@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AboutUs.AboutUs">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About mekvahan "
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="16sp"
+                android:layout_marginTop="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typeseting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. when an unknown printer took a gallery of type and scrambled it to make a type specimen book"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/background_about_us" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="32dp"
+                android:paddingTop="40dp"
+                android:paddingRight="32dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/contact_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Us"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_medium"/>
+
+                <TextView
+                    android:id="@+id/officeAddress"
+                    android:layout_below="@id/contact_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textStyle="bold"
+                    android:text="Office Address :-"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/gotham_medium" />
+
+                <TextView
+                    android:id="@+id/Mekvahan"
+                    android:layout_below="@id/officeAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/black"
+                    android:text="Mekvahan"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/gotham_medium" />
+
+                <TextView
+                    android:id="@+id/New_delhi"
+                    android:layout_below="@id/Mekvahan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/black"
+                    android:text="New Delhi, 110077"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/gotham_medium" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_below="@id/New_delhi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Email:- support@mekvahan.com"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/gotham_medium" />
+
+                <TextView
+                    android:id="@+id/connect"
+                    android:layout_below="@id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textColor="@color/black"
+                    android:text="Connect "
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/gotham_medium" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_below="@id/connect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/black"
+                    android:text="[ 9AM - 9PM ] :- +91 7838878899 "
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/gotham_medium" />
+
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

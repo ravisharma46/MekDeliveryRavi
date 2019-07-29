@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.naruto.mekvahandelivery">
+
+    <dist:module dist:instant="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:remove="android:maxSdkVersion" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity
+            android:name=".user_profile.Checklist"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".CaptureActivityPortrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity android:name=".FeedbackPage.Feedback_page" />
+        <activity android:name=".AboutUs.AboutUs" />
+        <activity android:name=".Chauffeur_Partner.NewBooking.NewBookingOrderView" />
+        <activity android:name=".Chauffeur_Partner.Chauffer" />
+        <activity android:name=".customer_report.ViewCustomerReport" />
+        <activity
+            android:name=".ScanQrcode"
+            android:screenOrientation="portrait" />
+        <activity android:name=".UserProfile" />
+        <activity
+            android:name=".user_profile.ShowAccountDetails"
+            android:label="Account details" />
+        <activity android:name=".customer_pickup.OnGoingBookingVendorDrop" />
+        <activity android:name=".customer_pickup.UpcomingBookingCustomer" />
+        <activity android:name=".customer_report.AddCustomerReport" />
+        <activity android:name=".transaction_history.Transaction" />
+        <activity android:name=".transaction_history.OrderHistory" />
+        <activity android:name=".vendor_pickup.OngoingBookingCustomerDrop" />
+        <activity android:name=".vendor_pickup.UpcomingBookingVendor" />
+        <activity android:name=".history.Service_Completed" />
+        <activity android:name=".signature.SignatureActivity" />
+
+        <activity android:name=".Help_And_Support.Disclaimer"/>
+        <activity android:name=".Help_And_Support.Faq_activity"/>
+        <activity android:name=".Help_And_Support.Help"/>
+        <activity android:name=".Help_And_Support.Mek_Legel_Activity"/>
+        <activity android:name=".Help_And_Support.Message"/>
+        <activity android:name=".Help_And_Support.Need_help"/>
+        <activity android:name=".Help_And_Support.Previous_Orders"/>
+        <activity android:name=".Help_And_Support.Privacy_policy"/>
+        <activity android:name=".Help_And_Support.Terms_and_Conditions"/>
+        <activity android:name=".Help_And_Support.Terms_Of_Use"/>
+        <activity android:name=".Help_And_Support.Help_and_Support"/>
+
+        <activity
+            android:name=".SplashActivity"
+            android:noHistory="true"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NavActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".OnBoardingActivity"
+            android:noHistory="true"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+    </application>
+
+</manifest>

@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Mekvahan Delivery</string>
+    <string name="enter_employee_id_and_password_to_submit">Enter employee ID and password to submit</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="enter_your_employee_id">Enter your Employee ID</string>
+    <string name="app_icon">app icon</string>
+    <string name="login_background">login background</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="submit">Submit</string>
+    <string name="faq_s">FAQ\'s</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="title_activity_nav">NavActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_mob">7838878899</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="menu_my_vehicle">My Vehicle</string>
+    <string name="menu_my_address">My Address</string>
+    <string name="menu_bookings">Bookings</string>
+    <string name="menu_mekcoins_wallet">Mekcoins Wallet</string>
+    <string name="menu_notification">Notification</string>
+    <string name="menu_about_us">About Us</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_referrals">Referrals</string>
+    <string name="menu_offers">Offers</string>
+    <string name="menu_log_out">Log Out</string>
+    <string name="authorization_value">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVlMTg5NjhhYjQ4Njg1ODM2ZGZjMzk0ODMyZDBmNmQyZTk2ZDc0MjBlYTNjMGMyZTBkZTllOGJhZjM2MDdmOTJmOTg4OGNhM2UxYjUwMTc2In0.eyJhdWQiOiIxIiwianRpIjoiNWUxODk2OGFiNDg2ODU4MzZkZmMzOTQ4MzJkMGY2ZDJlOTZkNzQyMGVhM2MwYzJlMGRlOWU4YmFmMzYwN2Y5MmY5ODg4Y2EzZTFiNTAxNzYiLCJpYXQiOjE1NDcwMjQyMTQsIm5iZiI6MTU0NzAyNDIxNCwiZXhwIjoxNTc4NTYwMjE0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Mx1sMFHFlgKn-VRpFkkps3OniKNiF6Bl9k_BtMCh-gjPxiMHwNFXbql9HxT5Sx3EZkeRlqXGibBqICNcYqifHupQrGy1WRAc1oh1W96u7fPNetyg_wtGNhebOyHZPI-RtORCh3cRh5Ov6iOohXy2LntMBUlBphyILS9sZRZCndJ0_KPmxNlkUnQeVHeBpcOM_USCF3tq_P0Ihhvev5ZKqn0zdJME5ZpJyVEmBE3YwHkD5ORasP-fFid5zq3TBVFJ4sOehzcjFtJZIEnzt6rYuMdQxCOdvMkoSq82_aGCFqwuzhx3lCXuRZ0R4yFUFAlXQxI1DGhdwSeHMxgE5PgrLcaOb4ktWyuRU7eV5SQTP2CwKP_vNjF_p768mCHDizjRNUeBk7NFJTgGfo0KMD1pObo0J9oRgxAk3tIrl7IzFo9Y_Bd3v3Gprff05NzeAjbD9j7HUCrZgOoQI14xwj5KvMYP47OWLeXGheC5VCvODvtGk5QSWq8_rSc8viuUfe44JzR56a5_y5LwTEjaLzX9WoqTuKWqsbsEGZND5BSJd6DORb2ff-DZndGGuMErTHgSoX_V0mbB8o23-BLvZyMUUMHQTipZ7Gw_QZ5_SPa5JMgcGWRMPxQLf0eh902JlBtdJuHMpV0egQFb-oN4MhWwP6ylXxonDvfwUlb5PcJloRw</string>
+    <string name="menu_home">Home</string>
+    <string name="profile_icon">profile icon</string>
+    <string name="mekvahan_delivery">Mekvahan Delivery</string>
+
+    <string name="rubbing">Rubbing &amp; polishing </string>
+    <string name="drop_date">Drop date &amp; time </string>
+    <string name="_15_min_approx">15 min (approx)</string>
+    <string name="navigate">Navigate</string>
+    <string name="pickup_date_time"><![CDATA[Pickup date & time]]></string>
+    <string name="to_confirm_service_nadd_vehicle_pic_confirm_otp"><![CDATA[To confirm service\nadd vehicle pic & confirm OTP]]></string>
+    <string name="petrol_diesel_meter">Petrol/ Diesel Meter</string>
+    <string name="message">I aurthorize to execute the jobs described herin using the necessary material cost. I understand that the vehicle is stored, repaired and tested at my own risk</string>
+    <string name="rubbing_polishing"><![CDATA[Rubbing & polishing]]></string>
+    <string name="drop_date_time"><![CDATA[Drop date & time]]></string>
+    <string name="serviced_drop_done"><![CDATA[Serviced & Drop Done]]></string>
+
+    <string-array name="select_battery">
+        <item>Oxide</item>
+        <item>Exide</item>
+    </string-array>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="content">Content</string>
+    <string name="jack_handle"><![CDATA[Jack & handle]]></string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+</resources>

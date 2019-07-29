@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/frame1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0px"
+            android:paddingBottom="0px">
+
+            <!--background and logo-->
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/bg_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_background"
+                    android:contentDescription="@string/login_background" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="24px">
+                <ImageView
+                    android:contentDescription="@string/app_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/app_icon" />
+            </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="72px"
+                    android:layout_marginTop="408px"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="48px"
+                        android:background="@color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="72px"
+                            android:layout_marginVertical="120px"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:text="@string/login"
+                                android:textColor="@color/mek_grey"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12px"
+                                android:text="@string/enter_employee_id_and_password_to_submit"
+                                android:textColor="@color/mek_grey"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="60px"
+                                android:fontFamily="@font/gotham_book"
+                                android:labelFor="@id/emp_id"
+                                android:paddingHorizontal="12px"
+                                android:paddingTop="84px"
+                                android:text="@string/enter_your_employee_id"
+                                android:textColor="@color/offwhite"
+                                android:textSize="10sp" />
+
+                            <EditText
+                                android:id="@+id/emp_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="username"
+                                android:fontFamily="@font/gotham_medium1"
+                                android:inputType="textAutoComplete"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24px"
+                                android:fontFamily="@font/gotham_book"
+                                android:labelFor="@id/emp_psw"
+                                android:paddingHorizontal="12px"
+                                android:paddingTop="72px"
+                                android:text="@string/password"
+                                android:textColor="@color/light_grey"
+                                android:textSize="10sp" />
+
+                            <EditText
+                                android:id="@+id/emp_psw"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="username"
+                                android:fontFamily="@font/gotham_medium1"
+                                android:inputType="textPassword"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_book"
+                                android:paddingTop="48px"
+                                android:text="@string/forgot_password"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#FFAC30"
+                                android:textSize="12sp" />
+
+                            <Button
+                                android:id="@+id/btn_login"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="72px"
+                                android:background="@drawable/red_button"
+                                android:fontFamily="@font/montserrat_medium"
+                                android:onClick="loginSubmit"
+                                android:text="@string/submit"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40px"
+                        android:layout_marginBottom="0px"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/btv_faqs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:layout_marginBottom="16px"
+                            android:fontFamily="@font/montserrat_semi_bold"
+                            android:drawableStart="@drawable/ic_faqs"
+                            android:gravity="start"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginHorizontal="24px"
+                            android:padding="34px"
+                            android:drawablePadding="48px"
+                            android:textColor="@color/mek_grey"
+                            android:layout_gravity="center"
+                            android:drawableEnd="@drawable/ic_right_arrow"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:textAllCaps="false"
+                            android:text="@string/faq_s" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="@color/line_colour" />
+
+                        <TextView
+                            android:id="@+id/btv_feedback"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:padding="34px"
+                            android:drawablePadding="48px"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginTop="16px"
+                            android:layout_gravity="center"
+                            android:layout_margin="24px"
+                            android:fontFamily="@font/montserrat_semi_bold"
+                            android:drawableStart="@drawable/ic_feedback"
+                            android:gravity="start"
+                            android:textColor="@color/mek_grey"
+                            android:drawableEnd="@drawable/ic_right_arrow"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:textAllCaps="false"
+                            android:text="@string/send_feedback" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+        </FrameLayout>
+
+    </ScrollView>
+
+</FrameLayout>

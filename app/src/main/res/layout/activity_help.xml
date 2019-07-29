@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:id="@+id/linear_layout1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:id="@+id/date"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:background="#A5A5A5"
+                                        android:fontFamily="@font/gotham_book"
+                                        android:paddingTop="12dp"
+                                        android:textSize="12sp"
+                                        android:paddingBottom="12dp"
+                                        android:paddingLeft="16dp"
+                                        android:text="28th July, 2018"
+                                        android:textColor="#ffffff" />
+
+                                    <TextView
+                                        android:id="@+id/time"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:textSize="12sp"
+                                        android:background="#A5A5A5"
+                                        android:fontFamily="@font/gotham_book"
+                                        android:gravity="right"
+                                        android:paddingTop="12dp"
+                                        android:paddingBottom="12dp"
+                                        android:paddingRight="16dp"
+                                        android:text="10:30 a.m"
+                                        android:textColor="#ffffff" />
+
+
+                                </LinearLayout>
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tvBookinghistory"
+                                        android:layout_gravity="left"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/gotham_book"
+                                        android:paddingBottom="12dp"
+                                        android:paddingLeft="16dp"
+                                        android:paddingTop="12dp"
+                                        android:textSize="12sp"
+                                        android:text="#123"
+                                        android:textColor="@android:color/black" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:src="@drawable/ic_chevron_right_red_24dp"
+                                        android:layout_gravity="right"
+                                        android:layout_marginTop="12dp"
+                                        android:layout_marginRight="16dp"
+                                        android:layout_marginBottom="12dp"
+                                        android:layout_height="wrap_content" />
+
+                                </FrameLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1px"
+                                    android:background="@color/line_colour" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="4dp"
+                                        android:weightSum="2"
+                                        android:orientation="horizontal">
+
+                                        <ImageView
+                                            android:id="@+id/logo"
+                                            android:layout_width="20dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="8dp"
+                                            android:layout_height="24dp"
+                                            android:src="@drawable/suzuki_logo" />
+
+                                        <LinearLayout
+                                            android:layout_weight="1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="2"
+                                            android:paddingRight="16dp">
+
+                                            <TextView
+                                                android:id="@+id/car_name"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/gotham_medium"
+                                                android:paddingTop="12dp"
+                                                android:paddingLeft="8dp"
+                                                android:textSize="13sp"
+                                                android:text="Wagonar R"
+                                                android:layout_weight="1"
+                                                android:textColor="#5B5B5B" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Payment Confirmed"
+                                                android:gravity="right"
+                                                android:layout_weight="1"
+                                                android:textColor="@color/green"
+                                                android:paddingRight="16dp"
+                                                android:drawablePadding="8dp"
+                                                android:textSize="11sp"
+                                                android:textStyle="bold"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:drawableRight="@drawable/tick_success"/>
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="4dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/numberPlate"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/gotham_book"
+                                            android:paddingLeft="44dp"
+                                            android:paddingBottom="12dp"
+                                            android:paddingTop="16dp"
+                                            android:paddingRight="16dp"
+                                            android:textSize="13sp"
+                                            android:text="DL1P3204"
+                                            android:textColor="#848484" />
+
+                                        <TextView
+                                            android:id="@+id/service_type"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/gotham_book"
+                                            android:gravity="end"
+                                            android:paddingBottom="12dp"
+                                            android:textSize="12sp"
+                                            android:paddingRight="16dp"
+                                            android:text="Denting Painting"
+                                            android:textColor="#DB0A16" />
+
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1px"
+                                        android:background="@color/line_colour" />
+
+                                </LinearLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/thirdframe"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/progress"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left"
+                                        android:paddingTop="12dp"
+                                        android:paddingBottom="12dp"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:paddingLeft="48dp"
+                                        android:text="Service in Progress"
+                                        android:textColor="@color/yellow"
+                                        android:textSize="14sp" />
+
+                                </FrameLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1px"
+                                    android:background="@color/line_colour" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp"
+                                    android:paddingBottom="12dp"
+                                    android:paddingTop="16dp"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:id="@+id/btn_need_help"
+                                        android:clickable="true"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/corners_new"
+                                        android:gravity="center_horizontal"
+                                        android:layout_weight="1">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Need Help ?"
+                                            android:paddingTop="16dp"
+                                            android:paddingBottom="16dp"
+                                            android:fontFamily="@font/montserrat_regular"
+                                            android:textStyle="bold"
+                                            android:textSize="13sp"
+                                            android:textColor="@color/white" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/btn_customer_support"
+                                        android:clickable="true"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/connect_customer_btn"
+                                        android:layout_width="0dp"
+                                        android:paddingTop="16dp"
+                                        android:paddingBottom="16dp"
+                                        android:gravity="center_horizontal"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Customer Support"
+                                            android:fontFamily="@font/montserrat_regular"
+                                            android:textSize="13sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1px"
+                                    android:background="@color/line_colour" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/reasonImg"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/circle_border"
+                            android:src="@drawable/denting_painting" />
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <View
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_colour" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:padding="24dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_gravity="left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gotham_medium"
+                            android:paddingLeft="8dp"
+                            android:textSize="12sp"
+                            android:text="Have Issue with previous order ?"
+                            android:drawableRight="@drawable/new_right_arrow"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_colour" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="32dp"
+                    android:paddingTop="32dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Help with other queries !"
+                        android:fontFamily="@font/gotham_medium"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/line_colour" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="12dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/btn_faqs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/gotham_book"
+                            android:drawableStart="@drawable/ic_faqs"
+                            android:gravity="start"
+                            android:focusable="true"
+                            android:layout_marginHorizontal="24px"
+                            android:padding="34px"
+                            android:drawablePadding="48px"
+                            android:layout_marginTop="16px"
+                            android:layout_margin="24px"
+                            android:textColor="@color/mek_grey"
+                            android:layout_gravity="center"
+                            android:drawableEnd="@drawable/new_right_arrow"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:textAllCaps="false"
+                            android:text="Mek FAQ's"
+                            android:drawableLeft="@drawable/ic_faqs"
+                            android:drawableRight="@drawable/new_right_arrow" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/line_colour" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/btn_MekLegal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:padding="34px"
+                            android:drawablePadding="48px"
+                            android:focusable="true"
+                            android:layout_marginTop="16px"
+                            android:layout_gravity="center"
+                            android:layout_margin="24px"
+                            android:fontFamily="@font/gotham_book"
+                            android:drawableStart="@drawable/legal"
+                            android:gravity="start"
+                            android:textColor="@color/mek_grey"
+                            android:drawableEnd="@drawable/new_right_arrow"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:textAllCaps="false"
+                            android:text="Mek Legal"
+                            android:drawableLeft="@drawable/legal"
+                            android:drawableRight="@drawable/new_right_arrow" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/line_colour" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true">
+
+                        <TextView
+                            android:id="@+id/btn_Mek_general_queries"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:padding="34px"
+                            android:drawablePadding="48px"
+                            android:focusable="true"
+                            android:layout_marginTop="16px"
+                            android:layout_gravity="center"
+                            android:layout_margin="24px"
+                            android:fontFamily="@font/gotham_book"
+                            android:drawableStart="@drawable/ic_feedback"
+                            android:gravity="start"
+                            android:textColor="@color/mek_grey"
+                            android:drawableEnd="@drawable/new_right_arrow"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:textAllCaps="false"
+                            android:text="Mek GENERAL QUERIES"
+                            android:drawableLeft="@drawable/ic_feedback"
+                            android:drawableRight="@drawable/new_right_arrow" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/line_colour" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </ScrollView>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2"
+    android:layout_height="match_parent"
+    tools:context=".OnBoardingActivity">
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8" />
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_dots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewpager"
+        android:gravity="center"
+        android:orientation="horizontal"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_weight=".2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/btnRL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/nextbtn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:gravity="center"
+                    android:textColor="#ffff"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:textSize="16sp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/btn_states" />
+                <Button
+                    android:id="@+id/nextbtn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Next"
+                    android:gravity="center"
+                    android:textColor="#ffff"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="16sp"
+                    android:background="@drawable/btn_states" />
+
+                <Button
+                    android:id="@+id/startbtnser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#ffff"
+                    android:textAllCaps="false"
+                    android:paddingTop="5dp"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:textSize="16sp"
+                    android:paddingHorizontal="16dp"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:background="@drawable/btn_states"
+                    android:text="Start Servicing" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/btnRL"
+                android:gravity="center_horizontal">
+
+
+                <TextView
+                    android:id="@+id/skiptv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skip"
+                    android:textSize="14sp"
+                    android:textColor="#a9a8ad"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".user_profile.Checklist">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp">
+        <ImageView
+            android:layout_width="28dp"
+            android:src="@drawable/back_arrow"
+            android:layout_marginLeft="8dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/montserrat_medium1"
+            android:text="Checklist"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginLeft="48dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/done_red_button"
+            android:textColor="@color/white"
+            android:text="Update"
+            android:fontFamily="@font/montserrat_medium1"
+            android:layout_margin="8dp"
+            android:textAllCaps="false"
+            android:layout_height="match_parent" />
+
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/gradient_bottom"
+        android:scaleY=".5" />
+
+
+      <ScrollView
+          android:layout_width="match_parent"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+          android:scrollbars="none"
+          android:layout_height="wrap_content">
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="wrap_content">
+
+              <LinearLayout
+                  android:id="@+id/linear_layout1"
+                  android:layout_width="match_parent"
+                  android:layout_marginTop="8dp"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:weightSum="2">
+
+                  <TextView
+                      android:id="@+id/date"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"
+                      android:background="#A5A5A5"
+                      android:fontFamily="@font/gotham_book"
+                      android:paddingTop="10dp"
+                      android:textSize="10sp"
+                      android:paddingBottom="10dp"
+                      android:paddingLeft="16dp"
+                      android:text="28th July, 2018"
+                      android:textColor="#ffffff" />
+
+                  <TextView
+                      android:id="@+id/time"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"
+                      android:textSize="10sp"
+                      android:background="#A5A5A5"
+                      android:fontFamily="@font/gotham_book"
+                      android:gravity="right"
+                      android:paddingTop="10dp"
+                      android:paddingBottom="10dp"
+                      android:paddingRight="16dp"
+                      android:text="10:30 a.m"
+                      android:textColor="#ffffff" />
+
+
+              </LinearLayout>
+
+              <LinearLayout
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:weightSum="2">
+
+                  <TextView
+
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"
+                      android:fontFamily="@font/gotham_book"
+                      android:paddingTop="10dp"
+                      android:textSize="8sp"
+                      android:paddingBottom="10dp"
+                      android:paddingLeft="16dp"
+                      android:text="Service Details"
+                      android:textColor="@color/offwhite" />
+
+                  <TextView
+
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"
+                      android:textSize="8sp"
+                      android:fontFamily="@font/gotham_book"
+                      android:gravity="right"
+                      android:paddingTop="10dp"
+                      android:paddingBottom="10dp"
+                      android:paddingRight="24dp"
+                      android:text="Availability"
+                      android:textColor="@color/offwhite" />
+
+
+              </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:weightSum="2"
+                 android:background="@drawable/frame_rect_02"
+                 android:layout_height="wrap_content">
+
+                 <FrameLayout
+                     android:layout_width="wrap_content"
+                     android:layout_weight="1"
+                     android:paddingTop="12dp"
+                     android:paddingBottom="12dp"
+                     android:layout_height="wrap_content">
+                     <ImageView
+                         android:layout_width="32dp"
+                         android:src="@drawable/shower"
+                         android:layout_marginLeft="12dp"
+                         android:layout_height="32dp" />
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:text="Shower"
+                         android:textColor="@color/black"
+                         android:textSize="12sp"
+                         android:gravity="center"
+                         android:layout_marginTop="8dp"
+                         android:textStyle="bold"
+                         android:layout_marginLeft="64dp"
+                         android:fontFamily="@font/montserrat_medium1"
+                         android:layout_height="match_parent" />
+
+                 </FrameLayout>
+
+                 <FrameLayout
+                     android:layout_width="wrap_content"
+                     android:layout_weight="1"
+                     android:layout_height="match_parent">
+
+                     <Switch
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:layout_marginRight="16dp"
+                         android:layout_gravity="right"
+                         android:enabled="true"
+                         android:theme="@style/SwitchCompatTheme"
+                         android:switchMinWidth="48dp"
+                         />
+
+
+                 </FrameLayout>
+
+
+
+             </LinearLayout>
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:weightSum="2"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:paddingTop="12dp"
+                      android:paddingBottom="12dp"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:layout_width="32dp"
+                          android:src="@drawable/charger"
+                          android:layout_marginLeft="12dp"
+                          android:layout_height="32dp" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:text="Charger"
+                          android:textColor="@color/black"
+                          android:textSize="12sp"
+                          android:gravity="center"
+                          android:layout_marginTop="8dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="64dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:layout_height="match_parent" />
+
+                  </FrameLayout>
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent">
+
+                      <Switch
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_marginRight="16dp"
+                          android:layout_gravity="right"
+                          android:enabled="true"
+                          android:theme="@style/SwitchCompatTheme"
+                          android:switchMinWidth="48dp"
+                          />
+
+
+                  </FrameLayout>
+
+
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:weightSum="2"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:paddingTop="12dp"
+                      android:paddingBottom="12dp"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:layout_width="32dp"
+                          android:src="@drawable/power_bank"
+                          android:layout_marginLeft="12dp"
+                          android:layout_height="32dp" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:text="Power bank"
+                          android:textColor="@color/black"
+                          android:textSize="12sp"
+                          android:gravity="center"
+                          android:layout_marginTop="8dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="64dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:layout_height="match_parent" />
+
+                  </FrameLayout>
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent">
+
+                      <Switch
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_marginRight="16dp"
+                          android:layout_gravity="right"
+                          android:enabled="true"
+                          android:theme="@style/SwitchCompatTheme"
+                          android:switchMinWidth="48dp"
+                          />
+
+
+                  </FrameLayout>
+
+
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:weightSum="2"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:paddingTop="12dp"
+                      android:paddingBottom="12dp"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:layout_width="32dp"
+                          android:src="@drawable/uniform"
+                          android:layout_marginLeft="12dp"
+                          android:layout_height="32dp" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:text="Uniform"
+                          android:textColor="@color/black"
+                          android:textSize="12sp"
+                          android:gravity="center"
+                          android:layout_marginTop="8dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="64dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:layout_height="match_parent" />
+
+                  </FrameLayout>
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent">
+
+                      <Switch
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_marginRight="16dp"
+                          android:layout_gravity="right"
+                          android:enabled="true"
+                          android:theme="@style/SwitchCompatTheme"
+                          android:switchMinWidth="48dp"
+                          />
+
+
+                  </FrameLayout>
+
+
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:weightSum="2"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:paddingTop="12dp"
+                      android:paddingBottom="12dp"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:layout_width="32dp"
+                          android:src="@drawable/backpack"
+                          android:layout_marginLeft="12dp"
+                          android:layout_height="32dp" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:text="Backpack"
+                          android:textColor="@color/black"
+                          android:textSize="12sp"
+                          android:gravity="center"
+                          android:layout_marginTop="8dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="64dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:layout_height="match_parent" />
+
+                  </FrameLayout>
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent">
+
+                      <Switch
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_marginRight="16dp"
+                          android:layout_gravity="right"
+                          android:enabled="true"
+                          android:theme="@style/SwitchCompatTheme"
+                          android:switchMinWidth="48dp"
+                          />
+
+
+                  </FrameLayout>
+
+
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:weightSum="2"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:paddingTop="12dp"
+                      android:paddingBottom="12dp"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:layout_width="32dp"
+                          android:src="@drawable/swiping_machine"
+                          android:layout_marginLeft="12dp"
+                          android:layout_height="32dp" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:text="Swiping machine"
+                          android:textColor="@color/black"
+                          android:textSize="12sp"
+                          android:gravity="center"
+                          android:layout_marginTop="8dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="64dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:layout_height="match_parent" />
+
+                  </FrameLayout>
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent">
+
+                      <Switch
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_marginRight="16dp"
+                          android:layout_gravity="right"
+                          android:enabled="true"
+                          android:theme="@style/SwitchCompatTheme"
+                          android:switchMinWidth="48dp"
+                          />
+
+
+                  </FrameLayout>
+
+
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:weightSum="2"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:paddingTop="12dp"
+                      android:paddingBottom="12dp"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:layout_width="32dp"
+                          android:src="@drawable/id_card"
+                          android:layout_marginLeft="12dp"
+                          android:layout_height="32dp" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:text="Id card"
+                          android:textColor="@color/black"
+                          android:textSize="12sp"
+                          android:gravity="center"
+                          android:layout_marginTop="8dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="64dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:layout_height="match_parent" />
+
+                  </FrameLayout>
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent">
+
+                      <Switch
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:layout_marginRight="16dp"
+                          android:layout_gravity="right"
+                          android:enabled="true"
+                          android:theme="@style/SwitchCompatTheme"
+                          android:switchMinWidth="48dp"
+                          />
+
+
+                  </FrameLayout>
+
+
+
+              </LinearLayout>
+
+
+              <FrameLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp">
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="left"
+                      android:layout_marginTop="12dp"
+                      android:fontFamily="@font/montserrat_medium1"
+                      android:paddingLeft="16dp"
+                      android:paddingTop="8dp"
+                      android:paddingRight="16dp"
+                      android:paddingBottom="8dp"
+                      android:text="Take Selfie"
+                      android:textColor="@color/app_caption_dark_grey"
+                      android:textSize="12sp" />
+
+                  <FrameLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="48dp"
+                      android:layout_gravity="right">
+
+                      <ImageView
+                          android:layout_width="36dp"
+                          android:layout_height="36dp"
+                          android:layout_marginLeft="12dp"
+                          android:padding="8dp"
+                          android:src="@drawable/camera_dummy" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="24dp"
+                          android:fontFamily="@font/montserrat_medium1"
+                          android:paddingTop="4dp"
+                          android:paddingRight="8dp"
+                          android:paddingBottom="4dp"
+                          android:text="Add more pics"
+                          android:textColor="@color/orange"
+                          android:textSize="8sp"
+                          android:textStyle="bold" />
+
+
+                  </FrameLayout>
+
+
+              </FrameLayout>
+
+              <FrameLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="8dp"
+                  android:background="@drawable/frame_rect_02">
+
+                  <FrameLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginLeft="16dp"
+                      android:layout_marginTop="16dp"
+                      android:layout_marginRight="16dp"
+                      android:layout_marginBottom="16dp"
+                      android:background="@drawable/frame_sqr">
+
+
+                      <ImageView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="right"
+                          android:layout_margin="4dp"
+                          android:paddingLeft="8dp"
+                          android:paddingBottom="8dp"
+                          android:src="@drawable/ic_cancel" />
+
+
+                      <ImageView
+                          android:layout_width="80dp"
+                          android:layout_height="80dp"
+                          android:layout_gravity="center"
+                          android:layout_marginLeft="16dp"
+                          android:layout_marginTop="16dp"
+                          android:layout_marginRight="16dp"
+                          android:layout_marginBottom="16dp"
+                          android:background="@drawable/image_svg" />
+
+                  </FrameLayout>
+
+
+              </FrameLayout>
+
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_marginTop="8dp"
+                  android:padding="12dp"
+                  android:orientation="horizontal"
+                  android:background="@drawable/frame_rect_02"
+                  android:layout_height="wrap_content">
+
+                  <ImageView
+                      android:layout_width="20dp"
+                      android:src="@drawable/gps_location"
+                      android:layout_height="20dp" />
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:text="Use Current location"
+                      android:textColor="@color/green"
+                      android:gravity="start|center"
+                      android:textSize="12sp"
+                      android:fontFamily="@font/montserrat_medium1"
+                      android:paddingStart="8dp"
+                      android:layout_height="match_parent" />
+
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_marginTop="8dp"
+                  android:layout_height="wrap_content">
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:textSize="8sp"
+                      android:layout_marginLeft="16dp"
+                      android:textColor="@color/offwhite"
+                      android:text="Complete Address"
+                      android:fontFamily="@font/montserrat_medium1"
+                      android:layout_height="wrap_content" />
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:textSize="12sp"
+                      android:layout_marginTop="4dp"
+                      android:layout_marginLeft="16dp"
+                      android:textStyle="bold"
+                      android:textColor="@color/black"
+                      android:text="Dwarka,sector 7,New Delhi-834005"
+                      android:fontFamily="@font/montserrat_medium1"
+                      android:layout_height="wrap_content" />
+
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="2dp"
+                      android:layout_marginTop="4dp"
+                      android:background="@drawable/gradient_bottom"
+                      android:scaleY=".5" />
+
+
+
+              </LinearLayout>
+
+
+              <Button
+                  android:id="@+id/btpickup"
+                  android:layout_width="match_parent"
+                  android:layout_height="40dp"
+                  android:layout_marginBottom="16dp"
+                  android:layout_marginTop="16dp"
+                  android:background="@drawable/done_red_button"
+                  android:fontFamily="@font/montserrat_medium1"
+                  android:text="Done"
+                  android:textAllCaps="false"
+                  android:textColor="@color/white" />
+
+
+
+
+
+
+
+          </LinearLayout>
+
+
+
+
+      </ScrollView>
+
+
+
+
+</LinearLayout>

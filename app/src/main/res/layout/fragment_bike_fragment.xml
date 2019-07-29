@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".customer_report.Bike_Add_fragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:id="@+id/bt_toolkit"
+                android:layout_weight="1"
+                android:background="@drawable/customer_rprt_bt01"
+                android:fontFamily="@font/montserrat_medium1"
+                android:text="Tool kit"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:id="@+id/bt_firstadkit"
+                android:background="@drawable/customer_rprt_bt01"
+                android:fontFamily="@font/montserrat_medium1"
+                android:text="First aid kit"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:id="@+id/bt_keychain"
+                android:layout_weight="1"
+                android:background="@drawable/customer_rprt_bt01"
+                android:fontFamily="@font/montserrat_medium1"
+                android:text="Key chain"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:id="@+id/bt_bikecover"
+                android:layout_weight="1"
+                android:background="@drawable/customer_rprt_bt01"
+                android:fontFamily="@font/montserrat_medium1"
+                android:text="Bike Cover"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/customer_rprt_bt01"
+                android:fontFamily="@font/montserrat_medium1"
+                android:text="Service book"
+                android:id="@+id/bt_servicebook"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="-4dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:id="@+id/bt_miscellenoustool"
+                android:background="@drawable/customer_rprt_bt01"
+                android:fontFamily="@font/montserrat_medium1"
+                android:text="Miscellneous \nTools"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

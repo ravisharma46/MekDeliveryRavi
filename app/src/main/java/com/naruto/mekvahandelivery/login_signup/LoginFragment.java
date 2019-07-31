@@ -40,7 +40,7 @@ import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.s
 public class LoginFragment extends Fragment {
 
 	private View mRootView;
-	private static final String myUrl = "https://mekvahan.com/api/delivery/login";
+		private static final String myUrl = "https://mekvahan.com/api/delivery/login";
 	private LoginSessionManager mSession;
 	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,
 			         cancelled_check_number,cancelled_check;

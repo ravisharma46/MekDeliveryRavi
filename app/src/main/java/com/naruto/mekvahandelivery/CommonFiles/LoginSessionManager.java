@@ -51,7 +51,8 @@ public class LoginSessionManager {
     }
 
     public void createLoginSession(String token_type, String accessToken, String userId, String profileId,  String name, String mobile, String email, String type,
-                                 String latitude,String longitude,String partnerId, String active){
+                                 String latitude,String longitude,String partnerId, String active,String panNumber,String accountNumber,String ifscCode,
+                                   String cancelledCheckNumber,String cancelledCheck){
 
         editor.putBoolean(IS_LOGIN, true);
 
@@ -67,6 +68,12 @@ public class LoginSessionManager {
         editor.putString(PARTNER_ID,partnerId);
         editor.putString(PROFILE_ID,profileId);
         editor.putString(ACTIVE,active);
+        editor.putString(PAN_NUMBER,panNumber);
+        editor.putString(ACCOUNT_NUMBER,accountNumber);
+        editor.putString(IFSC_CODE,ifscCode);
+        editor.putString(CANCELLED_CHECK_NUMBER,cancelledCheckNumber);
+        editor.putString(CANCELLED_CHECK,cancelledCheck);
+
         editor.commit();
     }
 
@@ -106,6 +113,11 @@ public class LoginSessionManager {
         user.put(PARTNER_ID, pref.getString(PARTNER_ID, ""));
         user.put(PROFILE_ID, pref.getString(PROFILE_ID, ""));
         user.put(ACTIVE, pref.getString(ACTIVE, ""));
+        user.put(PAN_NUMBER, pref.getString(PAN_NUMBER, ""));
+        user.put(ACCOUNT_NUMBER, pref.getString(ACCOUNT_NUMBER, ""));
+        user.put(IFSC_CODE, pref.getString(IFSC_CODE, ""));
+        user.put(CANCELLED_CHECK_NUMBER, pref.getString(CANCELLED_CHECK_NUMBER, ""));
+        user.put(CANCELLED_CHECK, pref.getString(CANCELLED_CHECK, ""));
 
 
         return user;

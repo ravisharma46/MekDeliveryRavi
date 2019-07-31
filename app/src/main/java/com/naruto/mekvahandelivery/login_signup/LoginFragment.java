@@ -42,7 +42,9 @@ public class LoginFragment extends Fragment {
 	private View mRootView;
 	private static final String myUrl = "https://mekvahan.com/api/delivery/login";
 	private LoginSessionManager mSession;
-	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active;
+	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,
+			         cancelled_check_number,cancelled_check;
+
 
 	public LoginFragment() {
 		// Required empty public constructor
@@ -145,9 +147,15 @@ public class LoginFragment extends Fragment {
 						longitude     = user.getString("longitude");
 						partner_id      = user.getString("partner_id");
 						active     = user.getString("active");
+						pan_number=user.getString("pan_number");
+						account_number=user.getString("account_number");
+						ifsc_code=user.getString("IFSC_code");
+						cancelled_check_number=user.getString("cancelled_check_number");
+						cancelled_check=user.getString("cancelled_check");
+
 
 						mSession.createLoginSession(tokenType,accessToken,String.valueOf(userId),profile_id,
-								name,mobile,email,type,latitude,longitude,partner_id,active );
+								name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,cancelled_check_number,cancelled_check );
 
 						Intent intent = new Intent(getContext(), NavActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

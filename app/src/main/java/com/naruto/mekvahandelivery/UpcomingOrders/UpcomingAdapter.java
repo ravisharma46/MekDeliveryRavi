@@ -54,32 +54,21 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
 
         if(status.contains("Awaiting customer pickup")){
-            viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("TAG","click");
-                    Intent i = new Intent(view.getContext(), UpcomingBookingCustomer.class);
-                    view.getContext().startActivity(i);
-                }
+            viewHolder.cv_details.setOnClickListener(view -> {
+                Log.e("TAG","click");
+                Intent i12 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
+                view.getContext().startActivity(i12);
             });
         }
         if(status.contains("Awaiting vendor pickup")){
-            viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("TAG","click");
-                    Intent i = new Intent(view.getContext(), UpcomingBookingVendor.class);
-                    view.getContext().startActivity(i);
-                }
+            viewHolder.cv_details.setOnClickListener(view -> {
+                Log.e("TAG","click");
+                Intent i1 = new Intent(view.getContext(), UpcomingBookingVendor.class);
+                view.getContext().startActivity(i1);
             });
         }
 
-
-
-
-
-
-
+        
     }
 
     @Override
@@ -92,19 +81,23 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvorder_id, textstatus, textViewstate, textViewrent, textViewdeposite, textViewaccomd, textViewbed;
+        private TextView tvorder_id, textstatus, textViewstate, carName, noPlate, paymentStatus, textViewbed,orderId;
         private CardView cv_details;
+        private LinearLayout connect;
+        private ImageView logo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-              cv_details =  itemView.findViewById(R.id.cv_details);
-              textstatus=(TextView) itemView.findViewById(R.id.status_U);
-//            textViewcity= (TextView) itemView.findViewById(R.id.city_tv);
-//            textViewrent= (TextView) itemView.findViewById(R.id.rent_tv);
-//            textViewdeposite= (TextView) itemView.findViewById(R.id.deposite_tv);
-//            textViewaccomd= (TextView) itemView.findViewById(R.id.accomd_tv);
-//            textViewbed= (TextView)itemView.findViewById(R.id.bed_tv);
+            cv_details =  itemView.findViewById(R.id.cv_details);
+            orderId = itemView.findViewById(R.id.order_id_1);
+            logo= itemView.findViewById(R.id.logo);
+            carName= itemView.findViewById(R.id.car_name);
+            noPlate= itemView.findViewById(R.id.numberPlate);
+            paymentStatus= itemView.findViewById(R.id.payment_confirm);
+            textstatus= itemView.findViewById(R.id.status_U);
+
+            connect=itemView.findViewById(R.id.connectButton);
 //
 //            imageView =(ImageView) itemView.findViewById(R.id.image_View);
 //            linearLayout=(LinearLayout) itemView.findViewById(R.id.linearLayout);

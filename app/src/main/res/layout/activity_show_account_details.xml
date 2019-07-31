@@ -30,10 +30,10 @@
 
             <TextView
                 android:layout_width="match_parent"
+                android:id="@+id/tv_panNumber"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat_medium1"
-                android:text="DPNPK3106Q"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -73,11 +73,11 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/tv_accountNumber"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/montserrat_medium1"
-                    android:text="3612 3456 5323"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat_medium1"
-                android:text="PUNB0013000"
+                android:id="@+id/tv_ifscCode"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat_medium1"
-                android:text="SBIN0011361"
+               android:id="@+id/tv_canceledCheckNumber"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />

@@ -10,13 +10,24 @@ import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.R;
+
+import java.util.HashMap;
+
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCOUNT_NUMBER;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.CANCELLED_CHECK;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.IFSC_CODE;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.PAN_NUMBER;
 
 public class ShowAccountDetails extends AppCompatActivity {
     private Button bt;
+    private TextView panNumber,accountNumber,ifsc,cancelledCheq;
+    private LoginSessionManager msessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +35,10 @@ public class ShowAccountDetails extends AppCompatActivity {
         setContentView(R.layout.activity_show_account_details);
 
         bt = findViewById(R.id.bt_ok);
+        panNumber=findViewById(R.id.tv_panNumber);
+        accountNumber=findViewById(R.id.tv_accountNumber);
+        ifsc=findViewById(R.id.tv_ifscCode);
+        cancelledCheq=findViewById(R.id.tv_canceledCheckNumber);
 
 
         try{
@@ -38,6 +53,13 @@ public class ShowAccountDetails extends AppCompatActivity {
 
         }
 
+        msessionManager=new LoginSessionManager(getApplicationContext());
+        HashMap<String,String> userInfo=msessionManager.getUserDetailsFromSP();
+
+        panNumber.setText(userInfo.get(PAN_NUMBER));
+        accountNumber.setText(userInfo.get(ACCOUNT_NUMBER));
+        ifsc.setText(userInfo.get(IFSC_CODE));
+        cancelledCheq.setText(userInfo.get(CANCELLED_CHECK));
 
 
 

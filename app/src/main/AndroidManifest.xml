@@ -83,7 +83,7 @@
             android:name=".NavActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".login_signup.LoginActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".OnBoardingActivity"

@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.naruto.mekvahandelivery.Adapter.ViewPagerAdapter;
+import com.naruto.mekvahandelivery.login_signup.LoginActivity;
 
 public class OnBoardingActivity extends AppCompatActivity {
 

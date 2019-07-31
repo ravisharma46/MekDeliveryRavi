@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.naruto.mekvahandelivery.LoginActivity;
+import com.naruto.mekvahandelivery.login_signup.LoginActivity;
 
 import java.util.HashMap;
 

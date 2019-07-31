@@ -52,12 +52,16 @@ public class UpcomingFragment extends Fragment {
 
         return v;
     }
+
+
+
     private ArrayList<MyListDataUpcomingBooking> initData() {
         ArrayList<MyListDataUpcomingBooking> list = new ArrayList<>();
-        list.add(new MyListDataUpcomingBooking("Awaiting vendor pickup"));
-        list.add(new MyListDataUpcomingBooking("Awaiting customer pickup"));
-        list.add(new MyListDataUpcomingBooking("Awaiting vendor pickup"));
-        list.add(new MyListDataUpcomingBooking("Awaiting customer pickup"));
+
+       // list.add(new MyListDataUpcomingBooking("Awaiting vendor pickup"));
+        //list.add(new MyListDataUpcomingBooking("Awaiting customer pickup"));
+        //list.add(new MyListDataUpcomingBooking("Awaiting vendor pickup"));
+       // list.add(new MyListDataUpcomingBooking("Awaiting customer pickup"));
 
         return list;
     }

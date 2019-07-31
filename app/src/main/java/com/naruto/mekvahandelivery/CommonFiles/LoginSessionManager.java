@@ -34,6 +34,13 @@ public class LoginSessionManager {
     public static final String LONGITUDE    = "longitude";
     public static final String PARTNER_ID     = "partnerId";
     public static final String ACTIVE       = "active";
+    public static final String PAN_NUMBER       = "pan_number";
+    public static final String ACCOUNT_NUMBER       = "account_number";
+    public static final String IFSC_CODE      = "ifsc_code";
+    public static final String CANCELLED_CHECK_NUMBER      = "cancelled_check_number";
+    public static final String CANCELLED_CHECK      = "cancelled_check";
+
+
 
 
 

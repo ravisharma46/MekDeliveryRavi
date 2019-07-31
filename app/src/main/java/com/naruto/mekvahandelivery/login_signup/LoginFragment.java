@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment {
 		});
 
 		mRootView.findViewById(R.id.btv_feedback).setOnClickListener(view ->
-				sendEmailIntent(Objects.requireNonNull(getActivity()));
+				sendEmailIntent(Objects.requireNonNull(getActivity())));
 
 	}
 

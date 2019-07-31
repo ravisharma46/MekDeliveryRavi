@@ -31,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.naruto.mekvahandelivery.AboutUs.AboutUs;
 import com.naruto.mekvahandelivery.Adapter.ExpandableListAdapter;
 import com.naruto.mekvahandelivery.Chauffeur_Partner.Chauffer;
+import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.Help_And_Support.Help;
 import com.naruto.mekvahandelivery.history.BookingHistoryFragment;
 import com.naruto.mekvahandelivery.OngoingOrders.OngoingFragment;
@@ -44,7 +45,7 @@ import java.util.List;
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 	private final String TAG = this.getClass().getSimpleName();
-	//    private LoginSessionManager mSession;
+	private LoginSessionManager mSession;
 	HashMap<String, String> mUserInfo;
 
 	ExpandableListAdapter expandableListAdapter;
@@ -69,14 +70,14 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 		mFragmentList.add(new OngoingFragment());
 		mFragmentList.add(new BookingHistoryFragment());
 
-//        mSession  = new LoginSessionManager(getApplicationContext());
-//        mUserInfo = mSession.getUserDetailsFromSP();
-//
-//        if (!mSession.isLoggedIn()) {
-//            mSession.checkLogin();
-//            finish();
-//            return;
-//        }
+        mSession  = new LoginSessionManager(getApplicationContext());
+        mUserInfo = mSession.getUserDetailsFromSP();
+
+        if (!mSession.isLoggedIn()) {
+            mSession.checkLogin();
+            finish();
+            return;
+        }
 
 		setContentView(R.layout.home_page);
 		Log.e(TAG,"Login successfully");
@@ -219,8 +220,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 			//startActivity(new Intent(AppHomePage.this,Profile.class));
 			drawer.closeDrawer(GravityCompat.START);
 		});
-//		tv_name.setText(mUserInfo.get(LoginSessionManager.NAME));
-//		tv_mobile.setText(mUserInfo.get(LoginSessionManager.MOBILE));
+		tv_name.setText(mUserInfo.get(LoginSessionManager.NAME));
+		tv_mobile.setText(mUserInfo.get(LoginSessionManager.MOBILE));
 
 	}
 
@@ -336,7 +337,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 						case 7: //startActivity(new Intent(AppHomePage.this, OffersHomePage.class));
 							break;
 						case 8: //startActivity(new Intent(AppHomePage.this, AboutUsPage.class));
-//                            mSession.logoutUser();
+                            mSession.logoutUser();
 							finish();
 							break;
 					}

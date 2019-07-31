@@ -107,7 +107,6 @@ public class LoginSessionManager {
         user.put(PROFILE_ID, pref.getString(PROFILE_ID, ""));
         user.put(ACTIVE, pref.getString(ACTIVE, ""));
 
-
         return user;
     }
 

@@ -44,6 +44,7 @@ public class LoginFragment extends Fragment {
 	private LoginSessionManager mSession;
 	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active;
 
+
 	public LoginFragment() {
 		// Required empty public constructor
 	}

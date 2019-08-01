@@ -29,11 +29,11 @@ public class FragmentForgotPassword extends Fragment {
 	}
 
 	private void clickListener() {
-		mRootView.findViewById(R.id.back_btn).setOnClickListener(view -> {
-			if (getFragmentManager() != null) {
-				getFragmentManager().popBackStack();
-			}
-		});
+//		mRootView.findViewById(R.id.back_btn).setOnClickListener(view -> {
+//			if (getFragmentManager() != null) {
+//				getFragmentManager().popBackStack();
+//			}
+//		});
 
 		mRootView.findViewById(R.id.proceed).setOnClickListener(view -> {
 			if (getFragmentManager() != null) {

@@ -31,7 +31,9 @@ public class AddCustomerReport extends AppCompatActivity {
     private Button take_sign,rc,puc,insurance,road_tax,passengerTax,pollutionPaper;
     private FrameLayout frame1;
 
-    private String head_reset,floor_mats,wheel_cap,mud_flap,rc_btn,puc_btn,insurance_btn,road_tax_btn,passanger_btn,pollution_papaer_btn,signature,meter_percentage,image,odometer,battery_info,description;
+    private String head_reset,floor_mats,wheel_cap,mud_flap,rc_btn,puc_btn,insurance_btn,
+                  road_tax_btn,passanger_btn,pollution_papaer_btn,signature,meter_percentage,
+                  image,odometer,battery_info,description;
 
 
 

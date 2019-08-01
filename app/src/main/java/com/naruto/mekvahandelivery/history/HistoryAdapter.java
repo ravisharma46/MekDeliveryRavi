@@ -49,14 +49,29 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.carlogo.setImageResource(cardata.getCarlogo());
         holder.reasonimg.setImageResource(cardata.getReasonImg());
 
-        holder.cv_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), Service_Completed.class);
-                view.getContext().startActivity(i);
+        if (cardata.getProgress().equals("Service Cancelled")) {
+            holder.cv_details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(view.getContext(), Service_Completed.class);
+                    i.putExtra("key","service cancelled");
+                    view.getContext().startActivity(i);
 
-            }
-        });
+                }
+            });
+
+        }
+        else{
+            holder.cv_details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(view.getContext(), Service_Completed.class);
+                    view.getContext().startActivity(i);
+
+                }
+            });
+        }
+
 
     }
 

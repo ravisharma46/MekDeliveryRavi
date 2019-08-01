@@ -39,7 +39,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>Ongoing booking</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>#123</font>"));
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

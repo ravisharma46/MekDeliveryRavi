@@ -585,7 +585,7 @@
                     android:layout_gravity="left"
                     android:fontFamily="@font/montserrat_medium1"
                     android:padding="16dp"
-                    android:text="vehicle interior picture"
+                    android:text="vehicle interior pictures"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 

@@ -41,6 +41,7 @@ public class LoginFragment extends Fragment {
 
 	private View mRootView;
 	private static final String myUrl = "https://mekvahan.com/api/delivery/login";
+	private static final String myUrlForgot = "https://mekvahan.com/api/delivery/forgotPassword";
 	private LoginSessionManager mSession;
 	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,
 			         cancelled_check_number,cancelled_check;
@@ -74,6 +75,8 @@ public class LoginFragment extends Fragment {
 
 		mRootView.findViewById(R.id.tv_forgot_password).setOnClickListener(v -> {
 
+			forgotPassword();
+
 			Fragment fragment = new FragmentOTP();
 			FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
 			FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -102,7 +105,7 @@ public class LoginFragment extends Fragment {
 //
 //	}
 
-	public void userLogin() {
+	private void userLogin() {
 
 
 		final ProgressDialog progressDialog = new ProgressDialog(getContext());
@@ -199,5 +202,72 @@ public class LoginFragment extends Fragment {
 		MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 
 	}
+
+	private void forgotPassword(){
+		final ProgressDialog progressDialog = new ProgressDialog(getContext());
+		progressDialog.setMessage("Loading....");
+		progressDialog.show();
+
+
+		//----if everything is fine-----
+		StringRequest stringRequest = new StringRequest(Request.Method.POST, myUrlForgot,
+				response -> {
+					progressDialog.dismiss();
+
+					try {
+
+						JSONObject jsonObject = new JSONObject(response);
+
+
+						int status = jsonObject.getInt("status");
+						String resp=jsonObject.getString("response");
+						if(status==1) {
+							Toast.makeText(getActivity(),resp,Toast.LENGTH_SHORT).show();
+							return;
+						}
+
+
+
+
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				},
+				error -> {
+					Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+					Log.e("TAGR", error.toString());
+
+				}) {
+			@Override
+			protected Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<>();
+
+				// params.put("delivery_boy_id","1");
+				params.put("mobile", "9487420625");
+				Log.e("TAG", params.toString());
+				return params;
+			}
+
+
+			@Override
+			public Map<String, String> getHeaders() throws AuthFailureError {
+				Map<String, String> params = new HashMap<>();
+
+				params.put("Accept","application/json");
+
+
+				return params;
+			}
+		};
+
+
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
+				NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+		MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+	}
+
 
 }

@@ -9,6 +9,7 @@ import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +18,10 @@ import com.naruto.mekvahandelivery.R;
 
 public class Service_Completed extends AppCompatActivity {
 
-    private TextView rupeeAmount, rupeepaytm,tvDetails;
+    private TextView rupeeAmount, rupeepaytm,tvDetails,service;
     private TextView btnClickme;
     private LinearLayout ll1;
+    private RelativeLayout rrTilte;
 
 
     @Override
@@ -39,6 +41,8 @@ public class Service_Completed extends AppCompatActivity {
         rupeepaytm = findViewById(R.id.rupeePaytm);
         ll1=findViewById(R.id.linear_paint);
         tvDetails=findViewById(R.id.tvDetails);
+        service=findViewById(R.id.service);
+        rrTilte=findViewById(R.id.firstRelative);
 
         rupeepaytm.setText("\u20B9" + " 3,200");
         rupeeAmount.setText("\u20B9" + " 3,200");
@@ -46,6 +50,14 @@ public class Service_Completed extends AppCompatActivity {
 
 
 
+        Bundle extras=getIntent().getExtras();
+        if(extras!=null){
+            String value= extras.getString("key");
+            if(value.contains("service cancelled")){
+               rrTilte.setBackgroundColor(getResources().getColor(R.color.chart_deep_red));
+               service.setText("Service Cancelled");
+            }
+        }
 
         tvDetails.setOnClickListener(new View.OnClickListener() {
             int check=1;

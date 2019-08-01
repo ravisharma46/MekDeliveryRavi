@@ -292,7 +292,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat_medium1"
-                    android:text="Customer details"
+                    android:text="Partner details"
                     android:textColor="@color/app_grey_headline_caption"
                     android:textSize="12sp" />
 
@@ -319,7 +319,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="40dp"
                         android:fontFamily="@font/montserrat_medium1"
-                        android:text="Name of the customer"
+                        android:text="Name of the partner"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -351,7 +351,7 @@
                         android:layout_marginTop="116dp"
                         android:layout_marginBottom="24dp"
                         android:fontFamily="@font/montserrat_medium1"
-                        android:text="Address of the customer"
+                        android:text="Address of the partner"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -544,7 +544,7 @@
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
                         android:paddingBottom="8dp"
-                        android:text="To confirm delivery add vehicle pic."
+                        android:text="To confirm delivery add vehicle exterior pic."
                         android:textColor="@color/app_caption_dark_grey"
                         android:textSize="10sp" />
 

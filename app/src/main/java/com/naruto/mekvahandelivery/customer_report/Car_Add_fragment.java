@@ -15,7 +15,10 @@ import com.naruto.mekvahandelivery.R;
 
 public class Car_Add_fragment extends Fragment {
 
-    private Button stepney,toolKit,mudguard,keyChain,serviceBook,mats,wheelCover,lock,jackHandle,carpet,stereoPanel,speakers;
+    private Button Stepney,toolKit,Mudguard,keyChain,serviceBook,Mats,wheelCover,Lock,jackHandle,Carpet,stereoPanel,speakers;
+
+    private  String  booking_id,tool_kit,stepney,mudguard,mats,keychain, service_book, wheel_cover,lock, jack_handle,carpet,stereo_panel,speaker,head_reset,floor_mats,wheel_cap,mud_flap;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -23,31 +26,33 @@ public class Car_Add_fragment extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_car_fragment, container, false);
 
-        stepney=v.findViewById(R.id.bt_stepney);
+        Stepney=v.findViewById(R.id.bt_stepney);
         toolKit=v.findViewById(R.id.bt_toolkit);
-        mudguard=v.findViewById(R.id.bt_mudguard);
+        Mudguard=v.findViewById(R.id.bt_mudguard);
         keyChain=v.findViewById(R.id.bt_keychain);
         serviceBook=v.findViewById(R.id.bt_servicebook);
-        mats=v.findViewById(R.id.bt_mats);
+        Mats=v.findViewById(R.id.bt_mats);
         wheelCover=v.findViewById(R.id.bt_wheelcover);
-        lock=v.findViewById(R.id.bt_lock);
+        Lock=v.findViewById(R.id.bt_lock);
         jackHandle=v.findViewById(R.id.bt_jackhandle);
-        carpet=v.findViewById(R.id.bt_carpet);
+        Carpet=v.findViewById(R.id.bt_carpet);
         stereoPanel=v.findViewById(R.id.bt_stereopanel);
         speakers=v.findViewById(R.id.bt_speakers);
 
 
-        stepney.setOnClickListener(new View.OnClickListener() {
+        Stepney.setOnClickListener(new View.OnClickListener() {
             int check = 1;
             @Override
             public void onClick(View view) {
                 if (check == 1) {
-                    stepney.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    stepney.setTextColor(Color.WHITE);
+                    Stepney.setBackgroundResource(R.drawable.customer_reprt_bt02);
+                    Stepney.setTextColor(Color.WHITE);
+                    stepney="1";
                     check = 0;
                 } else {
-                    stepney.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    stepney.setTextColor(Color.BLACK);
+                    Stepney.setBackgroundResource(R.drawable.customer_rprt_bt01);
+                    Stepney.setTextColor(Color.BLACK);
+                    stepney="0";
                     check = 1;
                 }
             }
@@ -59,25 +64,29 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     toolKit.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     toolKit.setTextColor(Color.WHITE);
+                    tool_kit="1";
                     check = 0;
                 } else {
                     toolKit.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     toolKit.setTextColor(Color.BLACK);
+                    tool_kit="0";
                     check = 1;
                 }
             }
         });
-        mudguard.setOnClickListener(new View.OnClickListener() {
+        Mudguard.setOnClickListener(new View.OnClickListener() {
             int check = 1;
             @Override
             public void onClick(View view) {
                 if (check == 1) {
-                    mudguard.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    mudguard.setTextColor(Color.WHITE);
+                    Mudguard.setBackgroundResource(R.drawable.customer_reprt_bt02);
+                    Mudguard.setTextColor(Color.WHITE);
+                    mudguard="1";
                     check = 0;
                 } else {
-                    mudguard.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    mudguard.setTextColor(Color.BLACK);
+                    Mudguard.setBackgroundResource(R.drawable.customer_rprt_bt01);
+                    Mudguard.setTextColor(Color.BLACK);
+                    mudguard="0";
                     check = 1;
                 }
             }
@@ -89,10 +98,12 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     keyChain.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     keyChain.setTextColor(Color.WHITE);
+                    keychain="1";
                     check = 0;
                 } else {
                     keyChain.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     keyChain.setTextColor(Color.BLACK);
+                    keychain="0";
                     check = 1;
                 }
             }
@@ -104,25 +115,29 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     serviceBook.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     serviceBook.setTextColor(Color.WHITE);
+                    service_book="1";
                     check = 0;
                 } else {
                     serviceBook.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     serviceBook.setTextColor(Color.BLACK);
+                    service_book="0";
                     check = 1;
                 }
             }
         });
-        mats.setOnClickListener(new View.OnClickListener() {
+        Mats.setOnClickListener(new View.OnClickListener() {
             int check = 1;
             @Override
             public void onClick(View view) {
                 if (check == 1) {
-                    mats.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    mats.setTextColor(Color.WHITE);
+                    Mats.setBackgroundResource(R.drawable.customer_reprt_bt02);
+                    Mats.setTextColor(Color.WHITE);
+                    mats="1";
                     check = 0;
                 } else {
-                    mats.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    mats.setTextColor(Color.BLACK);
+                    Mats.setBackgroundResource(R.drawable.customer_rprt_bt01);
+                    Mats.setTextColor(Color.BLACK);
+                    mats="0";
                     check = 1;
                 }
             }
@@ -134,25 +149,29 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     wheelCover.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     wheelCover.setTextColor(Color.WHITE);
+                    wheel_cover="1";
                     check = 0;
                 } else {
                     wheelCover.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     wheelCover.setTextColor(Color.BLACK);
+                    wheel_cover="0";
                     check = 1;
                 }
             }
         });
-        lock.setOnClickListener(new View.OnClickListener() {
+        Lock.setOnClickListener(new View.OnClickListener() {
             int check = 1;
             @Override
             public void onClick(View view) {
                 if (check == 1) {
-                    lock.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    lock.setTextColor(Color.WHITE);
+                    Lock.setBackgroundResource(R.drawable.customer_reprt_bt02);
+                    Lock.setTextColor(Color.WHITE);
+                    lock="1";
                     check = 0;
                 } else {
-                    lock.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    lock.setTextColor(Color.BLACK);
+                    Lock.setBackgroundResource(R.drawable.customer_rprt_bt01);
+                    Lock.setTextColor(Color.BLACK);
+                    lock="0";
                     check = 1;
                 }
             }
@@ -164,25 +183,29 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     jackHandle.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     jackHandle.setTextColor(Color.WHITE);
+                    jack_handle="1";
                     check = 0;
                 } else {
                     jackHandle.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     jackHandle.setTextColor(Color.BLACK);
+                    jack_handle="0";
                     check = 1;
                 }
             }
         });
-        carpet.setOnClickListener(new View.OnClickListener() {
+        Carpet.setOnClickListener(new View.OnClickListener() {
             int check = 1;
             @Override
             public void onClick(View view) {
                 if (check == 1) {
-                    carpet.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    carpet.setTextColor(Color.WHITE);
+                    Carpet.setBackgroundResource(R.drawable.customer_reprt_bt02);
+                    Carpet.setTextColor(Color.WHITE);
+                    carpet="1";
                     check = 0;
                 } else {
-                    carpet.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    carpet.setTextColor(Color.BLACK);
+                    Carpet.setBackgroundResource(R.drawable.customer_rprt_bt01);
+                    Carpet.setTextColor(Color.BLACK);
+                    carpet="0";
                     check = 1;
                 }
             }
@@ -194,10 +217,12 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     stereoPanel.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     stereoPanel.setTextColor(Color.WHITE);
+                    stereo_panel="1";
                     check = 0;
                 } else {
                     stereoPanel.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     stereoPanel.setTextColor(Color.BLACK);
+                    stereo_panel="0";
                     check = 1;
                 }
             }
@@ -209,10 +234,12 @@ public class Car_Add_fragment extends Fragment {
                 if (check == 1) {
                     speakers.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     speakers.setTextColor(Color.WHITE);
+                    speaker="1";
                     check = 0;
                 } else {
                     speakers.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     speakers.setTextColor(Color.BLACK);
+                    speaker="0";
                     check = 1;
                 }
             }

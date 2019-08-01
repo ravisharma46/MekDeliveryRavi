@@ -31,6 +31,9 @@ public class AddCustomerReport extends AppCompatActivity {
     private Button take_sign,rc,puc,insurance,road_tax,passengerTax,pollutionPaper;
     private FrameLayout frame1;
 
+    private String head_reset,floor_mats,wheel_cap,mud_flap,rc_btn,puc_btn,insurance_btn,road_tax_btn,passanger_btn,pollution_papaer_btn,signature,meter_percentage,image,odometer,battery_info,description;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,6 @@ public class AddCustomerReport extends AppCompatActivity {
 
 
 
-
         loadCarFragment();
         load_car();
 
@@ -103,6 +105,7 @@ public class AddCustomerReport extends AppCompatActivity {
                   Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
                   startActivityForResult(i,2);
 
+
             }
         });
         img_cancel.setOnClickListener(new View.OnClickListener() {
@@ -120,10 +123,12 @@ public class AddCustomerReport extends AppCompatActivity {
                 if (check == 1) {
                     rc.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     rc.setTextColor(Color.WHITE);
+                    rc_btn="1";
                     check = 0;
                 } else {
                     rc.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     rc.setTextColor(Color.BLACK);
+                    rc_btn="0";
                     check = 1;
                 }
             }
@@ -135,10 +140,12 @@ public class AddCustomerReport extends AppCompatActivity {
                 if (check == 1) {
                     puc.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     puc.setTextColor(Color.WHITE);
+                    puc_btn="1";
                     check = 0;
                 } else {
                     puc.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     puc.setTextColor(Color.BLACK);
+                    puc_btn="0";
                     check = 1;
                 }
             }
@@ -150,10 +157,12 @@ public class AddCustomerReport extends AppCompatActivity {
                 if (check == 1) {
                     passengerTax.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     passengerTax.setTextColor(Color.WHITE);
+                    passanger_btn="1";
                     check = 0;
                 } else {
                     passengerTax.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     passengerTax.setTextColor(Color.BLACK);
+                    passanger_btn="0";
                     check = 1;
                 }
             }
@@ -165,10 +174,12 @@ public class AddCustomerReport extends AppCompatActivity {
                 if (check == 1) {
                     insurance.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     insurance.setTextColor(Color.WHITE);
+                    insurance_btn="1";
                     check = 0;
                 } else {
                     insurance.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     insurance.setTextColor(Color.BLACK);
+                    insurance_btn="0";
                     check = 1;
                 }
             }
@@ -180,10 +191,12 @@ public class AddCustomerReport extends AppCompatActivity {
                 if (check == 1) {
                     road_tax.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     road_tax.setTextColor(Color.WHITE);
+                    road_tax_btn="1";
                     check = 0;
                 } else {
                     road_tax.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     road_tax.setTextColor(Color.BLACK);
+                    road_tax_btn="0";
                     check = 1;
                 }
             }
@@ -195,10 +208,12 @@ public class AddCustomerReport extends AppCompatActivity {
                 if (check == 1) {
                     pollutionPaper.setBackgroundResource(R.drawable.customer_reprt_bt02);
                     pollutionPaper.setTextColor(Color.WHITE);
+                    pollution_papaer_btn="1";
                     check = 0;
                 } else {
                     pollutionPaper.setBackgroundResource(R.drawable.customer_rprt_bt01);
                     pollutionPaper.setTextColor(Color.BLACK);
+                    pollution_papaer_btn="0";
                     check = 1;
                 }
             }

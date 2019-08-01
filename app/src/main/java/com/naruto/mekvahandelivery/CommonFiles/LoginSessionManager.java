@@ -119,7 +119,6 @@ public class LoginSessionManager {
         user.put(CANCELLED_CHECK_NUMBER, pref.getString(CANCELLED_CHECK_NUMBER, ""));
         user.put(CANCELLED_CHECK, pref.getString(CANCELLED_CHECK, ""));
 
-
         return user;
     }
 

@@ -47,6 +47,7 @@ public class LoginFragment extends Fragment {
 			         cancelled_check_number,cancelled_check;
 
 
+
 	public LoginFragment() {
 		// Required empty public constructor
 	}

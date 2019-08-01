@@ -67,7 +67,7 @@ public class OrderHistory extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         NavActivity.ViewPagerAdapter adapter = new NavActivity.ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new CustomerFragment(), "Customer");
-        adapter.addFragment(new ServiceFragment(), "Service");
+        adapter.addFragment(new ServiceFragment(), "Partner");
 
         viewPager.setAdapter(adapter);
     }

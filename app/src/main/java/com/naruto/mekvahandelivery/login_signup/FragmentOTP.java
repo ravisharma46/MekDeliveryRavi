@@ -35,8 +35,8 @@ public class FragmentOTP extends Fragment {
 	}
 
 	private void onClickLinstener() {
-		inflate.findViewById(R.id.back_btn).setOnClickListener(v ->
-				Objects.requireNonNull(getActivity()).onBackPressed());
+//		inflate.findViewById(R.id.back_btn).setOnClickListener(v ->
+//				Objects.requireNonNull(getActivity()).onBackPressed());
 
 		inflate.findViewById(R.id.ok).setOnClickListener(view -> replaceFragment(new FragmentForgotPassword()));
 	}
@@ -50,5 +50,7 @@ public class FragmentOTP extends Fragment {
 		ft.commit();
 
 	}
+
+
 
 }

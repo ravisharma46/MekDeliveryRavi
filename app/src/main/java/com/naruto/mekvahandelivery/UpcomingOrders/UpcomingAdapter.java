@@ -1,5 +1,7 @@
 package com.naruto.mekvahandelivery.UpcomingOrders;
 
+import com.squareup.picasso.Picasso;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +21,7 @@ import com.naruto.mekvahandelivery.OngoingOrders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
 import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,6 +47,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull UpcomingAdapter.ViewHolder viewHolder, int i) {
+
+
 
         final MyListDataUpcomingBooking data = dataArrayList.get(i);
 
@@ -81,7 +86,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvorder_id, textstatus, textViewstate, carName, noPlate, paymentStatus, textViewbed,orderId;
+        private TextView tvorder_id, textstatus, textViewstate, carName, noPlate, paymentStatus, textViewbed,orderId,time,date;
         private CardView cv_details;
         private LinearLayout connect;
         private ImageView logo;
@@ -96,6 +101,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             noPlate= itemView.findViewById(R.id.numberPlate);
             paymentStatus= itemView.findViewById(R.id.payment_confirm);
             textstatus= itemView.findViewById(R.id.status_U);
+            time=itemView.findViewById(R.id.time);
+            date=itemView.findViewById(R.id.date);
 
             connect=itemView.findViewById(R.id.connectButton);
 //

@@ -1,7 +1,6 @@
 package com.naruto.mekvahandelivery.UpcomingOrders;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
 import com.naruto.mekvahandelivery.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,23 +88,56 @@ public class UpcomingFragment extends Fragment {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
 
-//                        String service_type = jsonObject.getString("response");
-
                         JSONArray responseArray = jsonObject.getJSONArray("response");
 
-                        JSONObject regularService= responseArray.getJSONObject(0);
+                        for(int i=0;i<responseArray.length();i++){
 
-//                        JSONObject regularServices= (JSONObject) regular_service.get(0);
+                            JSONObject regularService= responseArray.getJSONObject(0);
 
-                        JSONArray regular_serviceArray= regularService.getJSONArray("regular_service");
+                            JSONArray regular_serviceArray= regularService.getJSONArray("regular_service");
 
-                        JSONObject object1 = regular_serviceArray.getJSONObject(0);
+                            JSONObject object1 = regular_serviceArray.getJSONObject(0);
 
-                        JSONObject serviceId = object1.getJSONObject("service_id");
+                            JSONObject serviceId = object1.getJSONObject("service_id");
 
-                        String serviceName = serviceId.getString("service_name");
+                            String serviceName = serviceId.getString("service_name");
+                            String serviceDate = object1.getString("service_date");
+                            String serviceTime = object1.getString("service_time");
+                            String paymentStatus = object1.getString("payment");
+                            String bookingId = object1.getString("booking_id");
+                            String mobileNo = object1.getString("mobile");
 
-                        Log.i("tag111",serviceName);
+                            JSONObject vehicleDetails = object1.getJSONObject("Vehicle Details");
+                            JSONObject vehicleData = vehicleDetails.getJSONObject("data");
+                            String licencePlate = vehicleData.getString("license_plate");
+
+                            JSONObject modelId = vehicleData.getJSONObject("model_id");
+                            String modelName =modelId.getString("name");
+
+                            JSONArray companyId =modelId.getJSONArray("company_id");
+
+                            JSONObject object2 = companyId.getJSONObject(0);
+
+                            JSONArray logo =object2.getJSONArray("logo");
+
+                            // JSONObject object3 = logo.getJSONObject(1);
+
+//                            Picasso.with()
+
+
+//                            MyListDataUpcomingBooking myListDataUpcomingBooking=new MyListDataUpcomingBooking()
+
+
+
+                        }
+
+
+                        //For NO Plate
+
+
+
+
+//                        Log.i("tag111",modelName);
 
 //                        String service_type = status.getString("service_type");
 

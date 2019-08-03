@@ -4,7 +4,7 @@ public class MyListDataUpcomingBooking {
 
     private String description;
     private String orderId;
-    private String dateAndTime;
+    private String date,time;
     private String payment_status;
     private String service_name;
     private String logo;
@@ -14,7 +14,8 @@ public class MyListDataUpcomingBooking {
 
 
 
-    public MyListDataUpcomingBooking(String dateAndTime,
+    public MyListDataUpcomingBooking(String date,
+                                     String time,
                                      String logo,
                                      String mobile,
                                      String modelName,
@@ -24,7 +25,8 @@ public class MyListDataUpcomingBooking {
                                      String service_name) {
         this.description = description;
 
-        this.dateAndTime=dateAndTime;
+        this.date=date;
+        this.time=time;
         this.logo=logo;
         this.mobile=mobile;
         this.modelName=modelName;
@@ -53,11 +55,11 @@ public class MyListDataUpcomingBooking {
     }
 
     public String getDateAndTime() {
-        return dateAndTime;
+        return date;
     }
 
-    public void setDateAndTime(String dateAndTime) {
-        this.dateAndTime = dateAndTime;
+    public void setDateAndTime(String date) {
+        this.date = date;
     }
 
     public String getPayment_status() {
@@ -106,6 +108,14 @@ public class MyListDataUpcomingBooking {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 //
 //    public int getImgId() {

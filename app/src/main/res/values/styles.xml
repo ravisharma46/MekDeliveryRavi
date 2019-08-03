@@ -37,6 +37,13 @@
     <style name="SwitchCompatTheme">
         <item name="colorControlActivated">#4cbc17</item>
     </style>
+    <style name="SwitchCompatStyle" >
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="android:track">@drawable/switch_track</item>
+    </style>
+
+
+
 
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/custom_spiner</item>

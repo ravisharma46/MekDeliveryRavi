@@ -14,9 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
+import com.squareup.picasso.Picasso;
+
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedDate;
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedTime;
+
 
 import java.util.ArrayList;
 
@@ -27,7 +33,9 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
     private ArrayList<MyListDataOngoingBooking> dataArrayList;
 
 
-    public OngoingAdapter_1(ArrayList<MyListDataOngoingBooking> dataArrayList) {
+
+    public OngoingAdapter_1(Context context,ArrayList<MyListDataOngoingBooking> dataArrayList) {
+        this.context=context;
         this.dataArrayList = dataArrayList;
 
     }
@@ -44,18 +52,32 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
 
     @Override
-    public void onBindViewHolder(@NonNull OngoingAdapter_1.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
        final MyListDataOngoingBooking data = dataArrayList.get(i);
 
-       viewHolder.textViewstatus.setText(data.getDescription());
+       viewHolder.textViewstatus.setText(data.getstatus());
+
+
+        viewHolder.tv_date.setText(data.getDate());
+        viewHolder.tv_time.setText(data.getTime());
+
+        viewHolder.tv_modelName.setText(data.getModelName());
+        viewHolder.tv_numberPlate.setText(data.getNumberPlate());
+        viewHolder.tv_bookingid.setText(data.getOrderId());
+        viewHolder.tv_serviceType.setText(data.getService_name());
+        viewHolder.tv_paymentStatus.setText(data.getPayment_status());
+
+        Glide.with(context).load(data.getLogo())
+                .into(viewHolder.iv_logo);
+
 
 
 
 
         //viewHolder.textViewRupee.setText("\u20B9" + " 99");
 
-        String status=data.getDescription();
+        String status=data.getstatus();
 
 
         if (status.contains("Awaiting customer drop off")) {
@@ -98,7 +120,8 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textVieworderid, textViewstatus, textViewstate, textViewrent, textViewdeposite, textViewaccomd, textViewbed;
+        private TextView tv_bookingid, textViewstatus, tv_numberPlate,tv_serviceType,tv_paymentStatus,tv_date,tv_time,tv_modelName;
+        private ImageView iv_logo;
         private CardView cv_details;
 
         public ViewHolder(@NonNull View itemView) {
@@ -106,6 +129,16 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
             cv_details= itemView.findViewById(R.id.cv_details);
             textViewstatus= itemView.findViewById(R.id.status);
+            tv_bookingid= itemView.findViewById(R.id.booking_id);
+            tv_numberPlate= itemView.findViewById(R.id.numberPlate);
+            tv_serviceType= itemView.findViewById(R.id.service_type);
+            tv_paymentStatus= itemView.findViewById(R.id.payment_status);
+            tv_date= itemView.findViewById(R.id.date);
+            tv_time= itemView.findViewById(R.id.time);
+            tv_modelName= itemView.findViewById(R.id.mode_name);
+            iv_logo= itemView.findViewById(R.id.logo);
+
+
 
 
         }

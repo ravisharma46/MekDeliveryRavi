@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
+import com.naruto.mekvahandelivery.onboarding.OnBoardingActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery;
+package com.naruto.mekvahandelivery.onboarding;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.naruto.mekvahandelivery.Adapter.ViewPagerAdapter;
+import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.login_signup.LoginActivity;
 
 public class OnBoardingActivity extends AppCompatActivity {
@@ -49,10 +49,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         next2.setOnClickListener(this::onClick);
         startbtn.setOnClickListener(this::onClick);
 
-        skip.setOnClickListener(view -> {
-
-            startApp();
-        });
+        skip.setOnClickListener(view -> startApp());
 
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];

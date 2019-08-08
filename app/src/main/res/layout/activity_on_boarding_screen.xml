@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:weightSum="2"
     android:layout_height="match_parent"
-    tools:context=".OnBoardingActivity">
-
+    tools:context=".onboarding.OnBoardingActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
@@ -14,13 +13,10 @@
         android:layout_height="0dp"
         android:layout_weight="1.8" />
 
-
-
     <LinearLayout
         android:id="@+id/ll_dots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewpager"
         android:gravity="center"
         android:orientation="horizontal"/>
     <FrameLayout
@@ -91,7 +87,6 @@
                 android:layout_below="@+id/btnRL"
                 android:gravity="center_horizontal">
 
-
                 <TextView
                     android:id="@+id/skiptv"
                     android:layout_width="wrap_content"
@@ -100,9 +95,9 @@
                     android:textSize="14sp"
                     android:textColor="#a9a8ad"
                     android:gravity="center"
-                    android:padding="10dp"
-                    />
+                    android:padding="10dp" />
             </RelativeLayout>
+
         </RelativeLayout>
 
     </FrameLayout>

@@ -45,8 +45,6 @@ public class SplashActivity extends AppCompatActivity {
            finish();
         }, SPLASH_DISPLAY_LENGTH);
 
-
-
     }
 
     @Override

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -58,7 +57,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 	private TabLayout tabLayout;
 	private ViewPager viewPager;
-	private ActionBar toolbar;
 	private ImageView chaufer;
 
 	@Override
@@ -116,7 +114,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 		private final List<String> mFragmentTitleList = new ArrayList<>();
 
 		public ViewPagerAdapter(FragmentManager manager) {
-			super(manager);
+			super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 		}
 
 		@NonNull
@@ -142,7 +140,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 	}
 
 	private  void setBottomNavigation(){
-		toolbar = getSupportActionBar();
 
 		BottomNavigationView navigation = findViewById(R.id.navigation);
 		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

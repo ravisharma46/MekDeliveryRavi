@@ -143,6 +143,9 @@ public class UpcomingFragment extends Fragment {
                             String longitude=drop_add.getString("longitide");
 
 
+                            String drop_date=jsonObject.getString("pickup_date");
+                            String drop_time=jsonObject.getString("pickup_time");
+
 
 
                             String pickup_date=jsonObject.getString("pickup_date");
@@ -153,6 +156,8 @@ public class UpcomingFragment extends Fragment {
                             String[] str = createdDate.split(" ");
                             String serviceDate=str[0];
                             String serviceTime = str[1];
+
+                            String amount=jsonObject.getString("cod");
 
                             String cod=jsonObject.getString("cod");
 
@@ -166,7 +171,7 @@ public class UpcomingFragment extends Fragment {
 
 
                             mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
-                                    licencePlate, bookingId, paymentStatus,serviceName,image_url));
+                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,customer_name,address,latitude,longitude,drop_date,drop_time,amount));
 
                             break;
 

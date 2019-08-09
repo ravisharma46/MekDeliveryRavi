@@ -5,6 +5,7 @@
 	android:layout_height="match_parent"
 	android:layout_gravity="bottom|center_horizontal"
 	android:gravity="center_horizontal"
+	tools:ignore="UnusedAttribute,SmallSp"
 	android:orientation="vertical"
 	tools:context=".login_signup.LoginFragment">
 

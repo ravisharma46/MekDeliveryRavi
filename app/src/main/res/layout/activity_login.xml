@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".login_signup.LoginActivity">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".login_signup.LoginActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/frame1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:paddingBottom="0dp">
+		<FrameLayout
+			android:id="@+id/frame1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="0dp"
+			android:paddingBottom="0dp">
 
-            <!--background and logo-->
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical">
+			<!--background and logo-->
+			<LinearLayout
+				android:id="@+id/linearLayout2"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@color/white"
+				android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/bg_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/login_background"
-                    android:contentDescription="@string/login_background" />
+				<ImageView
+					android:id="@+id/bg_img"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:background="@drawable/login_background"
+					android:contentDescription="@string/login_background" />
 
-            </LinearLayout>
+			</LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="24px">
-                <ImageView
-                    android:contentDescription="@string/app_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/app_icon" />
-            </RelativeLayout>
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginVertical="24px">
+				<ImageView
+					android:contentDescription="@string/app_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:background="@drawable/app_icon" />
+			</RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="136dp"
-                android:layout_gravity="center|top"
-                android:gravity="center|top"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+			<LinearLayout
+				android:id="@+id/fragment_container"
+				android:layout_width="match_parent"
+				android:layout_marginHorizontal="24dp"
+				android:layout_marginTop="136dp"
+				android:layout_gravity="center|top"
+				android:gravity="center|top"
+				android:orientation="vertical"
+				android:layout_height="wrap_content">
 
-            </LinearLayout>
+			</LinearLayout>
 
-        </FrameLayout>
+		</FrameLayout>
 
-    </ScrollView>
+	</ScrollView>
 
 </FrameLayout>

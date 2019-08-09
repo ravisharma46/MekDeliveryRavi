@@ -95,7 +95,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
        call.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               callIntent(getApplicationContext(),mobileNo);
+               callIntent(OngoingBookingCustomerDrop.this,mobileNo);
            }
        });
 

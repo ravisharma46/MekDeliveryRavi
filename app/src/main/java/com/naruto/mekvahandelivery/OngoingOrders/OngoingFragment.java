@@ -106,8 +106,9 @@ public class OngoingFragment extends Fragment {
 
                              JSONObject regular_service=jsonObject.getJSONObject("regular_service");
                              String serviceName="";
+                             String categoryName="";
                              if(service_type.contains("regular_service")){
-                                 String categoryName=regular_service.getString("category");
+                                 categoryName=regular_service.getString("category");
                                  serviceName = regular_service.getString("service_name");
 
                              }
@@ -168,7 +169,7 @@ public class OngoingFragment extends Fragment {
                             mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,customer_name,address,latitude,longitude,drop_date,drop_time,amount));
 
-                            break;
+
 
                         }
                         adapter = new OngoingAdapter_1(getActivity(), (ArrayList<MyListDataOngoingBooking>) mBookingList);

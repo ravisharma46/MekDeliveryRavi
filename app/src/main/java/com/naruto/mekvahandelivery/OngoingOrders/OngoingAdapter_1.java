@@ -3,6 +3,7 @@ package com.naruto.mekvahandelivery.OngoingOrders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,15 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
         viewHolder.tv_numberPlate.setText(data.getNumberPlate());
         viewHolder.tv_bookingid.setText(data.getOrderId());
         viewHolder.tv_serviceType.setText(data.getService_name());
-        viewHolder.tv_paymentStatus.setText(data.getPayment_status());
+
+        String payment_status=data.getPayment_status();
+        if(payment_status.contains("Payment awaiting")){
+            viewHolder.tv_paymentStatus.setText(payment_status);
+            viewHolder.tv_paymentStatus.setTextColor(Color.RED);
+        }
+
+
+
 
         Glide.with(context).load(data.getLogo())
                 .into(viewHolder.iv_logo);
@@ -92,11 +101,12 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
         }
 
-        if (status.contains("Awaiting vendor drop off")) {
+        if (status.contains("Awaiting partner dropoff")) {
             viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
+                    //Intent i = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
+                    Intent i = new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                     view.getContext().startActivity(i);
 
                 }

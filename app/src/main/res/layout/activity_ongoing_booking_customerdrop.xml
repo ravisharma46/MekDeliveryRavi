@@ -97,6 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="40dp"
+                        android:id="@+id/tv_name"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Name of the customer"
                         android:textColor="@color/black"
@@ -128,6 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="116dp"
+                        android:id="@+id/tv_address"
                         android:layout_marginBottom="24dp"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Address of the customer"
@@ -278,7 +280,7 @@
                     android:background="@drawable/frame_rect_02">
 
                     <TextView
-                        android:id="@+id/date"
+                        android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
@@ -290,7 +292,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/time"
+                        android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -341,7 +343,7 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_1"
+                            android:id="@+id/tv_subtotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -374,7 +376,7 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_2"
+                            android:id="@+id/tv_tax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -406,7 +408,7 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_3"
+                            android:id="@+id/tv_additonalcharge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -439,7 +441,7 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_4"
+                            android:id="@+id/tv_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"

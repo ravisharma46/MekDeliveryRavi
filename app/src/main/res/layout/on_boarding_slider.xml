@@ -2,17 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom|center_horizontal"
-        android:weightSum="9"
-        android:layout_marginTop="?actionBarSize">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,UnusedAttribute"
+    android:gravity="bottom|center_horizontal"
+    android:weightSum="9">
         <ImageView
             android:contentDescription="slider"
             android:id="@+id/im_slider"
@@ -24,32 +18,24 @@
 
         <TextView
             android:id="@+id/titles"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:fontFamily="@font/gotham_medium"
             android:gravity="center"
-            android:maxLines="2"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="32dp"
             android:singleLine="false"
             android:text="Smartest way of Care \n kwd jdwdjnkn"
             android:textColor="@color/black"
             android:textSize="22sp" />
+
         <TextView
             android:id="@+id/desc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@+id/titles"
             android:layout_weight="1.5"
-            android:paddingHorizontal="10dp"
-            android:maxLines="2"
+            android:paddingHorizontal="16dp"
             android:textSize="14sp"
             android:gravity="center"
-            android:fontFamily="@font/gotham_book"
-            android:singleLine="false"
-
-            />
-    </LinearLayout>
-
-
+            android:fontFamily="@font/gotham_book" />
 </LinearLayout>

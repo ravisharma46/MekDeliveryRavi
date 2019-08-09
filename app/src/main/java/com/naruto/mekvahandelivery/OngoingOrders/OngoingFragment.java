@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,8 @@ import java.util.Map;
 
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedTime;
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedDate;
 import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCESS_TOKEN;
 import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.NAME;
 import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TOKEN_TYPE;
@@ -68,13 +71,13 @@ public class OngoingFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        upcoming();
+        ongoing();
 
 
         return v;
     }
 
-    private void upcoming() {
+    private void ongoing() {
         mProgressDialog.show();
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
@@ -93,60 +96,82 @@ public class OngoingFragment extends Fragment {
                         JSONArray jsonArray = Object.getJSONArray("response");
 
 
+
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                              String bookingId = jsonObject.getString("booking_id");
                              String service_type=jsonObject.getString("service_type");
+
+
                              JSONObject regular_service=jsonObject.getJSONObject("regular_service");
+                             String serviceName="";
                              if(service_type.contains("regular_service")){
-                                 String serviceName = regular_service.getString("service_name");
-                                 Log.e("TAG",serviceName);
+                                 String categoryName=regular_service.getString("category");
+                                 serviceName = regular_service.getString("service_name");
+
+
+
 
                              }
 
+                            JSONObject vehicle=jsonObject.getJSONObject("vehicle");
 
-
-                            JSONArray regular_serviceArray= jsonObject.getJSONArray("regular_service");
-
-                            JSONObject object1 = regular_serviceArray.getJSONObject(0);
-
-                            JSONObject serviceId = object1.getJSONObject("service_id");
-                            String serviceName = serviceId.getString("service_name");
-                            String serviceDate = object1.getString("service_date");
-                            String serviceTime = object1.getString("service_time");
-                            String paymentStatus = object1.getString("payment");
-                            String status = object1.getString("status");
-
-                            String mobileNo = object1.getString("mobile");
-
-                            JSONObject vehicleDetails = object1.getJSONObject("Vehicle Details");
-                            JSONObject vehicleData = vehicleDetails.getJSONObject("data");
-                            String licencePlate = vehicleData.getString("license_plate");
-
-                            JSONObject modelId = vehicleData.getJSONObject("model_id");
-
-
-
+                             String vehicle_name= vehicle.getString("name");
                             //vehicle_logo
-                            JSONArray companyId =modelId.getJSONArray("company_id");
+                            JSONArray companyId =vehicle.getJSONArray("company_id");
                             JSONObject object2 = companyId.getJSONObject(0);
-                            String modelName =object2.getString("name");
+                            String vehicleBrand =object2.getString("name");
                             JSONArray logo =object2.getJSONArray("logo");
-                             String logo_url = logo.getString(1);
-
-                           //vehicle_image
-                            JSONArray images =modelId.getJSONArray("images");
+                            String logo_url = logo.getString(1);
+                            //vehicle_image
+                            JSONArray images =vehicle.getJSONArray("images");
                             String image_url = images.getString(1);
 
 
 
 
+                            JSONArray customer=jsonObject.getJSONArray("customer");
+                            JSONObject cust=customer.getJSONObject(0);
 
-                            mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobileNo,modelName,
+                            String customer_name=cust.getString("name");
+                            String customer_mobile=cust.getString("mobile");
+                            String otp=cust.getString("otp");
+
+
+
+                            JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                            String address=drop_add.getString("address");
+                            String latitude=drop_add.getString("latitude");
+                            String longitude=drop_add.getString("longitide");
+
+
+
+
+                            String pickup_date=jsonObject.getString("pickup_date");
+                            String pickup_time=jsonObject.getString("pickup_time");
+
+                            String createdDate = jsonObject.getJSONObject("created_at").getString("date");
+
+                            String[] str = createdDate.split(" ");
+                            String serviceDate=str[0];
+                            String serviceTime = str[1];
+
+                            String cod=jsonObject.getString("cod");
+
+
+                            String status = jsonObject.getJSONObject("category").getString("status_title");
+
+                           // Log.e("TAG",status);
+
+                            String licencePlate="SDF1233";
+                            String paymentStatus="Payment awaiting";
+
+
+                            mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url));
 
-
+                            break;
 
                         }
                         adapter = new OngoingAdapter_1(getActivity(), (ArrayList<MyListDataOngoingBooking>) mBookingList);

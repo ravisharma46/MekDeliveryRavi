@@ -18,6 +18,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
 import com.naruto.mekvahandelivery.R;
 
@@ -32,6 +33,9 @@ import java.util.Map;
 
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.NAME;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TOKEN_TYPE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,16 +80,34 @@ public class OngoingFragment extends Fragment {
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
+
+                        JSONObject Object = new JSONObject(response);
 
 
-                        JSONArray responseArray = jsonObject.getJSONArray("response");
+                        int status_1 = Object.getInt("status");
+                        if(status_1!=1) {
+                            Toast.makeText(getActivity(),"There is no data",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                        for(int i=0;i<responseArray.length();i++){
+                        JSONArray jsonArray = Object.getJSONArray("response");
 
-                            JSONObject regularService= responseArray.getJSONObject(0);
 
-                            JSONArray regular_serviceArray= regularService.getJSONArray("regular_service");
+                        for(int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                             String bookingId = jsonObject.getString("booking_id");
+                             String service_type=jsonObject.getString("service_type");
+                             JSONObject regular_service=jsonObject.getJSONObject("regular_service");
+                             if(service_type.contains("regular_service")){
+                                 String serviceName = regular_service.getString("service_name");
+                                 Log.e("TAG",serviceName);
+
+                             }
+
+
+
+                            JSONArray regular_serviceArray= jsonObject.getJSONArray("regular_service");
 
                             JSONObject object1 = regular_serviceArray.getJSONObject(0);
 
@@ -95,7 +117,7 @@ public class OngoingFragment extends Fragment {
                             String serviceTime = object1.getString("service_time");
                             String paymentStatus = object1.getString("payment");
                             String status = object1.getString("status");
-                            String bookingId = object1.getString("booking_id");
+
                             String mobileNo = object1.getString("mobile");
 
                             JSONObject vehicleDetails = object1.getJSONObject("Vehicle Details");
@@ -150,7 +172,12 @@ public class OngoingFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("Accept","application/json");
-                headers.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJjMWE4ZTM5MTc5OTU3ZDE1ZDg4NzI0MDgxZDI4MDY2MzM0MDNlNDEzNDA5NDdlYTRlMzQwYWJkMTdhMjBjODAzOGNmMWM2OWY0ZTI2YTI3In0.eyJhdWQiOiIxIiwianRpIjoiMmMxYThlMzkxNzk5NTdkMTVkODg3MjQwODFkMjgwNjYzMzQwM2U0MTM0MDk0N2VhNGUzNDBhYmQxN2EyMGM4MDM4Y2YxYzY5ZjRlMjZhMjciLCJpYXQiOjE1NjQzMjkwMTcsIm5iZiI6MTU2NDMyOTAxNywiZXhwIjoxNTk1OTUxNDE3LCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.AeIzLVIDk88_ka6qJ-Ep0GSeBhxTq3yUInU_r_RfbaUJxfRNmhyuUtWoJbl0MFxyhfEHkGOvJ1PDRwkh59LQc5tyk3RT0aByxQkJUx4GKjbivYcF19YPOEqVZG-hnd_aJuh-AyFlDn6Fk2HPLFiFxQoLamsMzzNwhqbOY7ojxtxOQ0m5mCfxmU-Yixp6Q4Hkm9ga6OprGHRuZU5c4WTCXWoTxTtbf1SWwN8lXBkU0hOWc0-vXCmmuzDmVP_l3WM7yCtQTgZfhxXhQwCU3JyZMX0CZZKJ-MDGmVepj-yTNfqRKaDk3IsrxWTYqsvd1FtX3NIjZvNMVGdlUkB6GNQBgj0iqs-h9cHIXMqpPZA7EPieBORyawzkyairPFLi5Tk6uh7QJmJLFBvdUjxPcm3NpxOYaADt-RK7o_ojyi-VdhyUA_IsFD6H2Hs79piad0TNi2xaj0rf2rGQVVdS3baTtmugqpsO_Fm1T56Dq93y92VoWugrvEA3oB3IhSCHR8Nw5mPOpZx19F6mnyU2tVVNttDqEdBI-aEi_C2oZDVBNU_Wa2nvUV0Gv1qwAuPk2vBY5ncOxeRu-J2V22TGgHznUOuLSt6bExmDkhx1UP-RZfUfjHHVVXV6y1PVqjvEUjViVM1AUvFvyINtB3LahqfYj_1CcjybiCzyCyQizorbB88");
+                LoginSessionManager loginSessionManager=new LoginSessionManager(getActivity());
+                HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
+                String token_type=token.get(TOKEN_TYPE);
+                String acces_token= token.get(ACCESS_TOKEN);
+                headers.put("Authorization",token_type+" "+acces_token);
+
                 return headers;
             }
         };

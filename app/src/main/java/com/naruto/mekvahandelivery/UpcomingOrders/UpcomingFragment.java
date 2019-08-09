@@ -78,7 +78,7 @@ public class UpcomingFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        upcoming();
+      //  upcoming();
     }
 
     private void upcoming() {

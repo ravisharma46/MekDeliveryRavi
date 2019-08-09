@@ -2,7 +2,7 @@ package com.naruto.mekvahandelivery.UpcomingOrders;
 
 public class MyListDataUpcomingBooking {
 
-    private String description;
+    private String status;
     private String orderId;
     private String date,time;
     private String payment_status;
@@ -11,10 +11,12 @@ public class MyListDataUpcomingBooking {
     private String modelName;
     private String numberPlate;
     private String mobile;
+    private String image_url;
 
 
 
-    public MyListDataUpcomingBooking(String date,
+    public MyListDataUpcomingBooking(String status,
+                                     String date,
                                      String time,
                                      String logo,
                                      String mobile,
@@ -22,9 +24,9 @@ public class MyListDataUpcomingBooking {
                                      String numberPlate,
                                      String orderId,
                                      String payment_status,
-                                     String service_name) {
-        this.description = description;
-
+                                     String service_name,
+                                     String image_url) {
+        this.status = status;
         this.date=date;
         this.time=time;
         this.logo=logo;
@@ -34,8 +36,16 @@ public class MyListDataUpcomingBooking {
         this.orderId=orderId;
         this.payment_status=payment_status;
         this.service_name=service_name;
+        this.image_url = image_url;
 
-        //  this.imgId = imgId;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getOrderId() {
@@ -54,11 +64,11 @@ public class MyListDataUpcomingBooking {
         this.service_name = service_name;
     }
 
-    public String getDateAndTime() {
+    public String getDate() {
         return date;
     }
 
-    public void setDateAndTime(String date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -102,12 +112,12 @@ public class MyListDataUpcomingBooking {
         this.mobile = mobile;
     }
 
-    public String getDescription() {
-        return description;
+    public String getstatus() {
+        return status;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setstatus(String status) {
+        this.status = status;
     }
 
     public String getTime() {
@@ -117,12 +127,4 @@ public class MyListDataUpcomingBooking {
     public void setTime(String time) {
         this.time = time;
     }
-//
-//    public int getImgId() {
-//        return imgId;
-//    }
-//
-//    public void setImgId(int imgId) {
-//        this.imgId = imgId;
-//    }
 }

@@ -1,10 +1,13 @@
 package com.naruto.mekvahandelivery.UpcomingOrders;
 
+
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +31,11 @@ import java.util.ArrayList;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
 
+    private Context context;
     private ArrayList<MyListDataUpcomingBooking> dataArrayList;
 
-    public UpcomingAdapter(ArrayList<MyListDataUpcomingBooking> dataArrayList) {
+    public UpcomingAdapter(Context context,ArrayList<MyListDataUpcomingBooking> dataArrayList) {
+        this.context=context;
        this.dataArrayList=dataArrayList;
     }
 
@@ -52,10 +57,26 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
         final MyListDataUpcomingBooking data = dataArrayList.get(i);
 
-        viewHolder.textstatus.setText(data.getDescription());
+        viewHolder.textstatus.setText(data.getstatus());
+        viewHolder.date.setText(data.getDate());
+        viewHolder.time.setText(data.getTime());
+
+        viewHolder.carName.setText(data.getModelName());
+        viewHolder.noPlate.setText(data.getNumberPlate());
+        viewHolder.orderId.setText(data.getOrderId());
+        viewHolder.serviceType.setText(data.getService_name());
+
+        String payment_status=data.getPayment_status();
+        if(payment_status.contains("Payment awaiting")){
+            viewHolder.paymentStatus.setText(payment_status);
+            viewHolder.paymentStatus.setTextColor(Color.RED);
+        }
+
+        Glide.with(context).load(data.getLogo())
+                .into(viewHolder.logo);
 
 
-        String status=data.getDescription();
+        String status=data.getstatus();
 
 
         if(status.contains("Awaiting customer pickup")){
@@ -86,7 +107,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvorder_id, textstatus, textViewstate, carName, noPlate, paymentStatus, textViewbed,orderId,time,date;
+        private TextView tvorder_id, textstatus, textViewstate, carName, noPlate, paymentStatus, textViewbed,orderId,time,date,serviceType;
         private CardView cv_details;
         private LinearLayout connect;
         private ImageView logo;
@@ -103,6 +124,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             textstatus= itemView.findViewById(R.id.status_U);
             time=itemView.findViewById(R.id.time);
             date=itemView.findViewById(R.id.date);
+            serviceType=itemView.findViewById(R.id.service_type);
+
 
             connect=itemView.findViewById(R.id.connectButton);
 //

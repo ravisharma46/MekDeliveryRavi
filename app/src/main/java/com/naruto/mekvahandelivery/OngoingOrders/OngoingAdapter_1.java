@@ -107,6 +107,15 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                 public void onClick(View view) {
                     //Intent i = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
                     Intent i = new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
+                    i.putExtra("name",data.getName());
+                    i.putExtra("address",data.getAddress());
+                    i.putExtra("latitude",data.getLatitude());
+                    i.putExtra("longitude",data.getLongitude());
+                    i.putExtra("dropDate",data.getDrop_date());
+                    i.putExtra("dropTime",data.getDrop_time());
+                    i.putExtra("amount",data.getAmount());
+                    i.putExtra("otp",data.getOtp());
+                    i.putExtra("mobile",data.getMobile());
                     view.getContext().startActivity(i);
 
                 }

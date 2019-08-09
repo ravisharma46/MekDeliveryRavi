@@ -110,9 +110,6 @@ public class OngoingFragment extends Fragment {
                                  String categoryName=regular_service.getString("category");
                                  serviceName = regular_service.getString("service_name");
 
-
-
-
                              }
 
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
@@ -148,16 +145,16 @@ public class OngoingFragment extends Fragment {
 
 
 
-                            String pickup_date=jsonObject.getString("pickup_date");
-                            String pickup_time=jsonObject.getString("pickup_time");
+                            String drop_date=jsonObject.getString("pickup_date");
+                            String drop_time=jsonObject.getString("pickup_time");
 
                             String createdDate = jsonObject.getJSONObject("created_at").getString("date");
 
                             String[] str = createdDate.split(" ");
                             String serviceDate=str[0];
-                            String serviceTime = str[1];
+                            String serviceTime=str[1];
 
-                            String cod=jsonObject.getString("cod");
+                            String amount=jsonObject.getString("cod");
 
 
                             String status = jsonObject.getJSONObject("category").getString("status_title");
@@ -169,7 +166,7 @@ public class OngoingFragment extends Fragment {
 
 
                             mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
-                                    licencePlate, bookingId, paymentStatus,serviceName,image_url));
+                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,customer_name,address,latitude,longitude,drop_date,drop_time,amount));
 
                             break;
 

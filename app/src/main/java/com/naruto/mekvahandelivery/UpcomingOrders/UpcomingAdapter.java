@@ -2,7 +2,6 @@ package com.naruto.mekvahandelivery.UpcomingOrders;
 
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 
 import android.content.Context;
@@ -20,11 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.naruto.mekvahandelivery.OngoingOrders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
 import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,7 +31,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     private Context context;
     private ArrayList<MyListDataUpcomingBooking> dataArrayList;
 
-    public UpcomingAdapter(Context context,ArrayList<MyListDataUpcomingBooking> dataArrayList) {
+    UpcomingAdapter(Context context, ArrayList<MyListDataUpcomingBooking> dataArrayList) {
         this.context=context;
        this.dataArrayList=dataArrayList;
     }
@@ -90,6 +87,15 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             viewHolder.cv_details.setOnClickListener(view -> {
                 Log.e("TAG","click");
                 Intent i1 = new Intent(view.getContext(), UpcomingBookingVendor.class);
+//                i1.putExtra("name",data.getName());
+//                i1.putExtra("address",data.getAddress());
+//                i1.putExtra("latitude",data.getLatitude());
+//                i1.putExtra("longitude",data.getLongitude());
+//                i1.putExtra("dropDate",data.getDrop_date());
+//                i1.putExtra("dropTime",data.getDrop_time());
+//                i1.putExtra("amount",data.getAmount());
+//                i1.putExtra("otp",data.getOtp());
+//                i1.putExtra("mobile",data.getMobile());
                 view.getContext().startActivity(i1);
             });
         }

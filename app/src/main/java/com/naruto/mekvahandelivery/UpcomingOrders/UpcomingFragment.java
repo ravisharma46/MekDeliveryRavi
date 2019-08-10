@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
+import com.naruto.mekvahandelivery.OngoingOrders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
 
 
@@ -98,19 +99,13 @@ public class UpcomingFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                             String bookingId = jsonObject.getString("booking_id");
+
                             String service_type=jsonObject.getString("service_type");
-
-
-                            JSONObject regular_service=jsonObject.getJSONObject("regular_service");
-                            String serviceName="";
-                            if(service_type.contains("regular_service")){
-                                String categoryName=regular_service.getString("category");
-                                serviceName = regular_service.getString("service_name");
+                            String otp=jsonObject.getString("otp");
 
 
 
 
-                            }
 
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
 
@@ -127,55 +122,186 @@ public class UpcomingFragment extends Fragment {
 
 
 
-
-                            JSONArray customer=jsonObject.getJSONArray("customer");
-                            JSONObject cust=customer.getJSONObject(0);
-
-                            String customer_name=cust.getString("name");
-                            String customer_mobile=cust.getString("mobile");
-                            String otp=cust.getString("otp");
+                            String name="",mobile="",address="",latitude="",longitude="",
+                                    action1="",action2="",action3="",action4="",action5="",action6="",
+                                    action7="",action8="",action9="",action10="",action11="",action12="",
+                                    action13="",action14="",action15="";
 
 
+                            String serviceName="";
+                            String categoryName="";
 
-                            JSONObject drop_add=jsonObject.getJSONObject("drop_address");
-                            String address=drop_add.getString("address");
-                            String latitude=drop_add.getString("latitude");
-                            String longitude=drop_add.getString("longitide");
+                            int status_id = jsonObject.getJSONObject("category").getInt("status_id");
+
+
+
+
+                            if(service_type.contains("regular_service")){
+                                JSONObject regular_service=jsonObject.getJSONObject("regular_service");
+                                categoryName=regular_service.getString("category");
+                                serviceName = regular_service.getString("service_name");
+
+                                String action_1[] = (regular_service.getString("action1").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action1 = action_1[0];
+                                String action_2[] = (regular_service.getString("action2").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action2=action_2[0];
+                                String action_3[] = (regular_service.getString("action3").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action3=action_3[0];
+                                String action_4[] = (regular_service.getString("action4").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action4=action_4[0];
+                                String action_5[] = (regular_service.getString("action5").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action5=action_5[0];
+                                String action_6[] = (regular_service.getString("action6").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action6=action_6[0];
+                                String action_7[] = (regular_service.getString("action7").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action7=action_7[0];
+                                String action_8[] = (regular_service.getString("action8").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action8=action_8[0];
+                                String action_9[] = (regular_service.getString("action9").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action9=action_9[0];
+                                String action_10[] = (regular_service.getString("action10").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action10=action_10[0];
+                                String action_11[] = (regular_service.getString("action11").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action11=action_11[0];
+                                String action_12[] = (regular_service.getString("action12").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action12=action_12[0];
+                                String action_13[] = (regular_service.getString("action13").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action13=action_13[0];
+                                String action_14[] = (regular_service.getString("action14").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action14=action_14[0];
+                                String action_15[] = (regular_service.getString("action15").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action15=action_15[0];
+
+
+
+
+
+
+
+                                if(status_id==8 ){
+                                    JSONArray partner=jsonObject.getJSONArray("partner");
+                                    JSONObject part=partner.getJSONObject(0);
+
+                                    name=part.getString("center_name");
+                                    mobile=part.getString("mobile");
+                                    address=part.getString("address");
+                                    latitude=part.getString("latitude");
+                                    longitude=part.getString("longitude");
+
+                                }
+
+
+                                if(status_id==5){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
+                                    address=drop_add.getString("address");
+                                    latitude=drop_add.getString("latitude");
+                                    longitude=drop_add.getString("longitide");
+                                }
+
+                            }
+
+                            if(service_type.contains("sos_service")){
+                                serviceName=jsonObject.getJSONObject("sos_service").getString("service_name");
+
+
+                                if(status_id==5){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
+                                    address=drop_add.getString("address");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+
+
+
+                                }
+                                if(status_id==8){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                                    address=drop_add.getString("address");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+
+
+
+                                }
+
+                            }
+
+
+
+
+
+
+
+
 
 
                             String drop_date=jsonObject.getString("pickup_date");
                             String drop_time=jsonObject.getString("pickup_time");
 
-
-
-                            String pickup_date=jsonObject.getString("pickup_date");
-                            String pickup_time=jsonObject.getString("pickup_time");
-
                             String createdDate = jsonObject.getJSONObject("created_at").getString("date");
 
                             String[] str = createdDate.split(" ");
                             String serviceDate=str[0];
-                            String serviceTime = str[1];
+                            String serviceTime=str[1];
+
 
                             String amount=jsonObject.getString("cod");
 
-                            String cod=jsonObject.getString("cod");
+
 
 
                             String status = jsonObject.getJSONObject("category").getString("status_title");
 
-                            // Log.e("TAG",status);
 
-                            String licencePlate="SDF1233";
+
+
+                            //String licencePlate=jsonObject.getString("licence_plate");
+                            String licencePlate="DBGT1234";
+                            //Log.e("TAG","YES");
                             String paymentStatus="Payment awaiting";
 
 
-                            mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
-                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,customer_name,address,latitude,longitude,drop_date,drop_time,amount));
 
-                            break;
+
+
+                            mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
+                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
+                                    drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15
+                            ));
+
+break;
 
                         }
+
+
+
                         adapter = new UpcomingAdapter(getActivity(), (ArrayList<MyListDataUpcomingBooking>) mBookingList);
                         recyclerView.setAdapter(adapter);
 

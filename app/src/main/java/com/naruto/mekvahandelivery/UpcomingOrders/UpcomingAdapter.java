@@ -70,10 +70,11 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         String status=data.getstatus();
 
 
-        if(status.contains("Awaiting user pickup")){
+        if(status.contains("Awaiting customer pickup")){
             viewHolder.cv_details.setOnClickListener(view -> {
                 Log.e("TAG","click");
                 Intent i12 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
+
                 view.getContext().startActivity(i12);
             });
         }
@@ -106,7 +107,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvorder_id, textstatus, textViewstate, carName, noPlate, paymentStatus, textViewbed,orderId,time,date,serviceType;
+        private TextView  textstatus,carName, noPlate, paymentStatus,orderId,time,date,serviceType;
         private CardView cv_details;
         private LinearLayout connect;
         private ImageView logo;

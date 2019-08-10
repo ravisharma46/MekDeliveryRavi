@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
+import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 import java.util.ArrayList;
 
@@ -80,33 +81,73 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
         //viewHolder.textViewRupee.setText("\u20B9" + " 99");
 
         String status=data.getstatus();
+        String service_name=data.getService_type();
 
 
-        if (status.contains("Awaiting customer drop off")) {
+        if (service_name.contains("sos_service")) {
             viewHolder.cv_details.setOnClickListener(view -> {
-                Intent i12 = new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
-                view.getContext().startActivity(i12);
-
-            });
-
-        }
-
-        if (status.contains("Awaiting partner dropoff")) {
-            viewHolder.cv_details.setOnClickListener(view -> {
-                //Intent i = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
-                Intent i1 = new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
+                Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                 i1.putExtra("name",data.getName());
                 i1.putExtra("address",data.getAddress());
-                i1.putExtra("latitude",data.getLatitude());
-                i1.putExtra("longitude",data.getLongitude());
+                //i1.putExtra("latitude",data.getLatitude());
+                // i1.putExtra("longitude",data.getLongitude());
                 i1.putExtra("dropDate",data.getDrop_date());
                 i1.putExtra("dropTime",data.getDrop_time());
                 i1.putExtra("amount",data.getAmount());
                 i1.putExtra("otp",data.getOtp());
                 i1.putExtra("mobile",data.getMobile());
+
                 view.getContext().startActivity(i1);
 
+
+
             });
+
+        }
+
+        else if (service_name.contains("regular_service")) {
+
+            if(status.contains("Awaiting partner dropoff")){
+                viewHolder.cv_details.setOnClickListener(view -> {
+                    Intent i1 = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
+                    i1.putExtra("name",data.getName());
+                    i1.putExtra("address",data.getAddress());
+                    i1.putExtra("latitude",data.getLatitude());
+                    i1.putExtra("longitude",data.getLongitude());
+                    i1.putExtra("dropDate",data.getDrop_date());
+                    i1.putExtra("dropTime",data.getDrop_time());
+                    i1.putExtra("amount",data.getAmount());
+                    i1.putExtra("otp",data.getOtp());
+                    i1.putExtra("mobile",data.getMobile());
+                    i1.putExtra("vehiclename",data.getModelName());
+                    i1.putExtra("vehiclebrand",data.getVehicleBrand());
+                    i1.putExtra("numberplate",data.getNumberPlate());
+                    i1.putExtra("imageurl",data.getImage_url());
+                    view.getContext().startActivity(i1);
+
+                });
+            }
+            if(status.contains("Awaiting customer dropoff")){
+                viewHolder.cv_details.setOnClickListener(view -> {
+                    Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
+                    i1.putExtra("name",data.getName());
+                    i1.putExtra("address",data.getAddress());
+                    //i1.putExtra("latitude",data.getLatitude());
+                    // i1.putExtra("longitude",data.getLongitude());
+                    i1.putExtra("dropDate",data.getDrop_date());
+                    i1.putExtra("dropTime",data.getDrop_time());
+                    i1.putExtra("amount",data.getAmount());
+                    i1.putExtra("otp",data.getOtp());
+                    i1.putExtra("mobile",data.getMobile());
+
+                    view.getContext().startActivity(i1);
+
+
+
+                });
+            }
+
+
 
         }
 

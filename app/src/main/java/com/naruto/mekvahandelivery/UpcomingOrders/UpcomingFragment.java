@@ -40,6 +40,7 @@ import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.R
 public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private ArrayList<MyListDataUpcomingBooking> list;
 
     private static final String myUrl = "https://mekvahan.com/api/delivery/upcoming_booking";
 
@@ -56,7 +57,7 @@ public class UpcomingFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_upcoming, container, false);
 
 
-        ArrayList<MyListDataUpcomingBooking> list = initData();
+
         
         
         recyclerView = v.findViewById(R.id.recyclerView_1);
@@ -78,6 +79,8 @@ public class UpcomingFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        ArrayList<MyListDataUpcomingBooking> list = initData();
+
         upcoming();
     }
 
@@ -90,11 +93,11 @@ public class UpcomingFragment extends Fragment {
 
                         JSONArray responseArray = jsonObject.getJSONArray("response");
 
-                        for(int i=0;i<responseArray.length();i++){
+                        for(int i=0;i<responseArray.length();i++) {
 
-                            JSONObject regularService= responseArray.getJSONObject(0);
+                            JSONObject regularService = responseArray.getJSONObject(0);
 
-                            JSONArray regular_serviceArray= regularService.getJSONArray("regular_service");
+                            JSONArray regular_serviceArray = regularService.getJSONArray("regular_service");
 
                             JSONObject object1 = regular_serviceArray.getJSONObject(0);
 
@@ -112,39 +115,22 @@ public class UpcomingFragment extends Fragment {
                             String licencePlate = vehicleData.getString("license_plate");
 
                             JSONObject modelId = vehicleData.getJSONObject("model_id");
-                            String modelName =modelId.getString("name");
+                            String modelName = modelId.getString("name");
 
-                            JSONArray companyId =modelId.getJSONArray("company_id");
+                            JSONArray companyId = modelId.getJSONArray("company_id");
 
                             JSONObject object2 = companyId.getJSONObject(0);
 
-                            JSONArray logo =object2.getJSONArray("logo");
+                            JSONArray logo = object2.getJSONArray("logo");
 
-                            // JSONObject object3 = logo.getJSONObject(1);
-
-//                            Picasso.with()
-
-
-//                            MyListDataUpcomingBooking myListDataUpcomingBooking=new MyListDataUpcomingBooking()
-
+                            Log.i("tag1",serviceName);
 
 
                         }
-
+                            // JSONObject object3 = logo.getJSONObject(1);
 
                         //For NO Plate
 
-
-
-
-//                        Log.i("tag111",modelName);
-
-//                        String service_type = status.getString("service_type");
-
-//                        if (service_type.equals("1")) {
-//                            Log.i("tag111", "true");
-//                        } else
-//                            Log.i("tag111", "false");
 
                     } catch (JSONException e) {
                         e.printStackTrace();

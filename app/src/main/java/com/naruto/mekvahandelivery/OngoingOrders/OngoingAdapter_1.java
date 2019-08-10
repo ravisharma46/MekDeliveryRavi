@@ -123,6 +123,22 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                     i1.putExtra("vehiclebrand",data.getVehicleBrand());
                     i1.putExtra("numberplate",data.getNumberPlate());
                     i1.putExtra("imageurl",data.getImage_url());
+                    i1.putExtra("servicename",data.getService_name());
+                    i1.putExtra("action1",data.getAction1());
+                    i1.putExtra("action2",data.getAction2());
+                    i1.putExtra("action3",data.getAction3());
+                    i1.putExtra("action4",data.getAction4());
+                    i1.putExtra("action5",data.getAction5());
+                    i1.putExtra("action6",data.getAction6());
+                    i1.putExtra("action7",data.getAction7());
+                    i1.putExtra("action8",data.getAction8());
+                    i1.putExtra("action9",data.getAction9());
+                    i1.putExtra("action10",data.getAction10());
+                    i1.putExtra("action11",data.getAction11());
+                    i1.putExtra("action12",data.getAction12());
+                    i1.putExtra("action13",data.getAction13());
+                    i1.putExtra("action14",data.getAction14());
+                    i1.putExtra("action15",data.getAction14());
                     view.getContext().startActivity(i1);
 
                 });

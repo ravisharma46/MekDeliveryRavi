@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FeedbackPage.Feedback_page">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/plz_share_your_exp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please rate your experience."
+                android:fontFamily= "@font/montserrat_medium"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:paddingTop="40dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/do_let_know"
+                android:layout_below="@id/plz_share_your_exp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/offwhite"
+                android:textSize="10sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Do let us know your thoughts, "/>
+
+            <TextView
+                android:id="@+id/your_thoughts_matters"
+                android:layout_below="@id/do_let_know"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="10sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="your thoughts matters!"/>
+
+            <ImageView
+                android:id="@+id/feedback_face"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/feedback_face_1"
+                android:layout_marginTop="72dp"
+                android:layout_below="@id/your_thoughts_matters"
+                android:layout_centerHorizontal="true" />
+
+            <RatingBar
+                android:id="@+id/feedback_rating"
+                android:layout_below="@id/feedback_face"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:progressTint="@color/chart_deep_red"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/enter_details"
+                android:layout_below="@id/feedback_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Details"
+                android:textSize="10sp"
+                android:layout_marginTop="88dp"
+                android:layout_marginLeft="32dp"
+                android:fontFamily = "@font/gotham_book"
+                android:textColor="@color/offwhite"/>
+
+            <EditText
+                android:id="@+id/Describe_your_problem"
+                android:layout_below="@id/enter_details"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:gravity="start"
+                android:textSize="10sp"
+                android:background="@drawable/frame_rect_02"
+                android:padding="8dp"
+                android:layout_marginLeft="24dp"
+                android:textColor="@color/black"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="8dp"
+                android:hint="Describe your problem,,"
+                android:fontFamily = "@font/gotham_book"/>
+
+            <LinearLayout
+                android:layout_below="@id/Describe_your_problem"
+                android:layout_width="match_parent"
+                android:layout_marginTop="40dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/frame_rect_02"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/red_button"
+                    android:text="Submit Feedback"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:fontFamily = "@font/montserrat_regular"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
 import com.naruto.mekvahandelivery.R;
 
@@ -32,6 +34,11 @@ import java.util.Map;
 
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedTime;
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedDate;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.NAME;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TOKEN_TYPE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,65 +71,206 @@ public class OngoingFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        upcoming();
+        ongoing();
 
 
         return v;
     }
 
-    private void upcoming() {
+    private void ongoing() {
         mProgressDialog.show();
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
+
+                        JSONObject Object = new JSONObject(response);
 
 
-                        JSONArray responseArray = jsonObject.getJSONArray("response");
+                        int status_1 = Object.getInt("status");
+                        if(status_1!=1) {
+                            Toast.makeText(getActivity(),"There is no data",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                        for(int i=0;i<responseArray.length();i++){
-
-                            JSONObject regularService= responseArray.getJSONObject(0);
-
-                            JSONArray regular_serviceArray= regularService.getJSONArray("regular_service");
-
-                            JSONObject object1 = regular_serviceArray.getJSONObject(0);
-
-                            JSONObject serviceId = object1.getJSONObject("service_id");
-                            String serviceName = serviceId.getString("service_name");
-                            String serviceDate = object1.getString("service_date");
-                            String serviceTime = object1.getString("service_time");
-                            String paymentStatus = object1.getString("payment");
-                            String status = object1.getString("status");
-                            String bookingId = object1.getString("booking_id");
-                            String mobileNo = object1.getString("mobile");
-
-                            JSONObject vehicleDetails = object1.getJSONObject("Vehicle Details");
-                            JSONObject vehicleData = vehicleDetails.getJSONObject("data");
-                            String licencePlate = vehicleData.getString("license_plate");
-
-                            JSONObject modelId = vehicleData.getJSONObject("model_id");
+                        JSONArray jsonArray = Object.getJSONArray("response");
 
 
 
+                        for(int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                             String bookingId = jsonObject.getString("booking_id");
+
+                             String service_type=jsonObject.getString("service_type");
+                             String otp=jsonObject.getString("otp");
+
+
+
+
+
+
+                            JSONObject vehicle=jsonObject.getJSONObject("vehicle");
+
+                             String vehicle_name= vehicle.getString("name");
                             //vehicle_logo
-                            JSONArray companyId =modelId.getJSONArray("company_id");
+                            JSONArray companyId =vehicle.getJSONArray("company_id");
                             JSONObject object2 = companyId.getJSONObject(0);
-                            String modelName =object2.getString("name");
+                            String vehicleBrand =object2.getString("name");
                             JSONArray logo =object2.getJSONArray("logo");
-                             String logo_url = logo.getString(1);
-
-                           //vehicle_image
-                            JSONArray images =modelId.getJSONArray("images");
+                            String logo_url = logo.getString(1);
+                            //vehicle_image
+                            JSONArray images =vehicle.getJSONArray("images");
                             String image_url = images.getString(1);
 
 
 
+                            String name="",mobile="",address="",latitude="",longitude="";
 
 
-                            mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobileNo,modelName,
-                                    licencePlate, bookingId, paymentStatus,serviceName,image_url));
+                            String serviceName="";
+                            String categoryName="";
+
+                            int status_id = jsonObject.getJSONObject("category").getInt("status_id");
+
+
+
+
+                            if(service_type.contains("regular_service")){
+                                JSONObject regular_service=jsonObject.getJSONObject("regular_service");
+                                categoryName=regular_service.getString("category");
+                                serviceName = regular_service.getString("service_name");
+
+
+                                if(status_id==6 || status_id==7 || status_id==8){
+                                    JSONArray partner=jsonObject.getJSONArray("partner");
+                                    JSONObject part=partner.getJSONObject(0);
+
+                                    name=part.getString("center_name");
+                                    mobile=part.getString("mobile");
+                                    address=part.getString("address");
+                                    latitude=part.getString("latitude");
+                                    longitude=part.getString("longitude");
+
+
+
+                                }
+
+                                if(status_id==5){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
+                                    address=drop_add.getString("address");
+                                    latitude=drop_add.getString("latitude");
+                                    longitude=drop_add.getString("longitide");
+                                }
+
+                                if(status_id==9){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                                    address=drop_add.getString("address");
+                                    latitude=drop_add.getString("latitude");
+                                    longitude=drop_add.getString("longitide");
+                                }
+
+                            }
+
+                            if(service_type.contains("sos_service")){
+                                serviceName=jsonObject.getString("sos_service");
+
+
+                                if(status_id==6 || status_id==7 || status_id==8 || status_id==9){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                                    address=drop_add.getString("address");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+
+
+
+                                }
+
+                                if(status_id==5){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
+                                    address=drop_add.getString("address");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+
+
+                            }
+
+
+
+
+
+
+
+
+
+
+                            String drop_date=jsonObject.getString("pickup_date");
+                            String drop_time=jsonObject.getString("pickup_time");
+
+                            String createdDate = jsonObject.getJSONObject("created_at").getString("date");
+
+                            String[] str = createdDate.split(" ");
+                            String serviceDate=str[0];
+                            String serviceTime=str[1];
+
+                            String amount=jsonObject.getString("cod");
+
+
+
+
+                            String status = jsonObject.getJSONObject("category").getString("status_title");
+
+
+
+                            String licencePlate="SDF1233";
+                            String paymentStatus="Payment awaiting";
+
+
+
+                            mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
+                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
+                                    drop_date,drop_time,amount,vehicleBrand,service_type));
 
 
 
@@ -150,7 +298,12 @@ public class OngoingFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("Accept","application/json");
-                headers.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJjMWE4ZTM5MTc5OTU3ZDE1ZDg4NzI0MDgxZDI4MDY2MzM0MDNlNDEzNDA5NDdlYTRlMzQwYWJkMTdhMjBjODAzOGNmMWM2OWY0ZTI2YTI3In0.eyJhdWQiOiIxIiwianRpIjoiMmMxYThlMzkxNzk5NTdkMTVkODg3MjQwODFkMjgwNjYzMzQwM2U0MTM0MDk0N2VhNGUzNDBhYmQxN2EyMGM4MDM4Y2YxYzY5ZjRlMjZhMjciLCJpYXQiOjE1NjQzMjkwMTcsIm5iZiI6MTU2NDMyOTAxNywiZXhwIjoxNTk1OTUxNDE3LCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.AeIzLVIDk88_ka6qJ-Ep0GSeBhxTq3yUInU_r_RfbaUJxfRNmhyuUtWoJbl0MFxyhfEHkGOvJ1PDRwkh59LQc5tyk3RT0aByxQkJUx4GKjbivYcF19YPOEqVZG-hnd_aJuh-AyFlDn6Fk2HPLFiFxQoLamsMzzNwhqbOY7ojxtxOQ0m5mCfxmU-Yixp6Q4Hkm9ga6OprGHRuZU5c4WTCXWoTxTtbf1SWwN8lXBkU0hOWc0-vXCmmuzDmVP_l3WM7yCtQTgZfhxXhQwCU3JyZMX0CZZKJ-MDGmVepj-yTNfqRKaDk3IsrxWTYqsvd1FtX3NIjZvNMVGdlUkB6GNQBgj0iqs-h9cHIXMqpPZA7EPieBORyawzkyairPFLi5Tk6uh7QJmJLFBvdUjxPcm3NpxOYaADt-RK7o_ojyi-VdhyUA_IsFD6H2Hs79piad0TNi2xaj0rf2rGQVVdS3baTtmugqpsO_Fm1T56Dq93y92VoWugrvEA3oB3IhSCHR8Nw5mPOpZx19F6mnyU2tVVNttDqEdBI-aEi_C2oZDVBNU_Wa2nvUV0Gv1qwAuPk2vBY5ncOxeRu-J2V22TGgHznUOuLSt6bExmDkhx1UP-RZfUfjHHVVXV6y1PVqjvEUjViVM1AUvFvyINtB3LahqfYj_1CcjybiCzyCyQizorbB88");
+                LoginSessionManager loginSessionManager=new LoginSessionManager(getActivity());
+                HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
+                String token_type=token.get(TOKEN_TYPE);
+                String acces_token= token.get(ACCESS_TOKEN);
+                headers.put("Authorization",token_type+" "+acces_token);
+
                 return headers;
             }
         };

@@ -57,7 +57,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="114dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/frame_rect_02"
                     android:orientation="horizontal"
@@ -71,6 +71,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/tv_vehiclebrand"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="16dp"
@@ -84,6 +85,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="40dp"
+                            android:id="@+id/tv_vehiclename"
                             android:fontFamily="@font/montserrat_medium1"
                             android:text="WagonR"
                             android:textColor="@color/chart_deep_red"
@@ -92,6 +94,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/tv_numberPlate"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="64dp"
@@ -104,10 +107,11 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_carimage"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
                         android:layout_gravity="right"
                         android:layout_weight="1"
-                        android:padding="16dp"
                         android:src="@drawable/maruti_suzuki" />
 
 
@@ -317,6 +321,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
+                        android:id="@+id/tv_name"
                         android:layout_marginTop="40dp"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Name of the partner"
@@ -349,6 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="116dp"
+                        android:id="@+id/tv_address"
                         android:layout_marginBottom="24dp"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Address of the partner"
@@ -400,7 +406,7 @@
                     android:background="@color/white">
 
                     <TextView
-                        android:id="@+id/date"
+                        android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
@@ -412,7 +418,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/time"
+                        android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"

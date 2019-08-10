@@ -1,6 +1,7 @@
 package com.naruto.mekvahandelivery.UpcomingOrders;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,12 +17,11 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
 import com.naruto.mekvahandelivery.R;
-import com.squareup.picasso.Picasso;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,10 +29,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TOKEN_TYPE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,10 +43,10 @@ import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.R
 public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private ArrayList<MyListDataUpcomingBooking> list;
-
     private static final String myUrl = "https://mekvahan.com/api/delivery/upcoming_booking";
+    private ProgressDialog mProgressDialog;
 
+    private List<MyListDataUpcomingBooking> mBookingList;
 
     public UpcomingFragment() {
         // Required empty public constructor
@@ -54,8 +57,12 @@ public class UpcomingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_upcoming, container, false);
+        View v=inflater.inflate(R.layout.fragment_upcoming, container, false);
 
+        mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.setMessage("Please wait...");
+
+        mBookingList = new ArrayList<>();
 
 
         
@@ -64,12 +71,7 @@ public class UpcomingFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new UpcomingAdapter(list);
-        recyclerView.setAdapter(adapter);
-
-      //getActivity().setTitle("Upcoming booking");
-     // getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-
+        upcoming();
 
 
         return v;
@@ -85,13 +87,13 @@ public class UpcomingFragment extends Fragment {
     }
 
     private void upcoming() {
+        mProgressDialog.show();
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
 
-                        JSONArray responseArray = jsonObject.getJSONArray("response");
+                        JSONObject Object = new JSONObject(response);
 
                         for(int i=0;i<responseArray.length();i++) {
 
@@ -99,27 +101,35 @@ public class UpcomingFragment extends Fragment {
 
                             JSONArray regular_serviceArray = regularService.getJSONArray("regular_service");
 
-                            JSONObject object1 = regular_serviceArray.getJSONObject(0);
+                        int status_1 = Object.getInt("status");
+                        if(status_1!=1) {
+                            Toast.makeText(getActivity(),"There is no data",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                            JSONObject serviceId = object1.getJSONObject("service_id");
+                        JSONArray jsonArray = Object.getJSONArray("response");
 
-                            String serviceName = serviceId.getString("service_name");
-                            String serviceDate = object1.getString("service_date");
-                            String serviceTime = object1.getString("service_time");
-                            String paymentStatus = object1.getString("payment");
-                            String bookingId = object1.getString("booking_id");
-                            String mobileNo = object1.getString("mobile");
 
-                            JSONObject vehicleDetails = object1.getJSONObject("Vehicle Details");
-                            JSONObject vehicleData = vehicleDetails.getJSONObject("data");
-                            String licencePlate = vehicleData.getString("license_plate");
+
+                        for(int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            String bookingId = jsonObject.getString("booking_id");
+                            String service_type=jsonObject.getString("service_type");
+
+
+                            JSONObject regular_service=jsonObject.getJSONObject("regular_service");
+                            String serviceName="";
+                            if(service_type.contains("regular_service")){
+                                String categoryName=regular_service.getString("category");
+                                serviceName = regular_service.getString("service_name");
 
                             JSONObject modelId = vehicleData.getJSONObject("model_id");
                             String modelName = modelId.getString("name");
 
                             JSONArray companyId = modelId.getJSONArray("company_id");
 
-                            JSONObject object2 = companyId.getJSONObject(0);
+
 
                             JSONArray logo = object2.getJSONArray("logo");
 
@@ -128,8 +138,77 @@ public class UpcomingFragment extends Fragment {
 
                         }
                             // JSONObject object3 = logo.getJSONObject(1);
+                            }
 
-                        //For NO Plate
+                            JSONObject vehicle=jsonObject.getJSONObject("vehicle");
+
+                            String vehicle_name= vehicle.getString("name");
+                            //vehicle_logo
+                            JSONArray companyId =vehicle.getJSONArray("company_id");
+                            JSONObject object2 = companyId.getJSONObject(0);
+                            String vehicleBrand =object2.getString("name");
+                            JSONArray logo =object2.getJSONArray("logo");
+                            String logo_url = logo.getString(1);
+                            //vehicle_image
+                            JSONArray images =vehicle.getJSONArray("images");
+                            String image_url = images.getString(1);
+
+
+
+
+                            JSONArray customer=jsonObject.getJSONArray("customer");
+                            JSONObject cust=customer.getJSONObject(0);
+
+                            String customer_name=cust.getString("name");
+                            String customer_mobile=cust.getString("mobile");
+                            String otp=cust.getString("otp");
+
+
+
+                            JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                            String address=drop_add.getString("address");
+                            String latitude=drop_add.getString("latitude");
+                            String longitude=drop_add.getString("longitide");
+
+
+                            String drop_date=jsonObject.getString("pickup_date");
+                            String drop_time=jsonObject.getString("pickup_time");
+
+
+
+                            String pickup_date=jsonObject.getString("pickup_date");
+                            String pickup_time=jsonObject.getString("pickup_time");
+
+                            String createdDate = jsonObject.getJSONObject("created_at").getString("date");
+
+                            String[] str = createdDate.split(" ");
+                            String serviceDate=str[0];
+                            String serviceTime = str[1];
+
+                            String amount=jsonObject.getString("cod");
+
+                            String cod=jsonObject.getString("cod");
+
+
+                            String status = jsonObject.getJSONObject("category").getString("status_title");
+
+                            // Log.e("TAG",status);
+
+                            String licencePlate="SDF1233";
+                            String paymentStatus="Payment awaiting";
+
+
+                            mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
+                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,customer_name,address,latitude,longitude,drop_date,drop_time,amount));
+
+                            break;
+
+                        }
+                        adapter = new UpcomingAdapter(getActivity(), (ArrayList<MyListDataUpcomingBooking>) mBookingList);
+                        recyclerView.setAdapter(adapter);
+
+                        mProgressDialog.dismiss();
+
 
 
                     } catch (JSONException e) {
@@ -138,7 +217,7 @@ public class UpcomingFragment extends Fragment {
                 }, error -> {
             Toast.makeText(getContext(),"Something get wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
-                }){
+        }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return super.getParams();
@@ -148,7 +227,12 @@ public class UpcomingFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("Accept","application/json");
-                headers.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJjMWE4ZTM5MTc5OTU3ZDE1ZDg4NzI0MDgxZDI4MDY2MzM0MDNlNDEzNDA5NDdlYTRlMzQwYWJkMTdhMjBjODAzOGNmMWM2OWY0ZTI2YTI3In0.eyJhdWQiOiIxIiwianRpIjoiMmMxYThlMzkxNzk5NTdkMTVkODg3MjQwODFkMjgwNjYzMzQwM2U0MTM0MDk0N2VhNGUzNDBhYmQxN2EyMGM4MDM4Y2YxYzY5ZjRlMjZhMjciLCJpYXQiOjE1NjQzMjkwMTcsIm5iZiI6MTU2NDMyOTAxNywiZXhwIjoxNTk1OTUxNDE3LCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.AeIzLVIDk88_ka6qJ-Ep0GSeBhxTq3yUInU_r_RfbaUJxfRNmhyuUtWoJbl0MFxyhfEHkGOvJ1PDRwkh59LQc5tyk3RT0aByxQkJUx4GKjbivYcF19YPOEqVZG-hnd_aJuh-AyFlDn6Fk2HPLFiFxQoLamsMzzNwhqbOY7ojxtxOQ0m5mCfxmU-Yixp6Q4Hkm9ga6OprGHRuZU5c4WTCXWoTxTtbf1SWwN8lXBkU0hOWc0-vXCmmuzDmVP_l3WM7yCtQTgZfhxXhQwCU3JyZMX0CZZKJ-MDGmVepj-yTNfqRKaDk3IsrxWTYqsvd1FtX3NIjZvNMVGdlUkB6GNQBgj0iqs-h9cHIXMqpPZA7EPieBORyawzkyairPFLi5Tk6uh7QJmJLFBvdUjxPcm3NpxOYaADt-RK7o_ojyi-VdhyUA_IsFD6H2Hs79piad0TNi2xaj0rf2rGQVVdS3baTtmugqpsO_Fm1T56Dq93y92VoWugrvEA3oB3IhSCHR8Nw5mPOpZx19F6mnyU2tVVNttDqEdBI-aEi_C2oZDVBNU_Wa2nvUV0Gv1qwAuPk2vBY5ncOxeRu-J2V22TGgHznUOuLSt6bExmDkhx1UP-RZfUfjHHVVXV6y1PVqjvEUjViVM1AUvFvyINtB3LahqfYj_1CcjybiCzyCyQizorbB88");
+                LoginSessionManager loginSessionManager=new LoginSessionManager(getActivity());
+                HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
+                String token_type=token.get(TOKEN_TYPE);
+                String acces_token= token.get(ACCESS_TOKEN);
+                headers.put("Authorization",token_type+" "+acces_token);
+
                 return headers;
             }
         };
@@ -158,15 +242,4 @@ public class UpcomingFragment extends Fragment {
 
         MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
-    private ArrayList<MyListDataUpcomingBooking> initData() {
-
-        ArrayList<MyListDataUpcomingBooking> list = new ArrayList<>();
-//        list.add(new MyListDataUpcomingBooking("Awaiting vendor pickup"));
-//        list.add(new MyListDataUpcomingBooking("Awaiting customer pickup"));
-//        list.add(new MyListDataUpcomingBooking("Awaiting vendor pickup"));
-//        list.add(new MyListDataUpcomingBooking("Awaiting customer pickup"));
-        return list;
-    }
-
 }

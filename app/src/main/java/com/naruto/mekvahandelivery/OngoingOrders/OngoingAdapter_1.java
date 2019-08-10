@@ -3,11 +3,12 @@ package com.naruto.mekvahandelivery.OngoingOrders;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,12 +19,6 @@ import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
-import com.squareup.picasso.Picasso;
-
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedDate;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedTime;
-
-
 import java.util.ArrayList;
 
 
@@ -34,7 +29,7 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
 
 
-    public OngoingAdapter_1(Context context,ArrayList<MyListDataOngoingBooking> dataArrayList) {
+    OngoingAdapter_1(Context context, ArrayList<MyListDataOngoingBooking> dataArrayList) {
         this.context=context;
         this.dataArrayList = dataArrayList;
 
@@ -66,7 +61,15 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
         viewHolder.tv_numberPlate.setText(data.getNumberPlate());
         viewHolder.tv_bookingid.setText(data.getOrderId());
         viewHolder.tv_serviceType.setText(data.getService_name());
-        viewHolder.tv_paymentStatus.setText(data.getPayment_status());
+
+        String payment_status=data.getPayment_status();
+        if(payment_status.contains("Payment awaiting")){
+            viewHolder.tv_paymentStatus.setText(payment_status);
+            viewHolder.tv_paymentStatus.setTextColor(Color.RED);
+        }
+
+
+
 
         Glide.with(context).load(data.getLogo())
                 .into(viewHolder.iv_logo);
@@ -78,29 +81,73 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
         //viewHolder.textViewRupee.setText("\u20B9" + " 99");
 
         String status=data.getstatus();
+        String service_name=data.getService_type();
 
 
-        if (status.contains("Awaiting customer drop off")) {
-            viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
-                    view.getContext().startActivity(i);
+        if (service_name.contains("sos_service")) {
+            viewHolder.cv_details.setOnClickListener(view -> {
+                Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
+                i1.putExtra("name",data.getName());
+                i1.putExtra("address",data.getAddress());
+                //i1.putExtra("latitude",data.getLatitude());
+                // i1.putExtra("longitude",data.getLongitude());
+                i1.putExtra("dropDate",data.getDrop_date());
+                i1.putExtra("dropTime",data.getDrop_time());
+                i1.putExtra("amount",data.getAmount());
+                i1.putExtra("otp",data.getOtp());
+                i1.putExtra("mobile",data.getMobile());
 
-                }
+                view.getContext().startActivity(i1);
+
+
+
             });
 
         }
 
-        if (status.contains("Awaiting vendor drop off")) {
-            viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
-                    view.getContext().startActivity(i);
+        else if (service_name.contains("regular_service")) {
 
-                }
-            });
+            if(status.contains("Awaiting partner dropoff")){
+                viewHolder.cv_details.setOnClickListener(view -> {
+                    Intent i1 = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
+                    i1.putExtra("name",data.getName());
+                    i1.putExtra("address",data.getAddress());
+                    i1.putExtra("latitude",data.getLatitude());
+                    i1.putExtra("longitude",data.getLongitude());
+                    i1.putExtra("dropDate",data.getDrop_date());
+                    i1.putExtra("dropTime",data.getDrop_time());
+                    i1.putExtra("amount",data.getAmount());
+                    i1.putExtra("otp",data.getOtp());
+                    i1.putExtra("mobile",data.getMobile());
+                    i1.putExtra("vehiclename",data.getModelName());
+                    i1.putExtra("vehiclebrand",data.getVehicleBrand());
+                    i1.putExtra("numberplate",data.getNumberPlate());
+                    i1.putExtra("imageurl",data.getImage_url());
+                    view.getContext().startActivity(i1);
+
+                });
+            }
+            if(status.contains("Awaiting customer dropoff")){
+                viewHolder.cv_details.setOnClickListener(view -> {
+                    Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
+                    i1.putExtra("name",data.getName());
+                    i1.putExtra("address",data.getAddress());
+                    //i1.putExtra("latitude",data.getLatitude());
+                    // i1.putExtra("longitude",data.getLongitude());
+                    i1.putExtra("dropDate",data.getDrop_date());
+                    i1.putExtra("dropTime",data.getDrop_time());
+                    i1.putExtra("amount",data.getAmount());
+                    i1.putExtra("otp",data.getOtp());
+                    i1.putExtra("mobile",data.getMobile());
+
+                    view.getContext().startActivity(i1);
+
+
+
+                });
+            }
+
+
 
         }
 

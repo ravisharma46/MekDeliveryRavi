@@ -11,7 +11,8 @@ public class MyListDataOngoingBooking {
     private String modelName;
     private String numberPlate;
     private String mobile;
-    private String image_url;
+    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount,vehicleBrand,service_type;
+
 
 
 
@@ -25,7 +26,8 @@ public class MyListDataOngoingBooking {
                                      String orderId,
                                      String payment_status,
                                      String service_name,
-                                     String image_url
+                                     String image_url,String otp,String name,String address,
+                                     String latitude,String longitude,String drop_date,String drop_time,String amount, String  vehicleBrand,String service_type
                                     ) {
         this.status = status;
         this.date=date;
@@ -38,6 +40,97 @@ public class MyListDataOngoingBooking {
         this.payment_status=payment_status;
         this.service_name=service_name;
         this.image_url = image_url;
+        this.otp = otp;
+        this.name = name;
+        this.address= address;
+        this.latitude= latitude;
+        this.longitude= longitude;
+        this.drop_date= drop_date;
+        this.drop_time= drop_time;
+        this.amount= amount;
+        this.vehicleBrand=vehicleBrand;
+        this.service_type=service_type;
+
+    }
+
+    public String getService_type() {
+        return service_type;
+    }
+
+    public void setService_type(String service_type) {
+        this.service_type = service_type;
+    }
+
+    public void setVehicleBrand(String vehicleBrand) {
+        this.vehicleBrand = vehicleBrand;
+    }
+
+    public String getVehicleBrand() {
+        return vehicleBrand;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setDrop_time(String drop_time) {
+        this.drop_time = drop_time;
+    }
+
+    public void setDrop_date(String drop_date) {
+        this.drop_date = drop_date;
+    }
+
+    public String getDrop_time() {
+        return drop_time;
+    }
+
+    public String getDrop_date() {
+        return drop_date;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 
     public String getImage_url() {

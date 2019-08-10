@@ -46,8 +46,6 @@ public class LoginFragment extends Fragment {
 	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,
 			         cancelled_check_number,cancelled_check;
 
-
-
 	public LoginFragment() {
 		// Required empty public constructor
 	}
@@ -61,12 +59,10 @@ public class LoginFragment extends Fragment {
 		TextView faq = mRootView.findViewById(R.id.btv_faqs);
 
 		faq.setOnClickListener(view -> {
-
 			Intent faqIntent = new Intent(getActivity(), Faq_activity.class);
 			startActivity(faqIntent);
 		});
 		mSession=new LoginSessionManager(getContext());
-
 
 		clickListener();
 		return mRootView;
@@ -97,22 +93,12 @@ public class LoginFragment extends Fragment {
 
 	}
 
-//	public void loginSubmit(View view) {
-//		userLogin();
-//		Intent intent = new Intent(LoginActivity.this, NavActivity.class);
-//		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//		startActivity(intent);
-//		finish();
-//
-//	}
-
 	private void userLogin() {
 
 
 		final ProgressDialog progressDialog = new ProgressDialog(getContext());
 		progressDialog.setMessage("Loading....");
 		progressDialog.show();
-
 
 		//----if everything is fine-----
 		StringRequest stringRequest = new StringRequest(Request.Method.POST, myUrl,
@@ -139,8 +125,6 @@ public class LoginFragment extends Fragment {
 
 						Log.e("TAG", user.toString());
 
-
-
 						int userId          = user.getInt("id");
 						profile_id         = user.getString("profile_id");
 						name         = user.getString("name");
@@ -156,7 +140,6 @@ public class LoginFragment extends Fragment {
 						ifsc_code=user.getString("IFSC_code");
 						cancelled_check_number=user.getString("cancelled_check_number");
 						cancelled_check=user.getString("cancelled_check");
-
 
 						mSession.createLoginSession(tokenType,accessToken,String.valueOf(userId),profile_id,
 								name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,cancelled_check_number,cancelled_check );
@@ -180,7 +163,7 @@ public class LoginFragment extends Fragment {
 				Map<String, String> params = new HashMap<>();
 
 				// params.put("delivery_boy_id","1");
-				params.put("mobile", "9911202111");
+				params.put("mobile", "8800329290");
 				params.put("password", "mridul");
 				params.put("provider", "deliverys");
 
@@ -188,14 +171,12 @@ public class LoginFragment extends Fragment {
 				return params;
 			}
 
-
 			@Override
 			public Map<String, String> getHeaders() throws AuthFailureError {
 
 				return super.getHeaders();
 			}
 		};
-
 
 		stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
 				NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -209,16 +190,13 @@ public class LoginFragment extends Fragment {
 		progressDialog.setMessage("Loading....");
 		progressDialog.show();
 
-
 		//----if everything is fine-----
 		StringRequest stringRequest = new StringRequest(Request.Method.POST, myUrlForgot,
 				response -> {
 					progressDialog.dismiss();
 
 					try {
-
 						JSONObject jsonObject = new JSONObject(response);
-
 
 						int status = jsonObject.getInt("status");
 						String resp=jsonObject.getString("response");
@@ -226,10 +204,6 @@ public class LoginFragment extends Fragment {
 							Toast.makeText(getActivity(),resp,Toast.LENGTH_SHORT).show();
 							return;
 						}
-
-
-
-
 
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -250,18 +224,15 @@ public class LoginFragment extends Fragment {
 				return params;
 			}
 
-
 			@Override
 			public Map<String, String> getHeaders() throws AuthFailureError {
 				Map<String, String> params = new HashMap<>();
 
 				params.put("Accept","application/json");
 
-
 				return params;
 			}
 		};
-
 
 		stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
 				NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -269,6 +240,5 @@ public class LoginFragment extends Fragment {
 		MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 
 	}
-
 
 }

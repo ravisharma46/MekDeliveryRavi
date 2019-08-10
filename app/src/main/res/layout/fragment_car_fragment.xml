@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText"
     tools:context=".customer_report.Car_Add_fragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            style="?buttonBarStyle"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Stepney"
                 android:id="@+id/bt_stepney"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Tool kit"
                 android:id="@+id/bt_toolkit"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:id="@+id/bt_mudguard"
+                style="?buttonBarButtonStyle"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Mudguard"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
@@ -59,40 +60,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            style="?buttonBarStyle"
             android:weightSum="3">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Keychain"
+                style="?buttonBarButtonStyle"
                 android:id="@+id/bt_keychain"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Service book"
+                style="?buttonBarButtonStyle"
                 android:id="@+id/bt_servicebook"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Mats"
+                style="?buttonBarButtonStyle"
                 android:id="@+id/bt_mats"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
@@ -102,40 +107,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="?buttonBarStyle"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Wheel cover"
+                style="?buttonBarButtonStyle"
                 android:id="@+id/bt_wheelcover"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Lock"
+                style="?buttonBarButtonStyle"
                 android:id="@+id/bt_lock"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="@string/jack_handle"
                 android:id="@+id/bt_jackhandle"
                 android:textAllCaps="false"
@@ -147,48 +156,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            style="?buttonBarStyle"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Carpet"
                 android:id="@+id/bt_carpet"
+                style="?buttonBarButtonStyle"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Stereo panel"
                 android:id="@+id/bt_stereopanel"
                 android:textAllCaps="false"
+                style="?buttonBarButtonStyle"
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/customer_rprt_bt01"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Speakers"
+                style="?buttonBarButtonStyle"
                 android:id="@+id/bt_speakers"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-
-</FrameLayout>
+</LinearLayout>

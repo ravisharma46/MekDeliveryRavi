@@ -1,9 +1,10 @@
 package com.naruto.mekvahandelivery.customer_report;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -11,15 +12,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naruto.mekvahandelivery.R;
-import com.naruto.mekvahandelivery.signature.SignatureActivity;
 
+@SuppressLint("SetTextI18n")
 public class ViewCustomerReport extends AppCompatActivity {
 
     private FrameLayout car, bike;
@@ -36,13 +36,13 @@ public class ViewCustomerReport extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>View customer report</font>"));
-            final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
-            upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
+            final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
+            upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
             getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
 
         car = findViewById(R.id.frame_2);
@@ -59,28 +59,19 @@ public class ViewCustomerReport extends AppCompatActivity {
         loadCarFragment();
         load_car();
 
-        car.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadCarFragment();
-                load_car();
+        car.setOnClickListener(view -> {
+            loadCarFragment();
+            load_car();
 
-
-            }
         });
 
-        bike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadBikeFragment();
-                load_bike();
+        bike.setOnClickListener(view -> {
+            loadBikeFragment();
+            load_bike();
 
-
-            }
         });
 
     }
-
 
     private void load_bike() {
         bike.setBackgroundResource(R.color.chart_deep_red);
@@ -104,7 +95,6 @@ public class ViewCustomerReport extends AppCompatActivity {
         document.setText("Car document");
     }
 
-
     private void loadCarFragment() {
         Car_view_fragment c_Fragment = new Car_view_fragment();
         FragmentManager manager = getSupportFragmentManager();
@@ -121,15 +111,12 @@ public class ViewCustomerReport extends AppCompatActivity {
                 b_Fragment.getTag()).commit();
     }
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

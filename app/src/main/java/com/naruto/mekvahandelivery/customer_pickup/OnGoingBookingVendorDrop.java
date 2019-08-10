@@ -25,6 +25,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.bumptech.glide.Glide;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -36,9 +37,12 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
+import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
 
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.dropConfirm;
+import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.getFormattedDate;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.sendNavigateIntent;
 
 import java.util.HashMap;
@@ -46,8 +50,8 @@ import java.util.Map;
 
 public class OnGoingBookingVendorDrop extends AppCompatActivity {
     private LinearLayout paint_linear,navigation;
-    private TextView tvDetails, date, time;
-    private ImageView call,iv_qrcode;
+    private TextView tvDetails, date, time,name,address,vehicleBrand,vehicleName,numberPlate;
+    private ImageView call,iv_qrcode,vehicle_image;
     private Button report_show,drop;
 
 
@@ -65,8 +69,59 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         iv_qrcode=findViewById(R.id.iv_qrcode);
         drop=findViewById(R.id.bt_drop);
         navigation=findViewById(R.id.ll_navigation);
+        vehicle_image=findViewById(R.id.iv_carimage);
 
-       generateQrcode();
+        date=findViewById(R.id.tv_date);
+        time=findViewById(R.id.tv_time);
+        name=findViewById(R.id.tv_name);
+        address=findViewById(R.id.tv_address);
+        vehicleBrand=findViewById(R.id.tv_vehiclebrand);
+        vehicleName=findViewById(R.id.tv_vehiclename);
+        numberPlate=findViewById(R.id.tv_numberPlate);
+
+        Bundle bundle=getIntent().getExtras();
+        String name_1 =bundle.getString("name");
+        String address_1 =bundle.getString("address");
+        double latitude= Double.parseDouble(bundle.getString("latitude"));
+        double longitude=Double.parseDouble( bundle.getString("longitude"));
+        String dropdate=bundle.getString("dropDate");
+        String dropTime= bundle.getString("dropTime");
+        String amount=bundle.getString("amount");
+        String otp_1=bundle.getString("otp");
+        String mobileNo=bundle.getString("mobile");
+        String vehiclename=bundle.getString("vehiclename");
+        String vehiclebrand=bundle.getString("vehiclebrand");
+        String numberplate=bundle.getString("numberplate");
+        String vehicleImageUrl=bundle.getString("imageurl");
+
+
+
+         name.setText(name_1);
+         address.setText(address_1);
+
+       //  String d=getFormattedDate("TAG",dropdate);
+
+         date.setText(dropdate);
+         time.setText(dropTime);
+         vehicleName.setText(vehiclename);
+         vehicleBrand.setText(vehiclebrand);
+         numberPlate.setText(numberplate);
+
+
+
+         try{
+             Glide.with(OnGoingBookingVendorDrop.this).load(vehicleImageUrl)
+                     .into(vehicle_image);
+
+         }
+         catch (Exception e){
+             e.printStackTrace();
+         }
+
+
+
+
+       generateQrcode(otp_1);
 
 
         final ImagePopup imagePopup = new ImagePopup(this);
@@ -99,7 +154,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendNavigateIntent(OnGoingBookingVendorDrop.this,28.717010,77.102364);
+                sendNavigateIntent(OnGoingBookingVendorDrop.this,latitude,longitude);
             }
         });
 
@@ -136,9 +191,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:123456789"));
-                startActivity(callIntent);
+                callIntent(OnGoingBookingVendorDrop.this,mobileNo);
             }
         });
         report_show.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +225,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
     }
 
 
-    public void generateQrcode(){
+    public void generateQrcode(String otp){
         try {
             //setting size of qr code
             int width =300;
@@ -180,7 +233,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
             int smallestDimension = width < height ? width : height;
 
 
-            String qrCodeData = "123456";
+            String qrCodeData = otp;
             //setting parameters for qr code
             String charset = "UTF-8";
             Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();

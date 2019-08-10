@@ -17,6 +17,7 @@ public class MyListDataUpcomingBooking {
     public MyListDataUpcomingBooking(String status,
                                      String date,
                                      String time,
+                                     String logo,
                                      String mobile,
                                      String modelName,
                                      String numberPlate,
@@ -27,7 +28,7 @@ public class MyListDataUpcomingBooking {
         this.status = status;
         this.date=date;
         this.time=time;
-//        this.logo=logo;
+        this.logo=logo;
         this.mobile=mobile;
         this.modelName=modelName;
         this.numberPlate=numberPlate;

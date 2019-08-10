@@ -64,9 +64,6 @@ public class UpcomingFragment extends Fragment {
 
         mBookingList = new ArrayList<>();
 
-
-        
-        
         recyclerView = v.findViewById(R.id.recyclerView_1);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -75,15 +72,6 @@ public class UpcomingFragment extends Fragment {
 
 
         return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        ArrayList<MyListDataUpcomingBooking> list = initData();
-
-        upcoming();
     }
 
     private void upcoming() {
@@ -95,11 +83,6 @@ public class UpcomingFragment extends Fragment {
 
                         JSONObject Object = new JSONObject(response);
 
-                        for(int i=0;i<responseArray.length();i++) {
-
-                            JSONObject regularService = responseArray.getJSONObject(0);
-
-                            JSONArray regular_serviceArray = regularService.getJSONArray("regular_service");
 
                         int status_1 = Object.getInt("status");
                         if(status_1!=1) {
@@ -124,20 +107,9 @@ public class UpcomingFragment extends Fragment {
                                 String categoryName=regular_service.getString("category");
                                 serviceName = regular_service.getString("service_name");
 
-                            JSONObject modelId = vehicleData.getJSONObject("model_id");
-                            String modelName = modelId.getString("name");
-
-                            JSONArray companyId = modelId.getJSONArray("company_id");
 
 
 
-                            JSONArray logo = object2.getJSONArray("logo");
-
-                            Log.i("tag1",serviceName);
-
-
-                        }
-                            // JSONObject object3 = logo.getJSONObject(1);
                             }
 
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");

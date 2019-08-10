@@ -108,8 +108,6 @@ public class UpcomingFragment extends Fragment {
                                 serviceName = regular_service.getString("service_name");
 
 
-
-
                             }
 
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");

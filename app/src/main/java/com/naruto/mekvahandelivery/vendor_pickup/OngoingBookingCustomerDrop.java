@@ -65,8 +65,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         String name =bundle.getString("name");
         String address =bundle.getString("address");
-        double latitude= Double.parseDouble(bundle.getString("latitude"));
-        double longitude=Double.parseDouble( bundle.getString("longitude"));
+       // double latitude= Double.parseDouble(bundle.getString("latitude"));
+      //  double longitude=Double.parseDouble( bundle.getString("longitude"));
         String dropdate=bundle.getString("dropDate");
         String dropTime= bundle.getString("dropTime");
         String amount=bundle.getString("amount");
@@ -122,7 +122,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                sendNavigateIntent(OngoingBookingCustomerDrop.this,latitude,longitude);
+                //sendNavigateIntent(OngoingBookingCustomerDrop.this,latitude,longitude);
             }
         });
 

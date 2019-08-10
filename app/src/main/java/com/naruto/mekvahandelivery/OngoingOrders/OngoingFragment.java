@@ -107,9 +107,6 @@ public class OngoingFragment extends Fragment {
 
 
 
-
-
-
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
 
                              String vehicle_name= vehicle.getString("name");
@@ -125,7 +122,10 @@ public class OngoingFragment extends Fragment {
 
 
 
-                            String name="",mobile="",address="",latitude="",longitude="";
+                            String name="",mobile="",address="",latitude="",longitude="",
+                                    action1="",action2="",action3="",action4="",action5="",action6="",
+                                    action7="",action8="",action9="",action10="",action11="",action12="",
+                                    action13="",action14="",action15="";
 
 
                             String serviceName="";
@@ -141,8 +141,44 @@ public class OngoingFragment extends Fragment {
                                 categoryName=regular_service.getString("category");
                                 serviceName = regular_service.getString("service_name");
 
+                                String action_1[] = (regular_service.getString("action1").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action1 = action_1[0];
+                                String action_2[] = (regular_service.getString("action2").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action2=action_2[0];
+                                String action_3[] = (regular_service.getString("action3").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action3=action_3[0];
+                                String action_4[] = (regular_service.getString("action4").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action4=action_4[0];
+                                String action_5[] = (regular_service.getString("action5").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action5=action_5[0];
+                                String action_6[] = (regular_service.getString("action6").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action6=action_6[0];
+                                String action_7[] = (regular_service.getString("action7").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action7=action_7[0];
+                                String action_8[] = (regular_service.getString("action8").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action8=action_8[0];
+                                String action_9[] = (regular_service.getString("action9").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action9=action_9[0];
+                                String action_10[] = (regular_service.getString("action10").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action10=action_10[0];
+                                String action_11[] = (regular_service.getString("action11").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action11=action_11[0];
+                                String action_12[] = (regular_service.getString("action12").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action12=action_12[0];
+                                String action_13[] = (regular_service.getString("action13").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action13=action_13[0];
+                                String action_14[] = (regular_service.getString("action14").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action14=action_14[0];
+                                String action_15[] = (regular_service.getString("action15").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                action15=action_15[0];
 
-                                if(status_id==6 || status_id==7 || status_id==8){
+
+
+
+
+
+
+                                if(status_id==6 ){
                                     JSONArray partner=jsonObject.getJSONArray("partner");
                                     JSONObject part=partner.getJSONObject(0);
 
@@ -152,22 +188,8 @@ public class OngoingFragment extends Fragment {
                                     latitude=part.getString("latitude");
                                     longitude=part.getString("longitude");
 
-
-
                                 }
 
-                                if(status_id==5){
-                                    JSONArray customer=jsonObject.getJSONArray("customer");
-                                    JSONObject cust=customer.getJSONObject(0);
-
-                                    name=cust.getString("name");
-                                    mobile=cust.getString("mobile");
-
-                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
-                                    address=drop_add.getString("address");
-                                    latitude=drop_add.getString("latitude");
-                                    longitude=drop_add.getString("longitide");
-                                }
 
                                 if(status_id==9){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
@@ -175,7 +197,6 @@ public class OngoingFragment extends Fragment {
 
                                     name=cust.getString("name");
                                     mobile=cust.getString("mobile");
-
                                     JSONObject drop_add=jsonObject.getJSONObject("drop_address");
                                     address=drop_add.getString("address");
                                     latitude=drop_add.getString("latitude");
@@ -185,18 +206,15 @@ public class OngoingFragment extends Fragment {
                             }
 
                             if(service_type.contains("sos_service")){
-                                serviceName=jsonObject.getString("sos_service");
+                                serviceName=jsonObject.getJSONObject("sos_service").getString("service_name");
 
 
-                                if(status_id==6 || status_id==7 || status_id==8 || status_id==9){
+                                if(status_id==6 || status_id==9){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
                                     JSONObject cust=customer.getJSONObject(0);
 
                                     name=cust.getString("name");
                                     mobile=cust.getString("mobile");
-
-
-
                                     JSONObject drop_add=jsonObject.getJSONObject("drop_address");
                                     address=drop_add.getString("address");
                                     try {
@@ -211,28 +229,6 @@ public class OngoingFragment extends Fragment {
 
 
                                 }
-
-                                if(status_id==5){
-                                    JSONArray customer=jsonObject.getJSONArray("customer");
-                                    JSONObject cust=customer.getJSONObject(0);
-
-                                    name=cust.getString("name");
-                                    mobile=cust.getString("mobile");
-
-
-                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
-                                    address=drop_add.getString("address");
-                                    try {
-                                        latitude=drop_add.getString("latitude");
-                                        longitude=drop_add.getString("longitide");
-                                    }
-                                    catch (Exception e){
-                                        e.printStackTrace();
-                                    }
-
-                                }
-
-
 
                             }
 
@@ -270,11 +266,15 @@ public class OngoingFragment extends Fragment {
 
                             mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
-                                    drop_date,drop_time,amount,vehicleBrand,service_type));
+                                    drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15
+                            ));
 
 
 
                         }
+
+
                         adapter = new OngoingAdapter_1(getActivity(), (ArrayList<MyListDataOngoingBooking>) mBookingList);
                         recyclerView.setAdapter(adapter);
 
@@ -300,8 +300,8 @@ public class OngoingFragment extends Fragment {
                 headers.put("Accept","application/json");
                 LoginSessionManager loginSessionManager=new LoginSessionManager(getActivity());
                 HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
-                String token_type=token.get(TOKEN_TYPE);
-                String acces_token= token.get(ACCESS_TOKEN);
+                String token_type = token.get(TOKEN_TYPE);
+                String acces_token = token.get(ACCESS_TOKEN);
                 headers.put("Authorization",token_type+" "+acces_token);
 
                 return headers;

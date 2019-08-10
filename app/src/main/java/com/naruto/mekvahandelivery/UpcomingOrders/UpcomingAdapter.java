@@ -1,6 +1,5 @@
 package com.naruto.mekvahandelivery.UpcomingOrders;
 
-
 import com.bumptech.glide.Glide;
 
 
@@ -25,7 +24,6 @@ import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
 
 import java.util.ArrayList;
 
-
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
 
     private Context context;
@@ -43,14 +41,10 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 .inflate(R.layout.custom_item1, viewGroup, false);
         return new UpcomingAdapter.ViewHolder(v);
 
-
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull UpcomingAdapter.ViewHolder viewHolder, int i) {
-
-
 
         final MyListDataUpcomingBooking data = dataArrayList.get(i);
 
@@ -76,14 +70,14 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         String status=data.getstatus();
 
 
-        if(status.contains("Awaiting customer pickup")){
+        if(status.contains("Awaiting user pickup")){
             viewHolder.cv_details.setOnClickListener(view -> {
                 Log.e("TAG","click");
                 Intent i12 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
                 view.getContext().startActivity(i12);
             });
         }
-        if(status.contains("Awaiting vendor pickup")){
+        if(status.contains("Awaiting partner pickup")){
             viewHolder.cv_details.setOnClickListener(view -> {
                 Log.e("TAG","click");
                 Intent i1 = new Intent(view.getContext(), UpcomingBookingVendor.class);
@@ -100,7 +94,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             });
         }
 
-        
     }
 
     @Override
@@ -131,7 +124,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             time=itemView.findViewById(R.id.time);
             date=itemView.findViewById(R.id.date);
             serviceType=itemView.findViewById(R.id.service_type);
-
 
             connect=itemView.findViewById(R.id.connectButton);
 //

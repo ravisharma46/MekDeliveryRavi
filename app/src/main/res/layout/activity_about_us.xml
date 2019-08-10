@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    tools:ignore="HardcodedText"
     tools:context=".AboutUs.AboutUs">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About mekvahan "
+                android:text="About Mekvahan:"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_medium"
                 android:textSize="16sp"
@@ -36,7 +31,7 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typeseting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. when an unknown printer took a gallery of type and scrambled it to make a type specimen book"/>
+                android:text="1. Mekvahan is a network of technology-enabled car &amp; bike service centres, offering a seamless service experience at the convenience of a tap.\n\n2. With our highly skilled technicians, manufacturer recommended procedures and the promise of genuine spare parts, we are your best bet.\n\n3. We have grown rapidly to disrupt the multi billion dollar automotive service market.\n\n4. Our vast network of Car &amp; Bike service centres uses only original equipment &amp; spare parts and high-quality consumables which ensures the best service quality.\n\n5. Unconditional Car &amp; Bike service warranty, we make sure you get more than what authorised &amp; multi brand service centres offer.\n\n6. Save up to 40% to 60% on car &amp; bike service and maintenance, that's the Mekvahan’s promise.\n\n7. Free pick-up and drop-in services​, for your ease and convenience. Now is the time to sit back, relax and spend quality time with your loved ones." />
 
         </LinearLayout>
 
@@ -65,50 +60,15 @@
                     android:fontFamily="@font/montserrat_medium"/>
 
                 <TextView
-                    android:id="@+id/officeAddress"
-                    android:layout_below="@id/contact_us"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:textStyle="bold"
-                    android:text="Office Address :-"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/gotham_medium" />
-
-                <TextView
-                    android:id="@+id/Mekvahan"
-                    android:layout_below="@id/officeAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/black"
-                    android:text="Mekvahan"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/gotham_medium" />
-
-                <TextView
-                    android:id="@+id/New_delhi"
-                    android:layout_below="@id/Mekvahan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/black"
-                    android:text="New Delhi, 110077"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/gotham_medium" />
-
-                <TextView
                     android:id="@+id/email"
-                    android:layout_below="@id/New_delhi"
+                    android:layout_below="@+id/contact_us"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="Email:- support@mekvahan.com"
+                    android:textIsSelectable="true"
+                    android:text="Email :- ​support@mekvahan.com"
                     android:textSize="12sp"
                     android:fontFamily="@font/gotham_medium" />
 
@@ -119,30 +79,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:textColor="@color/black"
-                    android:text="Connect "
+                    android:textIsSelectable="true"
+                    android:text="Connect:- +917838878899  [9AM - 9PM]"
                     android:textStyle="bold"
                     android:textSize="12sp"
                     android:fontFamily="@font/gotham_medium" />
-
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_below="@id/connect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/black"
-                    android:text="[ 9AM - 9PM ] :- +91 7838878899 "
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/gotham_medium" />
-
-
-
             </RelativeLayout>
 
 
         </RelativeLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

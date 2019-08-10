@@ -9,9 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -20,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.naruto.mekvahandelivery.R;
-import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,23 +40,17 @@ public class CommonVaribalesFunctions {
     public static final String CUSTOMER_CARE    = "1234567890";
     public static final String CONTACT_MEKVAHAN = "+917838878899";
 
-
-
-
     public static final String TIME_FORMAT  = "hh:mm a";
 
     @SuppressLint("ResourceAsColor")
     public static void setStatusBarColor(Window window, int a){
 
         // if a=0 => primarydark color else light black
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             if(a == 0)
                 window.setStatusBarColor(Color.parseColor("#B71C1C"));
             else
                 window.setStatusBarColor(Color.argb(255, 133, 146, 158));
-        }
     }
 
     public static void sendNavigateIntent(Context context, double latitude, double longitude){

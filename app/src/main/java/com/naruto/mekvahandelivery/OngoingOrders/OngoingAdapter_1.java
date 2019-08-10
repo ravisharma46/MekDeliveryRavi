@@ -1,6 +1,5 @@
 package com.naruto.mekvahandelivery.OngoingOrders;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,13 +20,10 @@ import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 import java.util.ArrayList;
 
-
 public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.ViewHolder> {
 
     private Context context;
     private ArrayList<MyListDataOngoingBooking> dataArrayList;
-
-
 
     OngoingAdapter_1(Context context, ArrayList<MyListDataOngoingBooking> dataArrayList) {
         this.context=context;
@@ -42,9 +38,7 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                 .inflate(R.layout.custom_item, viewGroup, false);
         return new OngoingAdapter_1.ViewHolder(v);
 
-
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
@@ -52,7 +46,6 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
        final MyListDataOngoingBooking data = dataArrayList.get(i);
 
        viewHolder.textViewstatus.setText(data.getstatus());
-
 
         viewHolder.tv_date.setText(data.getDate());
         viewHolder.tv_time.setText(data.getTime());
@@ -68,21 +61,13 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
             viewHolder.tv_paymentStatus.setTextColor(Color.RED);
         }
 
-
-
-
         Glide.with(context).load(data.getLogo())
                 .into(viewHolder.iv_logo);
-
-
-
-
 
         //viewHolder.textViewRupee.setText("\u20B9" + " 99");
 
         String status=data.getstatus();
         String service_name=data.getService_type();
-
 
         if (service_name.contains("sos_service")) {
             viewHolder.cv_details.setOnClickListener(view -> {
@@ -98,8 +83,6 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                 i1.putExtra("mobile",data.getMobile());
 
                 view.getContext().startActivity(i1);
-
-
 
             });
 
@@ -142,18 +125,10 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
                     view.getContext().startActivity(i1);
 
-
-
                 });
             }
 
-
-
         }
-
-
-
-
 
     }
 
@@ -184,9 +159,6 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
             tv_time= itemView.findViewById(R.id.time);
             tv_modelName= itemView.findViewById(R.id.mode_name);
             iv_logo= itemView.findViewById(R.id.logo);
-
-
-
 
         }
     }

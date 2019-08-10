@@ -101,17 +101,14 @@ public class OngoingFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                              String bookingId = jsonObject.getString("booking_id");
+
                              String service_type=jsonObject.getString("service_type");
+                             String otp=jsonObject.getString("otp");
 
 
-                             JSONObject regular_service=jsonObject.getJSONObject("regular_service");
-                             String serviceName="";
-                             String categoryName="";
-                             if(service_type.contains("regular_service")){
-                                 categoryName=regular_service.getString("category");
-                                 serviceName = regular_service.getString("service_name");
 
-                             }
+
+
 
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
 
@@ -128,20 +125,122 @@ public class OngoingFragment extends Fragment {
 
 
 
-
-                            JSONArray customer=jsonObject.getJSONArray("customer");
-                            JSONObject cust=customer.getJSONObject(0);
-
-                            String customer_name=cust.getString("name");
-                            String customer_mobile=cust.getString("mobile");
-                            String otp=cust.getString("otp");
+                            String name="",mobile="",address="",latitude="",longitude="";
 
 
+                            String serviceName="";
+                            String categoryName="";
 
-                            JSONObject drop_add=jsonObject.getJSONObject("drop_address");
-                            String address=drop_add.getString("address");
-                            String latitude=drop_add.getString("latitude");
-                            String longitude=drop_add.getString("longitide");
+                            int status_id = jsonObject.getJSONObject("category").getInt("status_id");
+
+
+
+
+                            if(service_type.contains("regular_service")){
+                                JSONObject regular_service=jsonObject.getJSONObject("regular_service");
+                                categoryName=regular_service.getString("category");
+                                serviceName = regular_service.getString("service_name");
+
+
+                                if(status_id==6 || status_id==7 || status_id==8){
+                                    JSONArray partner=jsonObject.getJSONArray("partner");
+                                    JSONObject part=partner.getJSONObject(0);
+
+                                    name=part.getString("center_name");
+                                    mobile=part.getString("mobile");
+                                    address=part.getString("address");
+                                    latitude=part.getString("latitude");
+                                    longitude=part.getString("longitude");
+
+
+
+                                }
+
+                                if(status_id==5){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
+                                    address=drop_add.getString("address");
+                                    latitude=drop_add.getString("latitude");
+                                    longitude=drop_add.getString("longitide");
+                                }
+
+                                if(status_id==9){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                                    address=drop_add.getString("address");
+                                    latitude=drop_add.getString("latitude");
+                                    longitude=drop_add.getString("longitide");
+                                }
+
+                            }
+
+                            if(service_type.contains("sos_service")){
+                                serviceName=jsonObject.getString("sos_service");
+
+
+                                if(status_id==6 || status_id==7 || status_id==8 || status_id==9){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+                                    address=drop_add.getString("address");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+
+
+
+                                }
+
+                                if(status_id==5){
+                                    JSONArray customer=jsonObject.getJSONArray("customer");
+                                    JSONObject cust=customer.getJSONObject(0);
+
+                                    name=cust.getString("name");
+                                    mobile=cust.getString("mobile");
+
+
+                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
+                                    address=drop_add.getString("address");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+
+
+                            }
+
+
+
+
+
+
 
 
 
@@ -158,16 +257,20 @@ public class OngoingFragment extends Fragment {
                             String amount=jsonObject.getString("cod");
 
 
+
+
                             String status = jsonObject.getJSONObject("category").getString("status_title");
 
-                           // Log.e("TAG",status);
+
 
                             String licencePlate="SDF1233";
                             String paymentStatus="Payment awaiting";
 
 
-                            mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,customer_mobile,vehicle_name,
-                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,customer_name,address,latitude,longitude,drop_date,drop_time,amount));
+
+                            mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
+                                    licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
+                                    drop_date,drop_time,amount,vehicleBrand,service_type));
 
 
 

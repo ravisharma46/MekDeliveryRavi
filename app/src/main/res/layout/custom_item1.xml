@@ -198,6 +198,7 @@
                         <ImageView
                             android:id="@+id/payment_confirm_tick"
                             android:layout_width="wrap_content"
+                            android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_asset_17" />
                     </LinearLayout>

@@ -116,7 +116,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
             cv_details =  itemView.findViewById(R.id.cv_details);
             orderId = itemView.findViewById(R.id.order_id_1);
-            logo= itemView.findViewById(R.id.logo);
+            //logo= itemView.findViewById(R.id.logo);
             carName= itemView.findViewById(R.id.car_name);
             noPlate= itemView.findViewById(R.id.numberPlate);
             paymentStatus= itemView.findViewById(R.id.payment_confirm);

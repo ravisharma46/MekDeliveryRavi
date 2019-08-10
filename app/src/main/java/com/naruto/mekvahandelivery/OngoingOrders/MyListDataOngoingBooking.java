@@ -11,7 +11,7 @@ public class MyListDataOngoingBooking {
     private String modelName;
     private String numberPlate;
     private String mobile;
-    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount;
+    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount,vehicleBrand,service_type;
 
 
 
@@ -26,7 +26,8 @@ public class MyListDataOngoingBooking {
                                      String orderId,
                                      String payment_status,
                                      String service_name,
-                                     String image_url,String otp,String name,String address,String latitude,String longitude,String drop_date,String drop_time,String amount
+                                     String image_url,String otp,String name,String address,
+                                     String latitude,String longitude,String drop_date,String drop_time,String amount, String  vehicleBrand,String service_type
                                     ) {
         this.status = status;
         this.date=date;
@@ -47,7 +48,25 @@ public class MyListDataOngoingBooking {
         this.drop_date= drop_date;
         this.drop_time= drop_time;
         this.amount= amount;
+        this.vehicleBrand=vehicleBrand;
+        this.service_type=service_type;
 
+    }
+
+    public String getService_type() {
+        return service_type;
+    }
+
+    public void setService_type(String service_type) {
+        this.service_type = service_type;
+    }
+
+    public void setVehicleBrand(String vehicleBrand) {
+        this.vehicleBrand = vehicleBrand;
+    }
+
+    public String getVehicleBrand() {
+        return vehicleBrand;
     }
 
     public String getAmount() {

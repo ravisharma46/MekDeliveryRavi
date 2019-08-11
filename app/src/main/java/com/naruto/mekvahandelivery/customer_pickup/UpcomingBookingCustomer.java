@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.naruto.mekvahandelivery.CustomListData.CustomListAdapter;
 import com.naruto.mekvahandelivery.R;
+
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
 
+import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 
 import java.util.ArrayList;
@@ -181,9 +183,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:123456789"));
-                startActivity(callIntent);
+                callIntent(UpcomingBookingCustomer.this,mobileNo);
             }
         });
 

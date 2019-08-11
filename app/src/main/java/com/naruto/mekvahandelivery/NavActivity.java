@@ -82,7 +82,12 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 
 		chaufer= findViewById(R.id.chaufer);
-		chaufer.setOnClickListener(view -> startActivity(new Intent(NavActivity.this, Chauffer.class)));
+		chaufer.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(NavActivity.this, Chauffer.class));
+			}
+		});
 
 		setNavigationDrawer();
 

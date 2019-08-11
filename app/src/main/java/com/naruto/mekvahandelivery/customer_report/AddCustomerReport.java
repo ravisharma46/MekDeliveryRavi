@@ -1,6 +1,5 @@
 package com.naruto.mekvahandelivery.customer_report;
 
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,10 +34,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     private FrameLayout car, bike;
     private ImageView car_image, bike_image, img_sign;
     private TextView tvbike, tvcar, document;
-    private Button btrc, btpuc, btinsurance, btroadtax, btpassengertax, btpollutionpaper;
     private String addCarReportapiUrl = "https://mekvahan.com/api/CarRegularServiceReport";
     private Map<String, String> carButton, bikeButton, reportButton;
-    private String rcStr,pucStr,insuranceStr, roadtaxStr,passangertaxStr,pollutionpapaerStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +70,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         tvbike = findViewById(R.id.tvbike);
         tvcar = findViewById(R.id.tvcar);
         document = findViewById(R.id.tvDocument);
-        Button take_sign = findViewById(R.id.bt_sign);
         img_sign=findViewById(R.id.image_sign);
+        Button take_sign = findViewById(R.id.bt_sign);
         ImageView img_cancel = findViewById(R.id.image_cross);
-
-        btrc=findViewById(R.id.bt_rc);
-        btpuc=findViewById(R.id.bt_puc);
-        btinsurance=findViewById(R.id.bt_insurance);
-        btroadtax=findViewById(R.id.bt_roadtax);
-        btpassengertax=findViewById(R.id.bt_passengertax);
-        btpollutionpaper=findViewById(R.id.bt_pollutionpaper);
 
         loadCarFragment();
         load_car();
@@ -104,109 +94,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         });
         img_cancel.setOnClickListener(view -> img_sign.setImageResource(R.drawable.image_svg));
 
-        btrc.setOnClickListener(new View.OnClickListener() {
-            int check = 1;
-            @Override
-            public void onClick(View view) {
-                if (check == 1) {
-                    btrc.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    btrc.setTextColor(Color.WHITE);
-                    rcStr="1";
-                    check = 0;
-                } else {
-                    btrc.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    btrc.setTextColor(Color.BLACK);
-                    rcStr="0";
-                    check = 1;
-                }
-            }
-        });
-        btpuc.setOnClickListener(new View.OnClickListener() {
-            int check = 1;
-            @Override
-            public void onClick(View view) {
-                if (check == 1) {
-                    btpuc.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    btpuc.setTextColor(Color.WHITE);
-                    pucStr="1";
-                    check = 0;
-                } else {
-                    btpuc.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    btpuc.setTextColor(Color.BLACK);
-                    pucStr="0";
-                    check = 1;
-                }
-            }
-        });
-        btpassengertax.setOnClickListener(new View.OnClickListener() {
-            int check = 1;
-            @Override
-            public void onClick(View view) {
-                if (check == 1) {
-                    btpassengertax.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    btpassengertax.setTextColor(Color.WHITE);
-                    passangertaxStr="1";
-                    check = 0;
-                } else {
-                    btpassengertax.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    btpassengertax.setTextColor(Color.BLACK);
-                    passangertaxStr="0";
-                    check = 1;
-                }
-            }
-        });
-        btinsurance.setOnClickListener(new View.OnClickListener() {
-            int check = 1;
-            @Override
-            public void onClick(View view) {
-                if (check == 1) {
-                    btinsurance.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    btinsurance.setTextColor(Color.WHITE);
-                    insuranceStr="1";
-                    check = 0;
-                } else {
-                    btinsurance.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    btinsurance.setTextColor(Color.BLACK);
-                    insuranceStr="0";
-                    check = 1;
-                }
-            }
-        });
-        btroadtax.setOnClickListener(new View.OnClickListener() {
-            int check = 1;
-            @Override
-            public void onClick(View view) {
-                if (check == 1) {
-                    btroadtax.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    btroadtax.setTextColor(Color.WHITE);
-                    roadtaxStr="1";
-                    check = 0;
-                } else {
-                    btroadtax.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    btroadtax.setTextColor(Color.BLACK);
-                    roadtaxStr="0";
-                    check = 1;
-                }
-            }
-        });
-        btpollutionpaper.setOnClickListener(new View.OnClickListener() {
-            int check = 1;
-            @Override
-            public void onClick(View view) {
-                if (check == 1) {
-                    btpollutionpaper.setBackgroundResource(R.drawable.customer_reprt_bt02);
-                    btpollutionpaper.setTextColor(Color.WHITE);
-                    pollutionpapaerStr="1";
-                    check = 0;
-                } else {
-                    btpollutionpaper.setBackgroundResource(R.drawable.customer_rprt_bt01);
-                    btpollutionpaper.setTextColor(Color.BLACK);
-                    pollutionpapaerStr="0";
-                    check = 1;
-                }
-            }
-        });
-
     }
 
     private Map<String, String> initReportData() {
@@ -223,6 +110,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportData.put("btpollutionpaper", "0");
         reportData.put("odometer", "0");
         reportData.put("otherreport", null);
+        reportData.put("sbrand", null);
         return reportData;
     }
 
@@ -276,7 +164,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         document.setText("Car document");
     }
 
-
     private void loadCarFragment() {
         Car_Add_fragment c_Fragment = new Car_Add_fragment();
         FragmentManager manager = getSupportFragmentManager();
@@ -297,16 +184,14 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==2 && data != null){
+        if(requestCode==2 && data != null & resultCode == RESULT_OK){
             byte[] bytes = data.getByteArrayExtra("image");
             Bitmap bmp = null;
             if (bytes != null) {
                 bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             }
             img_sign.setImageBitmap(bmp);
-
         }
-
     }
 
     @Override
@@ -316,13 +201,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             onBackPressed();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override
@@ -362,9 +241,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             btn.setTextColor(getColor(android.R.color.black));
             carButton.put(buttonId, "0");
         }
-
     }
-
 }
 
 

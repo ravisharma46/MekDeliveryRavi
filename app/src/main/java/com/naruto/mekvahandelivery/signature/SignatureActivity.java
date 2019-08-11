@@ -73,7 +73,7 @@ public class SignatureActivity extends AppCompatActivity {
             public void onSigned() {
                 clear_button.setEnabled(true);
                 save_button.setEnabled(true);
-//Event triggered when the pad is signed
+                //Event triggered when the pad is signed
             }
 
             @Override

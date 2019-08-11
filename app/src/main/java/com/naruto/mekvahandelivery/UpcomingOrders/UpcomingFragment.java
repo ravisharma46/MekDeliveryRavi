@@ -194,11 +194,11 @@ public class UpcomingFragment extends Fragment {
 
                                     name=cust.getString("name");
                                     mobile=cust.getString("mobile");
-                                    JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
-                                    address=drop_add.getString("address");
+                                    JSONObject pick_add=jsonObject.getJSONObject("pickup_address");
+                                    address=pick_add.getString("address");
                                     try {
-                                        latitude=drop_add.getString("latitude");
-                                        longitude=drop_add.getString("longitide");
+                                        latitude=pick_add.getString("latitude");
+                                        longitude=pick_add.getString("longitude");
                                     }
                                     catch (Exception e){
                                         e.printStackTrace();
@@ -215,7 +215,7 @@ public class UpcomingFragment extends Fragment {
                                     address=drop_add.getString("address");
                                     try {
                                         latitude=drop_add.getString("latitude");
-                                        longitude=drop_add.getString("longitide");
+                                        longitude=drop_add.getString("longitude");
                                     }
                                     catch (Exception e){
                                         e.printStackTrace();
@@ -224,6 +224,8 @@ public class UpcomingFragment extends Fragment {
                                 }
 
                             }
+
+                            Log.e("TAG",longitude+"z");
 
                             String drop_date=jsonObject.getString("pickup_date");
                             String drop_time=jsonObject.getString("pickup_time");

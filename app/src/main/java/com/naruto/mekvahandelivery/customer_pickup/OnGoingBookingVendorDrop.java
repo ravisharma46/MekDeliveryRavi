@@ -30,14 +30,14 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.naruto.mekvahandelivery.CustomListData.CustomListAdapter;
-import com.naruto.mekvahandelivery.OngoingOrders.MyListDataOngoingBooking;
+import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
+import com.naruto.mekvahandelivery.ongoing_orders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
 
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.callIntent;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.dropConfirm;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.sendNavigateIntent;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.dropConfirm;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
 
 import java.util.ArrayList;
 import java.util.HashMap;

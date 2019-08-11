@@ -1,7 +1,7 @@
-package com.naruto.mekvahandelivery.OngoingOrders;
+package com.naruto.mekvahandelivery.upcoming_orders;
 
+public class MyListDataUpcomingBooking {
 
-public class MyListDataOngoingBooking {
     private String status;
     private String orderId;
     private String date,time;
@@ -11,7 +11,7 @@ public class MyListDataOngoingBooking {
     private String modelName;
     private String numberPlate;
     private String mobile;
-    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount,vehicleBrand,service_type;
+    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount;
     private String action1;
     private String action2;
     private String action3;
@@ -29,10 +29,7 @@ public class MyListDataOngoingBooking {
     private String action15;
 
 
-
-
-
-    public MyListDataOngoingBooking( String status,
+    public MyListDataUpcomingBooking(String status,
                                      String date,
                                      String time,
                                      String logo,
@@ -42,12 +39,10 @@ public class MyListDataOngoingBooking {
                                      String orderId,
                                      String payment_status,
                                      String service_name,
-                                     String image_url,String otp,String name,String address,
-                                     String latitude,String longitude,String drop_date,String drop_time,String amount, String  vehicleBrand,String service_type,
-                                     String action1, String action2, String action3,
+                                     String image_url,String otp,String name,String address,String latitude,
+                                     String longitude,String drop_date,String drop_time,String amount,String  vehicleBrand,String service_type,String action1, String action2, String action3,
                                      String action4, String action5, String action6, String action7, String action8, String action9,
-                                     String action10, String action11, String action12, String action13, String action14, String action15
-                                    ) {
+                                     String action10, String action11, String action12, String action13, String action14, String action15) {
         this.status = status;
         this.date=date;
         this.time=time;
@@ -67,8 +62,6 @@ public class MyListDataOngoingBooking {
         this.drop_date= drop_date;
         this.drop_time= drop_time;
         this.amount= amount;
-        this.vehicleBrand=vehicleBrand;
-        this.service_type=service_type;
         this.action1 = action1;
         this.action2 = action2;
         this.action3 = action3;
@@ -85,10 +78,6 @@ public class MyListDataOngoingBooking {
         this.action14 = action14;
         this.action15 = action15;
 
-    }
-
-    public String getService_type() {
-        return service_type;
     }
     public String getAction1() {
         return action1;
@@ -150,48 +139,36 @@ public class MyListDataOngoingBooking {
         return action15;
     }
 
-    public void setService_type(String service_type) {
-        this.service_type = service_type;
+    public String getStatus() {
+        return status;
     }
 
-    public void setVehicleBrand(String vehicleBrand) {
-        this.vehicleBrand = vehicleBrand;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getVehicleBrand() {
-        return vehicleBrand;
+    public String getOtp() {
+        return otp;
     }
 
-    public String getAmount() {
-        return amount;
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public String getName() {
+        return name;
     }
 
-    public void setDrop_time(String drop_time) {
-        this.drop_time = drop_time;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDrop_date(String drop_date) {
-        this.drop_date = drop_date;
+    public String getAddress() {
+        return address;
     }
 
-    public String getDrop_time() {
-        return drop_time;
-    }
-
-    public String getDrop_date() {
-        return drop_date;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getLatitude() {
@@ -202,29 +179,42 @@ public class MyListDataOngoingBooking {
         this.latitude = latitude;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public String getAddress() {
-        return address;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDrop_date() {
+        return drop_date;
     }
 
-    public String getName() {
-        return name;
+    public void setDrop_date(String drop_date) {
+        this.drop_date = drop_date;
     }
 
-    public String getOtp() {
-        return otp;
+    public String getDrop_time() {
+        return drop_time;
     }
 
-    public void setOtp(String otp) {
-        this.otp = otp;
+    public void setDrop_time(String drop_time) {
+        this.drop_time = drop_time;
     }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+
+
+
+
 
     public String getImage_url() {
         return image_url;

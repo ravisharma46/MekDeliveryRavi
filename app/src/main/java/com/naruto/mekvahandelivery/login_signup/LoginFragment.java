@@ -20,9 +20,9 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
-import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
-import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
-import com.naruto.mekvahandelivery.Help_And_Support.Faq_activity;
+import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
+import com.naruto.mekvahandelivery.common_files.MySingleton;
+import com.naruto.mekvahandelivery.help_and_support.Faq_activity;
 import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 
@@ -33,9 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.sendEmailIntent;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendEmailIntent;
 
 public class LoginFragment extends Fragment {
 

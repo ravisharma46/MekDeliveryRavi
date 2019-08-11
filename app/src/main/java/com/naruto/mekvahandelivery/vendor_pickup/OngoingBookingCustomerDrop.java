@@ -19,10 +19,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.naruto.mekvahandelivery.R;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.dropConfirm;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.callIntent;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.sendNavigateIntent;
-import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.dropConfirm;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
+
 import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
 
 public class OngoingBookingCustomerDrop extends AppCompatActivity {

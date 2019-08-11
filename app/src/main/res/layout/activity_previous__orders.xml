@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Help_And_Support.Previous_Orders"
+    tools:context=".help_and_support.Previous_Orders"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView

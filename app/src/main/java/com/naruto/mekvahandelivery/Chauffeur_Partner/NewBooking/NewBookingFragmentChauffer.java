@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.Chauffeur_Partner.NewBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.NewBooking;
 
 
 import android.os.Bundle;

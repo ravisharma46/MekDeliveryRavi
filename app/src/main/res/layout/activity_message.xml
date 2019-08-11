@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Help_And_Support.Message">
+    tools:context=".help_and_support.Message">
 
 
     <LinearLayout

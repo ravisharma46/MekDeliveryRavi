@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.Help_And_Support;
+package com.naruto.mekvahandelivery.help_and_support;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;

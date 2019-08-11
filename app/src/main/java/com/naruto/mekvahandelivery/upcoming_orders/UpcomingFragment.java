@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.UpcomingOrders;
+package com.naruto.mekvahandelivery.upcoming_orders;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
-import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
-import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
+import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
+import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.R;
 
 import org.json.JSONArray;
@@ -32,10 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCESS_TOKEN;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TOKEN_TYPE;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
 public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;

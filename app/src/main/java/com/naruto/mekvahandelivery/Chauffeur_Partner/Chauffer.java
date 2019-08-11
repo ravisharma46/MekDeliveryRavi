@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.Chauffeur_Partner;
+package com.naruto.mekvahandelivery.chauffeur_partner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,13 +15,11 @@ import android.text.Html;
 import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
-import com.naruto.mekvahandelivery.Chauffeur_Partner.NewBooking.NewBookingFragmentChauffer;
-import com.naruto.mekvahandelivery.Chauffeur_Partner.OngoingBooking.OngoingBookingFragmentChauffer;
-import com.naruto.mekvahandelivery.Chauffeur_Partner.UpcomingBooking.UpcomingBookingFragmentChauffer;
+import com.naruto.mekvahandelivery.chauffeur_partner.NewBooking.NewBookingFragmentChauffer;
+import com.naruto.mekvahandelivery.chauffeur_partner.OngoingBooking.OngoingBookingFragmentChauffer;
+import com.naruto.mekvahandelivery.chauffeur_partner.UpcomingBooking.UpcomingBookingFragmentChauffer;
 import com.naruto.mekvahandelivery.NavActivity;
-import com.naruto.mekvahandelivery.OngoingOrders.OngoingFragment;
 import com.naruto.mekvahandelivery.R;
-import com.naruto.mekvahandelivery.UpcomingOrders.UpcomingFragment;
 import com.naruto.mekvahandelivery.history.BookingHistoryFragment;
 
 import java.util.ArrayList;

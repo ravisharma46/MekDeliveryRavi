@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.UpcomingOrders;
+package com.naruto.mekvahandelivery.upcoming_orders;
 
 import com.bumptech.glide.Glide;
 

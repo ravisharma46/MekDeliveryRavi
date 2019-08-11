@@ -35,10 +35,10 @@
         <activity
             android:name=".CaptureActivityPortrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
-        <activity android:name=".FeedbackPage.Feedback_page" />
-        <activity android:name=".AboutUs.AboutUs" />
-        <activity android:name=".Chauffeur_Partner.NewBooking.NewBookingOrderView" />
-        <activity android:name=".Chauffeur_Partner.Chauffer" />
+        <activity android:name=".feedback_page.Feedback_page" />
+        <activity android:name=".about_us.AboutUs" />
+        <activity android:name=".chauffeur_partner.NewBooking.NewBookingOrderView" />
+        <activity android:name=".chauffeur_partner.Chauffer" />
         <activity android:name=".customer_report.ViewCustomerReport" />
         <activity
             android:name=".ScanQrcode"
@@ -57,17 +57,17 @@
         <activity android:name=".history.Service_Completed" />
         <activity android:name=".signature.SignatureActivity" />
 
-        <activity android:name=".Help_And_Support.Disclaimer"/>
-        <activity android:name=".Help_And_Support.Faq_activity"/>
-        <activity android:name=".Help_And_Support.Help"/>
-        <activity android:name=".Help_And_Support.Mek_Legel_Activity"/>
-        <activity android:name=".Help_And_Support.Message"/>
-        <activity android:name=".Help_And_Support.Need_help"/>
-        <activity android:name=".Help_And_Support.Previous_Orders"/>
-        <activity android:name=".Help_And_Support.Privacy_policy"/>
-        <activity android:name=".Help_And_Support.Terms_and_Conditions"/>
-        <activity android:name=".Help_And_Support.Terms_Of_Use"/>
-        <activity android:name=".Help_And_Support.Help_and_Support"/>
+        <activity android:name=".help_and_support.Disclaimer"/>
+        <activity android:name=".help_and_support.Faq_activity"/>
+        <activity android:name=".help_and_support.Help"/>
+        <activity android:name=".help_and_support.Mek_Legel_Activity"/>
+        <activity android:name=".help_and_support.Message"/>
+        <activity android:name=".help_and_support.Need_help"/>
+        <activity android:name=".help_and_support.Previous_Orders"/>
+        <activity android:name=".help_and_support.Privacy_policy"/>
+        <activity android:name=".help_and_support.Terms_and_Conditions"/>
+        <activity android:name=".help_and_support.Terms_Of_Use"/>
+        <activity android:name=".help_and_support.Help_and_Support"/>
 
         <activity
             android:name=".SplashActivity"

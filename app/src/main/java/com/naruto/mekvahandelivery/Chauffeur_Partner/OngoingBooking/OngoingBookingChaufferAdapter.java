@@ -1,12 +1,10 @@
-package com.naruto.mekvahandelivery.Chauffeur_Partner.OngoingBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.OngoingBooking;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,8 +12,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.naruto.mekvahandelivery.Chauffeur_Partner.NewBooking.NewBookingAdapter;
-import com.naruto.mekvahandelivery.Chauffeur_Partner.NewBooking.NewBookingOrderView;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 

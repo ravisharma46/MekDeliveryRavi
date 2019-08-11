@@ -19,36 +19,145 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.naruto.mekvahandelivery.CustomListData.CustomListAdapter;
 import com.naruto.mekvahandelivery.R;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.pickupConfirm;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.sendNavigateIntent;
 
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 
-public class UpcomingBookingCustomer extends AppCompatActivity {
-    private LinearLayout paint_linear,navigation;
-    private TextView tvDetails;
-    private Button report,confirm_booking;
-    private ImageView call;
+import java.util.ArrayList;
 
+public class UpcomingBookingCustomer extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private LinearLayout navigation;
+    private TextView tvDetails,date, time,name,address,vehicleBrand,vehicleName,numberPlate,serviceName;
+    private Button report,confirm_booking;
+    private ImageView call,vehicle_image;
+
+    public ArrayList<String>arrayList;
+    public ArrayList<String>arrayListsend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_booking_customer);
 
-        paint_linear = findViewById(R.id.linear_paint);
         tvDetails = findViewById(R.id.tvDetails);
         report = findViewById(R.id.tvcustomer_report);
         call = findViewById(R.id.call);
         confirm_booking=findViewById(R.id.bt_confirm);
         navigation=findViewById(R.id.ll_navigation);
 
+        vehicle_image=findViewById(R.id.iv_carimage);
+        date=findViewById(R.id.tv_date);
+        time=findViewById(R.id.tv_time);
+        name=findViewById(R.id.tv_name);
+        address=findViewById(R.id.tv_address);
+        vehicleBrand=findViewById(R.id.tv_vehiclebrand);
+        vehicleName=findViewById(R.id.tv_vehiclename);
+        numberPlate=findViewById(R.id.tv_numberPlate);
+        serviceName=findViewById(R.id.tv_servicename);
+
+        arrayList=new ArrayList<>();
+        arrayListsend=new ArrayList<>();
+
+
+        Bundle bundle=getIntent().getExtras();
+        String name_1 =bundle.getString("name");
+        String bookingid =bundle.getString("bookingid");
+        String address_1 =bundle.getString("address");
+        double latitude= Double.parseDouble(bundle.getString("latitude"));
+        double longitude=Double.parseDouble( bundle.getString("longitude"));
+        String dropdate=bundle.getString("dropDate");
+        String dropTime= bundle.getString("dropTime");
+        String amount=bundle.getString("amount");
+        String otp_1=bundle.getString("otp");
+        String mobileNo=bundle.getString("mobile");
+        String vehiclename=bundle.getString("vehiclename");
+        String vehiclebrand=bundle.getString("vehiclebrand");
+        String numberplate=bundle.getString("numberplate");
+        String vehicleImageUrl=bundle.getString("imageurl");
+        String servicename=bundle.getString("servicename");
+        String action1=bundle.getString("action1");
+        String action2=bundle.getString("action2");
+        String action3=bundle.getString("action3");
+        String action4=bundle.getString("action4");
+        String action5=bundle.getString("action5");
+        String action6=bundle.getString("action6");
+        String action7=bundle.getString("action7");
+        String action8=bundle.getString("action8");
+        String action9=bundle.getString("action9");
+        String action10=bundle.getString("action10");
+        String action11=bundle.getString("action11");
+        String action12=bundle.getString("action12");
+        String action13=bundle.getString("action13");
+        String action14=bundle.getString("action14");
+        String action15=bundle.getString("action15");
+        arrayList.add(action1);
+        arrayList.add(action2);
+        arrayList.add(action3);
+        arrayList.add(action4);
+        arrayList.add(action6);
+        arrayList.add(action7);
+        arrayList.add(action8);
+        arrayList.add(action9);
+        arrayList.add(action10);
+        arrayList.add(action11);
+        arrayList.add(action12);
+        arrayList.add(action13);
+        arrayList.add(action14);
+        arrayList.add(action15);
+
+        for(int i=0;i<arrayList.size();i++){
+            if(arrayList.get(i).isEmpty()){
+                break;
+            }else{
+                arrayListsend.add(arrayList.get(i));
+            }
+        }
+
+
+
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView_listView);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
+        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend);
+        recyclerView.setAdapter(adapter);
+
+        name.setText(name_1);
+        address.setText(address_1);
+
+        //  String d=getFormattedDate("TAG",dropdate);
+
+        date.setText(dropdate);
+        time.setText(dropTime);
+        vehicleName.setText(vehiclename);
+        vehicleBrand.setText(vehiclebrand);
+        numberPlate.setText(numberplate);
+        serviceName.setText(servicename);
+
+
+
+        try{
+            Glide.with(UpcomingBookingCustomer.this).load(vehicleImageUrl)
+                    .into(vehicle_image);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>#123</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml(bookingid));
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -60,10 +169,10 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (check == 1) {
-                    paint_linear.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     check = 0;
                 } else {
-                    paint_linear.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
                     check = 1;
                 }
 
@@ -83,7 +192,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendNavigateIntent(UpcomingBookingCustomer.this,28.717010,77.102364);
+                sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
             }
         });
 

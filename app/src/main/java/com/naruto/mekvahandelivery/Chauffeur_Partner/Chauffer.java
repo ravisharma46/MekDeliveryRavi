@@ -15,9 +15,9 @@ import android.text.Html;
 import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
-import com.naruto.mekvahandelivery.chauffeur_partner.NewBooking.NewBookingFragmentChauffer;
-import com.naruto.mekvahandelivery.chauffeur_partner.OngoingBooking.OngoingBookingFragmentChauffer;
-import com.naruto.mekvahandelivery.chauffeur_partner.UpcomingBooking.UpcomingBookingFragmentChauffer;
+import com.naruto.mekvahandelivery.chauffeur_partner.new_booking.NewBookingFragmentChauffer;
+import com.naruto.mekvahandelivery.chauffeur_partner.ongoing_booking.OngoingBookingFragmentChauffer;
+import com.naruto.mekvahandelivery.chauffeur_partner.upcoming_booking.UpcomingBookingFragmentChauffer;
 import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.history.BookingHistoryFragment;

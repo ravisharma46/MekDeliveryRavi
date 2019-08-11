@@ -1,11 +1,10 @@
-package com.naruto.mekvahandelivery.chauffeur_partner.UpcomingBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.ongoing_booking;
 
-public class MyListDataUpcomingBookingchauffer {
-
+public class MyListDataOngoingBookingchauffer {
     private String description;
     private int imgId;
 
-    public MyListDataUpcomingBookingchauffer(String description) {
+    public MyListDataOngoingBookingchauffer(String description) {
         this.description = description;
         //  this.imgId = imgId;
     }

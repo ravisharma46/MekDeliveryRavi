@@ -37,7 +37,7 @@
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity android:name=".feedback_page.Feedback_page" />
         <activity android:name=".about_us.AboutUs" />
-        <activity android:name=".chauffeur_partner.NewBooking.NewBookingOrderView" />
+        <activity android:name=".chauffeur_partner.new_booking.NewBookingOrderView" />
         <activity android:name=".chauffeur_partner.Chauffer" />
         <activity android:name=".customer_report.ViewCustomerReport" />
         <activity

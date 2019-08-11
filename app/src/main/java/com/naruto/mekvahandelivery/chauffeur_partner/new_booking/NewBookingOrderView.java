@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.chauffeur_partner.NewBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.new_booking;
 
 import androidx.appcompat.app.AppCompatActivity;
 

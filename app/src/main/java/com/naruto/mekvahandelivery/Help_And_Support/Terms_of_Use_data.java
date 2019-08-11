@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.Help_And_Support;
+package com.naruto.mekvahandelivery.help_and_support;
 
 public class Terms_of_Use_data {
 

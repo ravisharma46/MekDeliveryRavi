@@ -5,7 +5,7 @@
     android:background="@color/white"
 
     android:layout_height="match_parent"
-    tools:context=".UpcomingOrders.UpcomingFragment">
+    tools:context=".upcoming_orders.UpcomingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
 

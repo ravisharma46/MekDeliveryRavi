@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.CommonFiles;
+package com.naruto.mekvahandelivery.common_files;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

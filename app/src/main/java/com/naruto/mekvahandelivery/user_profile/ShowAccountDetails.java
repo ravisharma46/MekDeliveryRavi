@@ -14,15 +14,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
+import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.R;
 
 import java.util.HashMap;
 
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCOUNT_NUMBER;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.CANCELLED_CHECK;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.IFSC_CODE;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.PAN_NUMBER;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCOUNT_NUMBER;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.CANCELLED_CHECK;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.IFSC_CODE;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.PAN_NUMBER;
 
 public class ShowAccountDetails extends AppCompatActivity {
     private Button bt;

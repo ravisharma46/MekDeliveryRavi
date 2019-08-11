@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.CommonFiles;
+package com.naruto.mekvahandelivery.common_files;
 
 import android.content.Context;
 import android.content.Intent;

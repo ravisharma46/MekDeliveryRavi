@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.Chauffeur_Partner.UpcomingBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.upcoming_booking;
 
 
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.naruto.mekvahandelivery.Chauffeur_Partner.OngoingBooking.OngoingBookingChaufferAdapter;
 import com.naruto.mekvahandelivery.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.AboutUs;
+package com.naruto.mekvahandelivery.about_us;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

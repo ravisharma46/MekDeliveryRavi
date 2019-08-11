@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chauffeur_Partner.NewBooking.NewBookingFragmentChauffer">
+    tools:context=".chauffeur_partner.new_booking.NewBookingFragmentChauffer">
 
     <androidx.recyclerview.widget.RecyclerView
 

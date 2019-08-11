@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.FeedbackPage;
+package com.naruto.mekvahandelivery.feedback_page;
 
 import androidx.appcompat.app.AppCompatActivity;
 

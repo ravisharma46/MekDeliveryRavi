@@ -1,16 +1,13 @@
-package com.naruto.mekvahandelivery.Help_And_Support;
+package com.naruto.mekvahandelivery.help_and_support;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Layout;
 import android.text.SpannableString;
-import android.text.style.AlignmentSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;

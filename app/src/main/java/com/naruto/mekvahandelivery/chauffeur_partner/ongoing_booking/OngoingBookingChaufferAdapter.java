@@ -1,12 +1,10 @@
-package com.naruto.mekvahandelivery.Chauffeur_Partner.UpcomingBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.ongoing_booking;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,38 +13,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.naruto.mekvahandelivery.R;
-import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 
 import java.util.ArrayList;
 
-public class UpcomingBookingChaufferAdapter extends RecyclerView.Adapter<UpcomingBookingChaufferAdapter.ViewHolder> {
-
+public class OngoingBookingChaufferAdapter extends RecyclerView.Adapter<OngoingBookingChaufferAdapter.ViewHolder> {
+    
+    
     private Context context;
-    private ArrayList<MyListDataUpcomingBookingchauffer> dataArrayList;
+    private ArrayList<MyListDataOngoingBookingchauffer> dataArrayList;
 
 
-    public UpcomingBookingChaufferAdapter(ArrayList<MyListDataUpcomingBookingchauffer> dataArrayList) {
+    public OngoingBookingChaufferAdapter(ArrayList<MyListDataOngoingBookingchauffer> dataArrayList) {
         this.dataArrayList = dataArrayList;
 
     }
 
     @NonNull
     @Override
-    public UpcomingBookingChaufferAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public OngoingBookingChaufferAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.chauffer_upcoming_booking, viewGroup, false);
-
-        return new UpcomingBookingChaufferAdapter.ViewHolder(v);
+                .inflate(R.layout.chauffer_ongoing_booking, viewGroup, false);
+        return new OngoingBookingChaufferAdapter.ViewHolder(v);
 
 
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull  UpcomingBookingChaufferAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull OngoingBookingChaufferAdapter.ViewHolder viewHolder, int i) {
 
-        final MyListDataUpcomingBookingchauffer data = dataArrayList.get(i);
+        final MyListDataOngoingBookingchauffer data = dataArrayList.get(i);
 
         viewHolder.textViewstatus.setText(data.getDescription());
 
@@ -64,7 +61,7 @@ public class UpcomingBookingChaufferAdapter extends RecyclerView.Adapter<Upcomin
         viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), UpcomingBookingCustomer.class);
+                Intent i = new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                 view.getContext().startActivity(i);
 
             }
@@ -100,6 +97,7 @@ public class UpcomingBookingChaufferAdapter extends RecyclerView.Adapter<Upcomin
             cv_details=itemView.findViewById(R.id.cv_details);
 
         }
-    }
-
+    } 
+    
+    
 }

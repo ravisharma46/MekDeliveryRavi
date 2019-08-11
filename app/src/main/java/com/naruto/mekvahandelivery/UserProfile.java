@@ -3,19 +3,15 @@ package com.naruto.mekvahandelivery;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,42 +20,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
+import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.user_profile.Checklist;
 import com.naruto.mekvahandelivery.user_profile.ShowAccountDetails;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.accounts.AccountManager.KEY_PASSWORD;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.EMAIL;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.LATITUDE;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.LONGITUDE;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.MOBILE;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.NAME;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.PROFILE_ID;
-import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TYPE;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.EMAIL;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.MOBILE;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.NAME;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.PROFILE_ID;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TYPE;
 
 public class UserProfile extends AppCompatActivity {
 

@@ -1,23 +1,15 @@
-package com.naruto.mekvahandelivery.CustomListData;
+package com.naruto.mekvahandelivery.custom_list_data;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.naruto.mekvahandelivery.OngoingOrders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
-import com.naruto.mekvahandelivery.UpcomingOrders.MyListDataUpcomingBooking;
-import com.naruto.mekvahandelivery.history.Car_Data;
-import com.naruto.mekvahandelivery.history.Service_Completed;
 
 import java.util.ArrayList;
 

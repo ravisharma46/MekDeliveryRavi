@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.OngoingOrders;
+package com.naruto.mekvahandelivery.ongoing_orders;
 
 import android.content.Context;
 import android.content.Intent;

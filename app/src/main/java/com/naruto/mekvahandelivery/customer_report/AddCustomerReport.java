@@ -101,10 +101,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
               Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
               startActivityForResult(i,2);
 
-
         });
         img_cancel.setOnClickListener(view -> img_sign.setImageResource(R.drawable.image_svg));
-
 
         btrc.setOnClickListener(new View.OnClickListener() {
             int check = 1;

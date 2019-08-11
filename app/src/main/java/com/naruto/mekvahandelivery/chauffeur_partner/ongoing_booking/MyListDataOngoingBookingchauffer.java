@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.Chauffeur_Partner.OngoingBooking;
+package com.naruto.mekvahandelivery.chauffeur_partner.ongoing_booking;
 
 public class MyListDataOngoingBookingchauffer {
     private String description;

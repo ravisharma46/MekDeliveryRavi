@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.pickupConfirm;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;

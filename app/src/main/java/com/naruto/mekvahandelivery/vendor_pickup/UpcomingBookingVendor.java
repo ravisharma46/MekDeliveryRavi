@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
-import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.sendNavigateIntent;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
 
 public class UpcomingBookingVendor extends AppCompatActivity {
 

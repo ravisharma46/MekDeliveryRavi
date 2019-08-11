@@ -1,9 +1,9 @@
 package com.naruto.mekvahandelivery.UpcomingOrders;
 
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager;
 import com.naruto.mekvahandelivery.CommonFiles.MySingleton;
-import com.naruto.mekvahandelivery.OngoingOrders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,15 +30,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.CommonFiles.CommonVaribalesFunctions.RETRY_SECONDS;
 import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.ACCESS_TOKEN;
 import static com.naruto.mekvahandelivery.CommonFiles.LoginSessionManager.TOKEN_TYPE;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -53,9 +49,8 @@ public class UpcomingFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_upcoming, container, false);
@@ -93,8 +88,6 @@ public class UpcomingFragment extends Fragment {
 
                         JSONArray jsonArray = Object.getJSONArray("response");
 
-
-
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -102,9 +95,6 @@ public class UpcomingFragment extends Fragment {
 
                             String service_type=jsonObject.getString("service_type");
                             String otp=jsonObject.getString("otp");
-
-
-
 
 
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
@@ -121,12 +111,10 @@ public class UpcomingFragment extends Fragment {
                             String image_url = images.getString(1);
 
 
-
                             String name="",mobile="",address="",latitude="",longitude="",
                                     action1="",action2="",action3="",action4="",action5="",action6="",
                                     action7="",action8="",action9="",action10="",action11="",action12="",
                                     action13="",action14="",action15="";
-
 
                             String serviceName="";
                             String categoryName="";
@@ -134,48 +122,41 @@ public class UpcomingFragment extends Fragment {
                             int status_id = jsonObject.getJSONObject("category").getInt("status_id");
 
 
-
-
                             if(service_type.contains("regular_service")){
                                 JSONObject regular_service=jsonObject.getJSONObject("regular_service");
                                 categoryName=regular_service.getString("category");
                                 serviceName = regular_service.getString("service_name");
 
-                                String action_1[] = (regular_service.getString("action1").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_1 = (regular_service.getString("action1").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action1 = action_1[0];
-                                String action_2[] = (regular_service.getString("action2").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_2 = (regular_service.getString("action2").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action2=action_2[0];
-                                String action_3[] = (regular_service.getString("action3").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_3 = (regular_service.getString("action3").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action3=action_3[0];
-                                String action_4[] = (regular_service.getString("action4").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_4 = (regular_service.getString("action4").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action4=action_4[0];
-                                String action_5[] = (regular_service.getString("action5").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_5 = (regular_service.getString("action5").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action5=action_5[0];
-                                String action_6[] = (regular_service.getString("action6").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_6 = (regular_service.getString("action6").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action6=action_6[0];
-                                String action_7[] = (regular_service.getString("action7").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_7 = (regular_service.getString("action7").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action7=action_7[0];
-                                String action_8[] = (regular_service.getString("action8").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_8 = (regular_service.getString("action8").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action8=action_8[0];
-                                String action_9[] = (regular_service.getString("action9").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_9 = (regular_service.getString("action9").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action9=action_9[0];
-                                String action_10[] = (regular_service.getString("action10").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_10 = (regular_service.getString("action10").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action10=action_10[0];
-                                String action_11[] = (regular_service.getString("action11").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_11 = (regular_service.getString("action11").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action11=action_11[0];
-                                String action_12[] = (regular_service.getString("action12").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_12 = (regular_service.getString("action12").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action12=action_12[0];
-                                String action_13[] = (regular_service.getString("action13").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_13 = (regular_service.getString("action13").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action13=action_13[0];
-                                String action_14[] = (regular_service.getString("action14").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_14 = (regular_service.getString("action14").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action14=action_14[0];
-                                String action_15[] = (regular_service.getString("action15").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
+                                String[] action_15 = (regular_service.getString("action15").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action15=action_15[0];
-
-
-
-
-
 
 
                                 if(status_id==8 ){
@@ -189,7 +170,6 @@ public class UpcomingFragment extends Fragment {
                                     longitude=part.getString("longitude");
 
                                 }
-
 
                                 if(status_id==5){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
@@ -208,7 +188,6 @@ public class UpcomingFragment extends Fragment {
                             if(service_type.contains("sos_service")){
                                 serviceName=jsonObject.getJSONObject("sos_service").getString("service_name");
 
-
                                 if(status_id==5){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
                                     JSONObject cust=customer.getJSONObject(0);
@@ -224,9 +203,6 @@ public class UpcomingFragment extends Fragment {
                                     catch (Exception e){
                                         e.printStackTrace();
                                     }
-
-
-
 
                                 }
                                 if(status_id==8){
@@ -245,21 +221,9 @@ public class UpcomingFragment extends Fragment {
                                         e.printStackTrace();
                                     }
 
-
-
-
                                 }
 
                             }
-
-
-
-
-
-
-
-
-
 
                             String drop_date=jsonObject.getString("pickup_date");
                             String drop_time=jsonObject.getString("pickup_time");
@@ -273,41 +237,25 @@ public class UpcomingFragment extends Fragment {
 
                             String amount=jsonObject.getString("cod");
 
-
-
-
                             String status = jsonObject.getJSONObject("category").getString("status_title");
-
-
-
 
                             //String licencePlate=jsonObject.getString("licence_plate");
                             String licencePlate="DBGT1234";
                             //Log.e("TAG","YES");
                             String paymentStatus="Payment awaiting";
 
-
-
-
-
                             mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
                                     action7,action8,action9,action10,action11,action12,action13,action14,action15
                             ));
-
-break;
-
+                            break;
                         }
-
-
 
                         adapter = new UpcomingAdapter(getActivity(), (ArrayList<MyListDataUpcomingBooking>) mBookingList);
                         recyclerView.setAdapter(adapter);
 
                         mProgressDialog.dismiss();
-
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -325,7 +273,7 @@ break;
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("Accept","application/json");
-                LoginSessionManager loginSessionManager=new LoginSessionManager(getActivity());
+                LoginSessionManager loginSessionManager=new LoginSessionManager(Objects.requireNonNull(getActivity()));
                 HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
                 String token_type=token.get(TOKEN_TYPE);
                 String acces_token= token.get(ACCESS_TOKEN);

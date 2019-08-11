@@ -11,7 +11,7 @@ public class MyListDataUpcomingBooking {
     private String modelName;
     private String numberPlate;
     private String mobile;
-    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount;
+    private String image_url,otp,name,address,latitude,longitude,drop_date,drop_time,amount,service_type,vehicleBrand;
     private String action1;
     private String action2;
     private String action3;
@@ -62,6 +62,8 @@ public class MyListDataUpcomingBooking {
         this.drop_date= drop_date;
         this.drop_time= drop_time;
         this.amount= amount;
+        this.vehicleBrand=vehicleBrand;
+        this.service_type=service_type;
         this.action1 = action1;
         this.action2 = action2;
         this.action3 = action3;
@@ -141,6 +143,14 @@ public class MyListDataUpcomingBooking {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getService_type() {
+        return service_type;
+    }
+
+    public String getVehicleBrand() {
+        return vehicleBrand;
     }
 
     public void setStatus(String status) {

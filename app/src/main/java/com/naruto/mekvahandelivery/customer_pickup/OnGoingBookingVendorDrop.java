@@ -55,7 +55,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
     private Button report_show,drop;
 
 
-    private List<MyListDataOngoingBooking> mBookingList;
+
     public ArrayList<String>arrayList;
     public ArrayList<String>arrayListsend;
 

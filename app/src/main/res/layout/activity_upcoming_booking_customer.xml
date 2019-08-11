@@ -59,7 +59,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="114dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/frame_rect_02"
                     android:orientation="horizontal"
@@ -73,6 +73,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/tv_vehiclebrand"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="16dp"
@@ -86,6 +87,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="40dp"
+                            android:id="@+id/tv_vehiclename"
                             android:fontFamily="@font/montserrat_medium1"
                             android:text="WagonR"
                             android:textColor="@color/chart_deep_red"
@@ -94,6 +96,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/tv_numberPlate"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="64dp"
@@ -106,10 +109,11 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_carimage"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
                         android:layout_gravity="right"
                         android:layout_weight="1"
-                        android:padding="16dp"
                         android:src="@drawable/maruti_suzuki" />
 
 
@@ -141,6 +145,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:clickable="true"
+                        android:id="@+id/tv_servicename"
                         android:fontFamily="@font/montserrat_semibold"
                         android:text="Denting Painting"
                         android:textColor="@color/black"
@@ -148,9 +153,10 @@
 
                     <TextView
                         android:id="@+id/tvDetails"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
+                        android:gravity="right"
                         android:layout_marginRight="12dp"
                         android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                         android:drawablePadding="4dp"
@@ -164,127 +170,12 @@
                 </FrameLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/linear_paint"
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/frame_rect_offwhite">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Interior cleaning"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/frame_rect">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Exterior cleaning"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/frame_rect_offwhite">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Dashboard cleaning"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/frame_rect">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="@string/rubbing"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-
-                </LinearLayout>
+                    android:visibility="gone"
+                    android:id="@+id/recyclerView_listView"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
 
 
                 <TextView
@@ -319,6 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="24dp"
+                        android:id="@+id/tv_name"
                         android:layout_marginTop="40dp"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Name of the customer"
@@ -352,6 +244,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="116dp"
                         android:layout_marginBottom="24dp"
+                        android:id="@+id/tv_address"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Address of the customer"
                         android:textColor="@color/black"
@@ -402,7 +295,7 @@
                     android:background="@drawable/frame_rect_02">
 
                     <TextView
-                        android:id="@+id/date"
+                        android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
@@ -414,7 +307,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/time"
+                        android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"

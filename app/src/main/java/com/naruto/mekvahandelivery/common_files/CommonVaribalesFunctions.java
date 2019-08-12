@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.naruto.mekvahandelivery.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -176,6 +178,38 @@ public class CommonVaribalesFunctions {
 
 
     }
+
+    public static String getDate(String str){
+        Date date = null;
+        try {
+
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(str);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new SimpleDateFormat("EEE, dd MMM").format(date);
+
+    }
+
+    public static String  getTime(String str){
+        String dateString3 = str;
+        String time="";
+        //old format
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        try{
+            Date date3 = sdf.parse(dateString3);
+            //new format
+            SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm a");
+            //formatting the given time to new format with AM/PM
+
+            time=sdf2.format(date3);
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        return time;
+    }
+
 
     public static void pickupConfirm(Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -21,8 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
 import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
+import com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions;
 
 import java.util.ArrayList;
+
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
 
@@ -49,8 +53,9 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         final MyListDataUpcomingBooking data = dataArrayList.get(i);
 
         viewHolder.textstatus.setText(data.getstatus());
-        viewHolder.date.setText(data.getDate());
-        viewHolder.time.setText(data.getTime());
+
+        viewHolder.date.setText(getDate(data.getDate()));
+        viewHolder.time.setText(getTime(data.getTime()));
 
         viewHolder.carName.setText(data.getModelName());
         viewHolder.noPlate.setText(data.getNumberPlate());
@@ -67,10 +72,62 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 .into(viewHolder.logo);
 
 
-        String status=data.getstatus();
+
+        String service_name=data.getService_type();
+        int statusid=data.getStatus_id();
 
 
-        if(status.contains("Awaiting customer pickup")){
+
+        if(service_name.contains("regular_service")){
+            if(statusid==5){
+                viewHolder.cv_details.setOnClickListener(view -> {
+                    Intent i1 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
+                    i1.putExtra("name",data.getName());
+                    i1.putExtra("bookingid",data.getOrderId());
+                    i1.putExtra("address",data.getAddress());
+                    i1.putExtra("latitude",data.getLatitude());
+                    i1.putExtra("longitude",data.getLongitude());
+                    i1.putExtra("dropDate",data.getDrop_date());
+                    i1.putExtra("dropTime",data.getDrop_time());
+                    i1.putExtra("amount",data.getAmount());
+                    i1.putExtra("otp",data.getOtp());
+                    i1.putExtra("mobile",data.getMobile());
+                    i1.putExtra("vehiclename",data.getModelName());
+                    i1.putExtra("vehiclebrand",data.getVehicleBrand());
+                    i1.putExtra("numberplate",data.getNumberPlate());
+                    i1.putExtra("imageurl",data.getImage_url());
+                    i1.putExtra("servicename",data.getService_name());
+                    i1.putExtra("action1",data.getAction1());
+                    i1.putExtra("action2",data.getAction2());
+                    i1.putExtra("action3",data.getAction3());
+                    i1.putExtra("action4",data.getAction4());
+                    i1.putExtra("action5",data.getAction5());
+                    i1.putExtra("action6",data.getAction6());
+                    i1.putExtra("action7",data.getAction7());
+                    i1.putExtra("action8",data.getAction8());
+                    i1.putExtra("action9",data.getAction9());
+                    i1.putExtra("action10",data.getAction10());
+                    i1.putExtra("action11",data.getAction11());
+                    i1.putExtra("action12",data.getAction12());
+                    i1.putExtra("action13",data.getAction13());
+                    i1.putExtra("action14",data.getAction14());
+                    i1.putExtra("action15",data.getAction14());
+                    view.getContext().startActivity(i1);
+                });
+            }
+            if(statusid==8){
+                viewHolder.cv_details.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i1 = new Intent(view.getContext(), UpcomingBookingVendor.class);
+
+                        view.getContext().startActivity(i1);
+                    }
+                });
+            }
+
+        }
+        if(service_name.contains("sos_service")){
             viewHolder.cv_details.setOnClickListener(view -> {
                 Intent i1 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
                 i1.putExtra("name",data.getName());
@@ -105,14 +162,9 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 i1.putExtra("action15",data.getAction14());
                 view.getContext().startActivity(i1);
             });
-        }
-        if(status.contains("Awaiting partner pickup")){
-            viewHolder.cv_details.setOnClickListener(view -> {
-                Log.e("TAG","click");
-                Intent i1 = new Intent(view.getContext(), UpcomingBookingVendor.class);
 
-                view.getContext().startActivity(i1);
-            });
+
+
         }
 
     }

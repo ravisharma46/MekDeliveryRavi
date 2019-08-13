@@ -20,6 +20,9 @@ import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 import java.util.ArrayList;
 
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
+
 public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.ViewHolder> {
 
     private Context context;
@@ -47,8 +50,9 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
        viewHolder.textViewstatus.setText(data.getstatus());
 
-        viewHolder.tv_date.setText(data.getDate());
-        viewHolder.tv_time.setText(data.getTime());
+        viewHolder.tv_date.setText(getDate(data.getDate()));
+        viewHolder.tv_time.setText(getTime(data.getTime()));
+
 
         viewHolder.tv_modelName.setText(data.getModelName());
         viewHolder.tv_numberPlate.setText(data.getNumberPlate());
@@ -66,13 +70,14 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
         //viewHolder.textViewRupee.setText("\u20B9" + " 99");
 
-        String status=data.getstatus();
+        int statusid=data.getStatusid();
         String service_name=data.getService_type();
 
         if (service_name.contains("sos_service")) {
             viewHolder.cv_details.setOnClickListener(view -> {
                 Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                 i1.putExtra("name",data.getName());
+                i1.putExtra("bookingid",data.getOrderId());
                 i1.putExtra("address",data.getAddress());
                 //i1.putExtra("latitude",data.getLatitude());
                 // i1.putExtra("longitude",data.getLongitude());
@@ -90,10 +95,12 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
         else if (service_name.contains("regular_service")) {
 
-            if(status.contains("Awaiting partner dropoff")){
+            if(statusid==6){
+
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1 = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
                     i1.putExtra("name",data.getName());
+                    i1.putExtra("bookingid",data.getOrderId());
                     i1.putExtra("address",data.getAddress());
                     i1.putExtra("latitude",data.getLatitude());
                     i1.putExtra("longitude",data.getLongitude());
@@ -125,11 +132,14 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                     view.getContext().startActivity(i1);
 
                 });
+
             }
-            if(status.contains("Awaiting customer dropoff")){
+
+            if(statusid==9){
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                     i1.putExtra("name",data.getName());
+                    i1.putExtra("bookingid",data.getOrderId());
                     i1.putExtra("address",data.getAddress());
                     //i1.putExtra("latitude",data.getLatitude());
                     // i1.putExtra("longitude",data.getLongitude());

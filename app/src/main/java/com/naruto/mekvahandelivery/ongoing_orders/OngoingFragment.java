@@ -263,7 +263,7 @@ public class OngoingFragment extends Fragment {
                             mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
-                                    action7,action8,action9,action10,action11,action12,action13,action14,action15
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id
                             ));
 
 

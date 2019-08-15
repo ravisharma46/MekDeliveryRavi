@@ -179,7 +179,7 @@
                          android:layout_marginRight="16dp"
                          android:layout_gravity="right"
                          android:enabled="true"
-                         android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                          android:switchMinWidth="48dp"
                          />
 
@@ -233,7 +233,7 @@
                           android:layout_marginRight="16dp"
                           android:layout_gravity="right"
                           android:enabled="true"
-                          android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                           android:switchMinWidth="48dp"
                           />
 
@@ -288,7 +288,7 @@
                           android:layout_marginRight="16dp"
                           android:layout_gravity="right"
                           android:enabled="true"
-                          android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                           android:switchMinWidth="48dp"
                           />
 
@@ -343,7 +343,7 @@
                           android:layout_marginRight="16dp"
                           android:layout_gravity="right"
                           android:enabled="true"
-                          android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                           android:switchMinWidth="48dp"
                           />
 
@@ -398,7 +398,7 @@
                           android:layout_marginRight="16dp"
                           android:layout_gravity="right"
                           android:enabled="true"
-                          android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                           android:switchMinWidth="48dp"
                           />
 
@@ -453,7 +453,7 @@
                           android:layout_marginRight="16dp"
                           android:layout_gravity="right"
                           android:enabled="true"
-                          android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                           android:switchMinWidth="48dp"
                           />
 
@@ -508,7 +508,7 @@
                           android:layout_marginRight="16dp"
                           android:layout_gravity="right"
                           android:enabled="true"
-                          android:theme="@style/SwitchCompatTheme"
+                         style="@style/SwitchCompatStyle"
                           android:switchMinWidth="48dp"
                           />
 

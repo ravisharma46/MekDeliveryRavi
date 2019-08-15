@@ -52,17 +52,13 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         timeD=findViewById(R.id.tv_time);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>#123</font>"));
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
-        upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
 
 
 
         Bundle bundle=getIntent().getExtras();
         String name =bundle.getString("name");
+        String bookingid =bundle.getString("bookingid");
         String address =bundle.getString("address");
        // double latitude= Double.parseDouble(bundle.getString("latitude"));
       //  double longitude=Double.parseDouble( bundle.getString("longitude"));
@@ -86,6 +82,12 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         dateD.setText( dropdate);
         timeD.setText(dropTime);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+        getSupportActionBar().setTitle(Html.fromHtml(bookingid));
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
+        upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
 
 

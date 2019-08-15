@@ -37,6 +37,10 @@ import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.dropConfirm;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getFormattedDate;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getFormattedTime;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
 
 import java.util.ArrayList;
@@ -93,6 +97,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
         Bundle bundle=getIntent().getExtras();
         String name_1 =bundle.getString("name");
+        String bookingid=bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
         double latitude= Double.parseDouble(bundle.getString("latitude"));
         double longitude=Double.parseDouble( bundle.getString("longitude"));
@@ -149,16 +154,16 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend);
+        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend,"ongoing");
         recyclerView.setAdapter(adapter);
 
          name.setText(name_1);
          address.setText(address_1);
 
-       //  String d=getFormattedDate("TAG",dropdate);
 
-         date.setText(dropdate);
-         time.setText(dropTime);
+
+         date.setText(getDate(dropdate));
+         time.setText(getTime(dropTime));
          vehicleName.setText(vehiclename);
          vehicleBrand.setText(vehiclebrand);
          numberPlate.setText(numberplate);
@@ -221,7 +226,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>#123</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml(bookingid));
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

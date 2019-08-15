@@ -127,6 +127,7 @@ public class UpcomingFragment extends Fragment {
                                 categoryName=regular_service.getString("category");
                                 serviceName = regular_service.getString("service_name");
 
+
                                 String[] action_1 = (regular_service.getString("action1").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
                                 action1 = action_1[0];
                                 String[] action_2 = (regular_service.getString("action2").replaceAll("[^a-zA-Z0-9(), ]+", "")).split(",");
@@ -159,6 +160,7 @@ public class UpcomingFragment extends Fragment {
                                 action15=action_15[0];
 
 
+
                                 if(status_id==8 ){
                                     JSONArray partner=jsonObject.getJSONArray("partner");
                                     JSONObject part=partner.getJSONObject(0);
@@ -175,12 +177,20 @@ public class UpcomingFragment extends Fragment {
                                     JSONArray customer=jsonObject.getJSONArray("customer");
                                     JSONObject cust=customer.getJSONObject(0);
 
+
                                     name=cust.getString("name");
                                     mobile=cust.getString("mobile");
                                     JSONObject drop_add=jsonObject.getJSONObject("pickup_address");
                                     address=drop_add.getString("address");
-                                    latitude=drop_add.getString("latitude");
-                                    longitude=drop_add.getString("longitide");
+                                    try {
+                                        latitude=drop_add.getString("latitude");
+                                        longitude=drop_add.getString("longitide");
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+
                                 }
 
                             }
@@ -225,7 +235,7 @@ public class UpcomingFragment extends Fragment {
 
                             }
 
-                            Log.e("TAG",longitude+"z");
+
 
                             String drop_date=jsonObject.getString("pickup_date");
                             String drop_time=jsonObject.getString("pickup_time");
@@ -243,15 +253,14 @@ public class UpcomingFragment extends Fragment {
 
                             //String licencePlate=jsonObject.getString("licence_plate");
                             String licencePlate="DBGT1234";
-                            //Log.e("TAG","YES");
                             String paymentStatus="Payment awaiting";
 
                             mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
-                                    action7,action8,action9,action10,action11,action12,action13,action14,action15
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id
                             ));
-                            break;
+
                         }
 
                         adapter = new UpcomingAdapter(getActivity(), (ArrayList<MyListDataUpcomingBooking>) mBookingList);

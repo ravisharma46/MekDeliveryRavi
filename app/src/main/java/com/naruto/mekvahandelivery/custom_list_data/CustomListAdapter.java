@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.ViewHolder> {
 
     private ArrayList<String> data;
+    private String booking;
 
-    public CustomListAdapter(ArrayList<String> data) {
+    public CustomListAdapter(ArrayList<String> data,String booking) {
         this.data = data;
+        this.booking=booking;
     }
 
 
@@ -33,6 +36,11 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
 
         holder.data.setText(data.get(i));
+
+        if(booking.contains("upcoming")){
+            holder.iv_check.setImageResource(R.drawable.checked_svg);
+        }
+
         if(i%2!=0){
             holder.fm.setBackgroundResource(R.drawable.frame_rect);
         }
@@ -55,12 +63,14 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
         private TextView data;
+        private ImageView iv_check;
         private FrameLayout fm;
 
         private ViewHolder(View view) {
             super(view);
             this.view = view;
             data = view.findViewById(R.id.tv_data);
+            iv_check=view.findViewById(R.id.iv_check);
             fm=view.findViewById(R.id.fl_framelayout);
 
         }

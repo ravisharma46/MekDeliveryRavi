@@ -24,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
 
@@ -72,8 +74,8 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         String name_1 =bundle.getString("name");
         String bookingid =bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
-        double latitude= Double.parseDouble(bundle.getString("latitude"));
-        double longitude=Double.parseDouble( bundle.getString("longitude"));
+//        double latitude= Double.parseDouble(bundle.getString("latitude"));
+    //    double longitude=Double.parseDouble( bundle.getString("longitude"));
         String dropdate=bundle.getString("dropDate");
         String dropTime= bundle.getString("dropTime");
         String amount=bundle.getString("amount");
@@ -127,7 +129,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend);
+        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend,"upcoming");
         recyclerView.setAdapter(adapter);
 
         name.setText(name_1);
@@ -190,7 +192,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
+              //  sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
             }
         });
 

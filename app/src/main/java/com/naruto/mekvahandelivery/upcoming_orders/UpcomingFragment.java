@@ -190,7 +190,7 @@ public class UpcomingFragment extends Fragment {
                                         e.printStackTrace();
                                     }
 
-                                    Log.e("TAG","YES");
+
                                 }
 
                             }

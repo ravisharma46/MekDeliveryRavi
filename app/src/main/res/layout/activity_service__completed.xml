@@ -5,6 +5,8 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
+
+
     <RelativeLayout
         android:id="@+id/firstRelative"
         android:layout_width="match_parent"
@@ -65,70 +67,66 @@
 
 
             <LinearLayout
-                android:id="@+id/linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/vehicleDetails"
-                android:layout_marginLeft="16dp"
+                android:layout_height="114dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/car_background"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/frame_rect_02"
                 android:orientation="horizontal"
-                android:padding="8dp"
                 android:weightSum="2">
 
-                <RelativeLayout
-                    android:id="@+id/relative"
-                    android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/maruti_suzuki"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:text="Maruti Suzuki"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/wagonR"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/maruti_suzuki"
-                        android:fontFamily="@font/gotham_medium1"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="8dp"
-                        android:text="WagonR"
-                        android:textColor="#DA0614"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/car_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/wagonR"
-                        android:fontFamily="@font/gotham_medium1"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="8dp"
-                        android:text="DL1R0ABC"
-                        android:textSize="14dp" />
-
-                </RelativeLayout>
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="96dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <ImageView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_vehiclebrand"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Maruti Suzuki"
+                        android:textColor="@color/app_grey_headline_caption"
+                        android:textSize="14sp" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/car_icon" />
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="40dp"
+                        android:id="@+id/tv_vehiclename"
+                        android:fontFamily="@font/montserrat_medium1"
+                        android:text="WagonR"
+                        android:textColor="@color/chart_deep_red"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_numberPlate"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="64dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="DL1R0ABC"
+                        android:textColor="@color/app_caption_dark_grey"
+                        android:textSize="12sp" />
                 </FrameLayout>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/iv_carimage"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:src="@drawable/maruti_suzuki" />
+
 
             </LinearLayout>
 
@@ -170,6 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginLeft="16dp"
+                        android:id="@+id/tv_servicename"
                         android:layout_marginTop="16dp"
                         android:clickable="true"
                         android:fontFamily="@font/montserrat_semibold"
@@ -179,9 +178,10 @@
 
                     <TextView
                         android:id="@+id/tvDetails"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
+                        android:gravity="right"
                         android:layout_marginRight="8dp"
                         android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                         android:drawablePadding="4dp"
@@ -195,130 +195,13 @@
                 </FrameLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/linear_paint"
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_below="@id/frame1"
-                    android:layout_marginTop="2dp"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/layout_off_white">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Interior cleaning"
-                            android:textColor="@color/offwhite_01"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/right_tick" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/frame_rect">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Exterior cleaning"
-                            android:textColor="@color/offwhite_01"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/right_tick" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/layout_off_white">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Dashboard cleaning"
-                            android:textColor="@color/offwhite_01"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/right_tick" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/frame_rect">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="@string/rubbing_polishing"
-                            android:textColor="@color/offwhite_01"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/right_tick" />
-
-
-                    </FrameLayout>
-
-
-
-
-
-
-                </LinearLayout>
+                    android:visibility="gone"
+                    android:id="@+id/recyclerView_listView"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -415,7 +298,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_1"
+                        android:id="@+id/tv_subtotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -448,7 +331,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_2"
+                        android:id="@+id/tv_tax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -480,7 +363,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_3"
+                        android:id="@+id/tv_additonalcharge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -513,7 +396,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_4"
+                        android:id="@+id/tv_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"

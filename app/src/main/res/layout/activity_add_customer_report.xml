@@ -100,207 +100,192 @@
 
             </LinearLayout>
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/frame_rect_02">
+                android:background="@drawable/frame_rect_02"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Customer Report Checkup"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/frame_rect_02"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Customer Report Count"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|top"
-                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/montserrat_medium"
-                        android:padding="8dp"
-                        android:text="Customer Report Checkup"
+                        android:gravity="center"
+                        android:text="Head Rest"
+                        android:textAllCaps="false"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
 
-                    <FrameLayout
-                        android:id="@+id/frameLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Floor Mats"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
                 </LinearLayout>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/frame_rect_02">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:padding="8dp"
-                            android:text="Customer Report Count"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:text="Head Rest"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:text="Floor Mats"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <EditText
-                            android:id="@+id/et_headrest"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:inputType="numberSigned"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp"
-                            android:importantForAutofill="no" />
-
-                        <EditText
-                            android:id="@+id/et_floormats"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:inputType="numberSigned"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp"
-                            android:importantForAutofill="no" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <EditText
+                        android:id="@+id/et_headrest"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:text="Wheel cap"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                        android:inputType="numberSigned"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        android:importantForAutofill="no" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:text="Mud Flap"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:layout_gravity="center"
+                    <EditText
+                        android:id="@+id/et_floormats"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <EditText
-                            android:id="@+id/et_wheelcap"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:inputType="numberSigned"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp"
-                            android:importantForAutofill="no" />
-
-                        <EditText
-                            android:id="@+id/et_mudflap"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:gravity="center"
-                            android:inputType="numberSigned"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp"
-                            android:importantForAutofill="no" />
-                    </LinearLayout>
-
+                        android:inputType="numberSigned"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        android:importantForAutofill="no" />
                 </LinearLayout>
 
-            </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Wheel cap"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Mud Flap"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <EditText
+                        android:id="@+id/et_wheelcap"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:inputType="numberSigned"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        android:importantForAutofill="no" />
+
+                    <EditText
+                        android:id="@+id/et_mudflap"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:inputType="numberSigned"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        android:importantForAutofill="no" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|top"
+                android:gravity="center"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Other Report"
                 android:textColor="@color/black"
@@ -357,128 +342,128 @@
                     android:scaleY=".5" />
             </FrameLayout>
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/frame_rect_02">
+                android:background="@drawable/frame_rect_02"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvDocument"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Bike Document"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tvDocument"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    style="?buttonBarStyle"
+                    android:weightSum="3">
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/bt_rc"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:onClick="onAddReportButton"
+                        android:background="@drawable/customer_rprt_bt01"
                         android:fontFamily="@font/montserrat_medium"
-                        android:padding="8dp"
-                        android:text="Bike Document"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:text="Rc"
+                        style="?buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        style="?buttonBarStyle"
-                        android:weightSum="3">
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:id="@+id/bt_rc"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Rc"
-                            style="?buttonBarButtonStyle"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:id="@+id/bt_puc"
+                        android:onClick="onAddReportButton"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Puc"
+                        style="?buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:id="@+id/bt_puc"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Puc"
-                            style="?buttonBarButtonStyle"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:id="@+id/bt_insurance"
-                            android:layout_weight="1"
-                            style="?buttonBarButtonStyle"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Insurance"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal"
-                        style="?buttonBarStyle"
-                        android:weightSum="3">
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:id="@+id/bt_roadtax"
-                            android:layout_weight="1"
-                            style="?buttonBarButtonStyle"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Road tax"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            style="?buttonBarButtonStyle"
-                            android:id="@+id/bt_passengertax"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Passenger tax"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:id="@+id/bt_pollutionpaper"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
-                            style="?buttonBarButtonStyle"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium"
-                            android:text="Pollution Paper"
-                            android:textAlignment="center"
-                            android:textAllCaps="false"
-                            android:textScaleX=".9"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:id="@+id/bt_insurance"
+                        android:layout_weight="1"
+                        android:onClick="onAddReportButton"
+                        style="?buttonBarButtonStyle"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Insurance"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
-            </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    style="?buttonBarStyle"
+                    android:weightSum="3">
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:id="@+id/bt_roadtax"
+                        android:layout_weight="1"
+                        style="?buttonBarButtonStyle"
+                        android:onClick="onAddReportButton"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Road tax"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        style="?buttonBarButtonStyle"
+                        android:onClick="onAddReportButton"
+                        android:id="@+id/bt_passengertax"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Passenger tax"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/bt_pollutionpaper"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        style="?buttonBarButtonStyle"
+                        android:onClick="onAddReportButton"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Pollution Paper"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textScaleX=".9"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -500,10 +485,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
                     <ImageView
+                        android:id="@+id/bt_rvcamera"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginEnd="16dp"
+                        android:onClick="onAddReportButton"
                         android:padding="8dp"
                         android:src="@drawable/camera_dummy" />
 
@@ -521,164 +508,30 @@
 
             </FrameLayout>
 
-            <FrameLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_imagedocument"
                 android:layout_width="match_parent"
                 android:layout_height="152dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/frame_rect_02">
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_margin="4dp"
-                                android:paddingStart="8dp"
-                                android:paddingBottom="8dp"
-                                android:src="@drawable/ic_cancel" />
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_margin="4dp"
-                                android:paddingStart="8dp"
-                                android:paddingBottom="8dp"
-                                android:src="@drawable/ic_cancel" />
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_margin="4dp"
-                                android:paddingStart="8dp"
-                                android:paddingBottom="8dp"
-                                android:src="@drawable/ic_cancel" />
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_margin="4dp"
-                                android:paddingStart="8dp"
-                                android:paddingBottom="8dp"
-                                android:src="@drawable/ic_cancel" />
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                </HorizontalScrollView>
-
-            </FrameLayout>
+                android:background="@drawable/frame_rect_02" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/frame_rect_02"
+                android:layout_gravity="center"
                 android:orientation="vertical">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_medium"
-                        android:padding="8dp"
-                        android:text="@string/petrol_diesel_meter"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </FrameLayout>
+                    android:gravity="center"
+                    android:layout_gravity="center|top"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="@string/petrol_diesel_meter"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -853,7 +706,6 @@
                             android:textSize="12sp" />
                     </FrameLayout>
 
-
                     <FrameLayout
                         android:layout_width="2dp"
                         android:id="@+id/fmview"
@@ -875,31 +727,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="16dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/frame_sqr"
                         android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/image_cross"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_margin="4dp"
+                            android:paddingStart="8dp"
+                            android:paddingBottom="8dp"
+                            android:src="@drawable/ic_cancel" />
 
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:id="@+id/image_sign"
+                            android:layout_height="80dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/frame_sqr">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:id="@+id/image_cross"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_margin="4dp"
-                                android:paddingStart="8dp"
-                                android:paddingBottom="8dp"
-                                android:src="@drawable/ic_cancel" />
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:id="@+id/image_sign"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/image_svg" />
-                        </FrameLayout>
-
+                            android:src="@drawable/image_svg" />
                     </FrameLayout>
 
                 </LinearLayout>
@@ -907,6 +753,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/bt_add_customer_details"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="32dp"

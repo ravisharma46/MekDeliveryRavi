@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,26 +26,46 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.naruto.mekvahandelivery.R;
+import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.signature.SignatureActivity;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 @SuppressLint("SetTextI18n")
 public class AddCustomerReport extends AppCompatActivity implements Car_Add_fragment.OnFragmentInteractionListener,
-        Bike_Add_fragment.OnFragmentInteractionListener {
+        Bike_Add_fragment.OnFragmentInteractionListener, AddCustomerReportAdapter.OnAdapterClickListener {
     private FrameLayout car, bike;
+    Button btn, addDetails;
     private ImageView car_image, bike_image, img_sign;
     private TextView tvbike, tvcar, document;
-    private String addCarReportapiUrl = "https://mekvahan.com/api/CarRegularServiceReport";
+    RecyclerView.Adapter imageDocumentAdapter;
+    RecyclerView imageDocumentView;
+    File mPhotoFile;
+    private LoginSessionManager sessionManager;
+
+    private String addCarReportapiUrl = "https://mekvahan.com/api/CarRegularServiceReport", buttonId;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    private int rv_index = 6;
+    private Uri photoURI = null, prevPhotoUri = null;
     private Map<String, String> carButton, bikeButton, reportButton;
+    private Map<String, Integer> dataIndex;
+    private List<AddCustomerReportData> reportDocument;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +78,10 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         bikeButton = initBikeData();
         reportButton = new HashMap<>();
         reportButton = initReportData();
+        dataIndex = new HashMap<>();
+        dataIndex = initIndex();
+        reportDocument = new ArrayList<>();
+        reportDocument = initDocumentData();
 
         try{
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
@@ -72,6 +97,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             e.printStackTrace();
         }
 
+        addDetails = findViewById(R.id.bt_add_customer_details);
         car = findViewById(R.id.frame_2);
         bike = findViewById(R.id.frame_1);
         car_image = findViewById(R.id.car_image);
@@ -80,8 +106,15 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         tvcar = findViewById(R.id.tvcar);
         document = findViewById(R.id.tvDocument);
         img_sign=findViewById(R.id.image_sign);
+        sessionManager = new LoginSessionManager(this);
         Button take_sign = findViewById(R.id.bt_sign);
         ImageView img_cancel = findViewById(R.id.image_cross);
+        imageDocumentView = findViewById(R.id.rv_imagedocument);
+        imageDocumentView.setHasFixedSize(false);
+        imageDocumentView.setLayoutManager(new LinearLayoutManager(imageDocumentView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        imageDocumentAdapter = new AddCustomerReportAdapter(reportDocument, imageDocumentView.getContext());
+        imageDocumentView.setAdapter(imageDocumentAdapter);
 
         loadCarFragment();
         load_car();
@@ -97,12 +130,100 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
         });
         take_sign.setOnClickListener(view -> {
-              Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
-              startActivityForResult(i,2);
+            Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
+            startActivityForResult(i,2);
 
         });
         img_cancel.setOnClickListener(view -> img_sign.setImageResource(R.drawable.image_svg));
 
+        addDetails.setOnClickListener(this::sendUserDetails);
+
+    }
+
+    private void sendUserDetails(View view) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, addCarReportapiUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.e("response report", response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, Throwable::printStackTrace) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> bodyparams = new HashMap<>();
+                //TODO add all body parameters
+//                bodyparams.put("booking_id", )
+                bodyparams.put("tool_kit", carButton.get("toolkit"));
+                bodyparams.put("stepney", carButton.get("stepney"));
+                bodyparams.put("mudguard", carButton.get("mudguard"));
+                bodyparams.put("mats", carButton.get("mats"));
+                bodyparams.put("keychain", carButton.get("keychain"));
+                bodyparams.put("service_book", carButton.get("servicebook"));
+                bodyparams.put("wheel_cover", carButton.get("wheelcover"));
+                bodyparams.put("lock", carButton.get("lock"));
+                bodyparams.put("jack_handle", carButton.get("jackhandle"));
+                bodyparams.put("carpet", carButton.get("carpet"));
+                bodyparams.put("stereo_panel", carButton.get("stereopanel"));
+                bodyparams.put("speakers", carButton.get("speakers"));
+                bodyparams.put("car_cover", "");    //?????
+                bodyparams.put("seat_cover", "");   //????
+                bodyparams.put("meter_percentage", ""); //?????
+                bodyparams.put("odometer", reportButton.get("odometer"));
+                bodyparams.put("description", reportButton.get("otherreport"));
+                bodyparams.put("battery_info", reportButton.get("sbrand"));
+                bodyparams.put("miscellaneous", "");    //??????
+                bodyparams.put("head_rest", reportButton.get("headrest"));
+                bodyparams.put("floor_mats", reportButton.get("floormats"));
+                bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
+                bodyparams.put("mud_flap", reportButton.get("mudflap"));
+                bodyparams.put("rc", null);
+                bodyparams.put("puc", null);
+                bodyparams.put("insurance", null);
+                bodyparams.put("road_tax", null);
+                bodyparams.put("passenger_tax", null);
+                bodyparams.put("pollution_paper", null);
+                bodyparams.put("image", null);
+                bodyparams.put("signature", null);
+
+                return bodyparams;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headerParams = new HashMap<>();
+                headerParams.put("Accept", "application/json");
+                headerParams.put("Authorization", sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.TOKEN_TYPE)+" "+sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.ACCESS_TOKEN));
+                return headerParams;
+            }
+        };
+    }
+
+    // storing the index of all buttons passed in the list sequentially
+    private Map<String, Integer> initIndex() {
+        Map<String, Integer> dataIndex = new HashMap<>();
+        dataIndex.put("bt_rc", 0);
+        dataIndex.put("bt_puc", 1);
+        dataIndex.put("bt_insurance", 2);
+        dataIndex.put("bt_roadtax", 3);
+        dataIndex.put("bt_passengertax", 4);
+        dataIndex.put("bt_pollutionpaper", 5);
+        return dataIndex;
+    }
+
+    private List<AddCustomerReportData> initDocumentData() {
+        List<AddCustomerReportData> reportDocument = new ArrayList<>();
+        reportDocument.add(new AddCustomerReportData("bt_rc", null, "0"));
+        reportDocument.add(new AddCustomerReportData("bt_puc", null,"0"));
+        reportDocument.add(new AddCustomerReportData("bt_insurance", null, "0"));
+        reportDocument.add(new AddCustomerReportData("bt_roadtax", null, "0"));
+        reportDocument.add(new AddCustomerReportData("bt_passengertax", null, "0"));
+        reportDocument.add(new AddCustomerReportData("bt_pollutionpaper", null, "0"));
+        return reportDocument;
     }
 
     private Map<String, String> initReportData() {
@@ -111,14 +232,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportData.put("floormats", "0");
         reportData.put("wheelcap", "0");
         reportData.put("mudflap", "0");
-        reportData.put("btrc", "0");
-        reportData.put("btpuc", "0");
-        reportData.put("btinsurance", "0");
-        reportData.put("btroadtax", "0");
-        reportData.put("btpassengertax", "0");
-        reportData.put("btpollutionpaper", "0");
         reportData.put("odometer", "0");
-        reportData.put("otherreport", null);
+        reportData.put("otherreport", "0");
         reportData.put("sbrand", null);
         return reportData;
     }
@@ -189,7 +304,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 b_Fragment.getTag()).commit();
     }
 
-    private void dispatchTakePictureIntent() {
+    private void dispatchTakePictureIntent(int requestCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -199,15 +314,17 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
-            ...
+                ex.printStackTrace();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
+                photoURI = FileProvider.getUriForFile(this,
+                        "com.naruto.mekvahandelivery",
                         photoFile);
+
+                mPhotoFile = photoFile;
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                startActivityForResult(takePictureIntent, requestCode);
             }
         }
     }
@@ -217,15 +334,18 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
+        // Save a file: path for use with ACTION_VIEW intents
+//        File image = File.createTempFile(
+//                imageFileName,  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
+//        String currentPhotoPath = image.getAbsolutePath();
+        return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
     }
 
     @Override
@@ -239,6 +359,23 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             }
             img_sign.setImageBitmap(bmp);
+        } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            int dIndex = dataIndex.get(buttonId);
+            reportDocument.set(dIndex, new AddCustomerReportData(buttonId, photoURI, "1"));
+            imageDocumentAdapter.notifyItemChanged(dIndex);
+            imageDocumentView.scrollToPosition(dIndex);
+            prevPhotoUri = photoURI;
+            btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
+            btn.setTextColor(getColor(android.R.color.white));
+        } else if (requestCode == REQUEST_TAKE_PHOTO) {
+            prevPhotoUri = null;
+        } else if (requestCode == 3 && resultCode == RESULT_OK) {
+            reportDocument.add(rv_index, new AddCustomerReportData("bt_rvcamera", photoURI, "3"));
+            imageDocumentAdapter.notifyItemInserted(rv_index++);
+            imageDocumentView.scrollToPosition(rv_index-1);
+            prevPhotoUri = photoURI;
+        } else if (requestCode == 3) {
+            prevPhotoUri = null;
         }
     }
 
@@ -262,34 +399,80 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     }
 
     private void onBikeFragmentButtonClick(View view) {
-        String buttonId = getResources().getResourceEntryName(view.getId());
+        String bikeButtonId = getResources().getResourceEntryName(view.getId());
         Button btn = findViewById(view.getId());
-        buttonId = buttonId.substring(3);
-        if (bikeButton.get(buttonId).equals("0")) {
+        bikeButtonId = bikeButtonId.substring(3);
+        if (bikeButton.get(bikeButtonId).equals("0")) {
             btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
             btn.setTextColor(getColor(android.R.color.white));
-            bikeButton.put(buttonId, "1");
-        } else if (carButton.get(buttonId).equals("1")) {
+            bikeButton.put(bikeButtonId, "1");
+        } else if (carButton.get(bikeButtonId).equals("1")) {
             btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
             btn.setTextColor(getColor(android.R.color.black));
-            bikeButton.put(buttonId, "0");
+            bikeButton.put(bikeButtonId, "0");
         }
     }
 
     private void onCarFragmentButtonClick(View view) {
-        String buttonId = getResources().getResourceEntryName(view.getId());
+        String carButtonId = getResources().getResourceEntryName(view.getId());
         Button btn = findViewById(view.getId());
-        buttonId = buttonId.substring(3);
-        if (carButton.get(buttonId).equals("0")) {
+        carButtonId = carButtonId.substring(3);
+        if (carButton.get(carButtonId).equals("0")) {
             btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
             btn.setTextColor(getColor(android.R.color.white));
-            carButton.put(buttonId, "1");
-        } else if (carButton.get(buttonId).equals("1")) {
+            carButton.put(carButtonId, "1");
+        } else if (carButton.get(carButtonId).equals("1")) {
             btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
             btn.setTextColor(getColor(android.R.color.black));
-            carButton.put(buttonId, "0");
+            carButton.put(carButtonId, "0");
         }
     }
+
+    public void onAddReportButton(View view) {
+        buttonId = getResources().getResourceEntryName(view.getId());
+
+        if (!buttonId.equals("bt_rvcamera")) {
+            btn = findViewById(view.getId());
+            if (reportDocument.get(dataIndex.get(buttonId)).getBtnstate().equals("0")) {
+                dispatchTakePictureIntent(REQUEST_TAKE_PHOTO);
+            } else if (reportDocument.get(dataIndex.get(buttonId)).getBtnstate().equals("1")) {
+                reportDocument.set(dataIndex.get(buttonId), new AddCustomerReportData(buttonId, null, "0"));
+                imageDocumentAdapter.notifyItemChanged(dataIndex.get(buttonId));
+                prevPhotoUri = null;
+                btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
+                btn.setTextColor(getColor(android.R.color.black));
+            }
+        } else {
+            dispatchTakePictureIntent(3);
+        }
+    }
+
+    public void onAddReportButton(String buttonId) {
+        this.buttonId = buttonId;
+        if (!buttonId.endsWith("z")) {
+            btn = findViewById(getResources().getIdentifier(buttonId, "id", getApplicationContext().getPackageName()));
+
+            reportDocument.set(dataIndex.get(buttonId), new AddCustomerReportData(buttonId, null, "0"));
+            imageDocumentAdapter.notifyItemChanged(dataIndex.get(buttonId));
+            prevPhotoUri = null;
+            btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
+            btn.setTextColor(getColor(android.R.color.black));
+        } else {
+            buttonId = buttonId.substring(0, buttonId.length()-1);
+            int final_index = Integer.parseInt(buttonId);
+            reportDocument.remove(final_index);
+            imageDocumentView.getRecycledViewPool().clear();
+            imageDocumentAdapter.notifyItemRemoved(final_index);
+
+            // use below code only in case of crash due to position issue
+//            imageDocumentAdapter.notifyDataSetChanged();
+
+            rv_index--;
+        }
+    }
+
+    @Override
+    public void onAdapterInteraction(String buttonId) {
+        onAddReportButton(buttonId);
+    }
 }
-
-

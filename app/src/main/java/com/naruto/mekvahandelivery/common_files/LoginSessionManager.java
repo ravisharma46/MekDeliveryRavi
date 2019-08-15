@@ -1,5 +1,6 @@
 package com.naruto.mekvahandelivery.common_files;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +45,7 @@ public class LoginSessionManager {
 
 
 
+    @SuppressLint("CommitPrefEdits")
     public LoginSessionManager(Context context) {
         this.context = context;
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);

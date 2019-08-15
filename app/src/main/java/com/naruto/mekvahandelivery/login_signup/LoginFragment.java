@@ -202,7 +202,6 @@ public class LoginFragment extends Fragment {
 						String resp=jsonObject.getString("response");
 						if(status==1) {
 							Toast.makeText(getActivity(),resp,Toast.LENGTH_SHORT).show();
-							return;
 						}
 
 					} catch (JSONException e) {

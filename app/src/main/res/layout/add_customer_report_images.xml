@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:orientation="horizontal"
+	tools:ignore="UnusedAttribute,ContentDescription"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<FrameLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginHorizontal="16dp"
+		android:layout_marginVertical="16dp"
+		android:background="@drawable/frame_sqr">
+	<ImageView
+		android:id="@+id/iv_cancel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end"
+		android:layout_margin="4dp"
+		android:paddingStart="8dp"
+		android:onClick="onAddReportButton"
+		android:paddingBottom="8dp"
+		android:src="@drawable/ic_cancel" />
+
+	<ImageView
+		android:id="@+id/iv_document"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:layout_gravity="center"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginBottom="16dp" />
+	</FrameLayout>
+
+</LinearLayout>

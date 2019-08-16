@@ -200,7 +200,9 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class));
+                Intent intent = new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class);
+                intent.putExtra("bookingId", bookingid);
+                startActivity(intent);
             }
         });
 

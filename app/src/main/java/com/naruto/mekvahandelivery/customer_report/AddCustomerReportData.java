@@ -20,7 +20,7 @@ class AddCustomerReportData {
         return buttonId;
     }
 
-    Uri getPhotoUri() {
+    public Uri getPhotoUri() {
         return photoUri;
     }
 

@@ -51,7 +51,7 @@ import java.util.Map;
 public class AddCustomerReport extends AppCompatActivity implements Car_Add_fragment.OnFragmentInteractionListener,
         Bike_Add_fragment.OnFragmentInteractionListener, AddCustomerReportAdapter.OnAdapterClickListener {
     private FrameLayout car, bike;
-    Button btn, addDetails;
+    private Button btn, addDetails;
     private ImageView car_image, bike_image, img_sign;
     private TextView tvbike, tvcar, document;
     RecyclerView.Adapter imageDocumentAdapter;
@@ -97,7 +97,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             e.printStackTrace();
         }
 
-        addDetails = findViewById(R.id.bt_add_customer_details);
+        addDetails = findViewById(R.id.bt_done);
         car = findViewById(R.id.frame_2);
         bike = findViewById(R.id.frame_1);
         car_image = findViewById(R.id.car_image);
@@ -352,7 +352,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==2 && data != null & resultCode == RESULT_OK){
+        if(requestCode==2 && data!=null){
             byte[] bytes = data.getByteArrayExtra("image");
             Bitmap bmp = null;
             if (bytes != null) {

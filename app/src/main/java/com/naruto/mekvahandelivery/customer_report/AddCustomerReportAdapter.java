@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.naruto.mekvahandelivery.R;
 
 import java.util.List;
@@ -46,6 +47,15 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
     public void onBindViewHolder(@NonNull AddCustomerReportAdapter.ViewHolder holder, int position) {
         final AddCustomerReportData data = imageDocumentList.get(position);
 
+        final ImagePopup imagePopup = new ImagePopup(context);
+        imagePopup.setWindowHeight(800); // Optional
+        imagePopup.setWindowWidth(800); // Optional
+        imagePopup.setBackgroundColor(context.getResources().getColor(R.color.offwhite_01));
+        imagePopup.setFullScreen(true); // Optional
+        imagePopup.setHideCloseIcon(true);  // Optional
+        imagePopup.setImageOnClickClose(true);
+
+
         if (data.getPhotoUri() != null) {
 
             Glide.with(context)
@@ -54,9 +64,25 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
                             .fitCenter()
                             .placeholder(R.drawable.image_svg))
                     .into(holder.ivevent);
+
+
         } else {
             holder.ivevent.setImageDrawable(context.getDrawable(R.drawable.image_svg));
         }
+
+          // Optional
+
+
+
+        imagePopup.initiatePopupWithPicasso(data.getPhotoUri());
+        holder.ivevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagePopup.viewPopup();
+            }
+        });
+
+
 
         holder.ivcancel.setOnClickListener(view -> {
             if (data.getBtnstate().equals("1")) {

@@ -186,7 +186,7 @@ public class OngoingFragment extends Fragment {
                                 }
 
 
-                                if(status_id==9){
+                                if(status_id==9 || status_id==10){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
                                     JSONObject cust=customer.getJSONObject(0);
 

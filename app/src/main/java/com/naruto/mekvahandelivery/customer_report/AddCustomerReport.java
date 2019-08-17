@@ -133,16 +133,22 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         loadCarFragment();
         load_car();
 
-        car.setOnClickListener(view -> {
+
+        Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
+        String vehicle_type =bundle.getString("vehicletype");
+
+
+        if(vehicle_type.contains("car")){
             loadCarFragment();
             load_car();
+        }
 
-        });
-        bike.setOnClickListener(view -> {
+        else if(vehicle_type.contains("bike")){
             loadBikeFragment();
             load_bike();
+        }
 
-        });
         take_sign.setOnClickListener(view -> {
             Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
             startActivityForResult(i,2);

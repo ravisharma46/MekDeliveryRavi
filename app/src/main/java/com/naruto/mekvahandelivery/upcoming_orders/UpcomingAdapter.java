@@ -25,6 +25,7 @@ import com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions;
 
 import java.util.ArrayList;
 
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 
@@ -62,6 +63,20 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         viewHolder.orderId.setText(data.getOrderId());
         viewHolder.serviceType.setText(data.getService_name());
 
+        viewHolder.needHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callIntent(context,"123456789");
+            }
+        });
+
+        viewHolder.connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callIntent(context,data.getMobile());
+            }
+        });
+
         String payment_status=data.getPayment_status();
         if(payment_status.contains("Payment awaiting")){
             viewHolder.paymentStatus.setText(payment_status);
@@ -83,6 +98,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
                     i1.putExtra("name",data.getName());
+                    i1.putExtra("vehicletype",data.getVehicle_type());
                     i1.putExtra("bookingid",data.getOrderId());
                     i1.putExtra("address",data.getAddress());
                     i1.putExtra("latitude",data.getLatitude());
@@ -131,6 +147,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             viewHolder.cv_details.setOnClickListener(view -> {
                 Intent i1 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
                 i1.putExtra("name",data.getName());
+                i1.putExtra("vehicletype",data.getVehicle_type());
                 i1.putExtra("bookingid",data.getOrderId());
                 i1.putExtra("address",data.getAddress());
                 i1.putExtra("latitude",data.getLatitude());
@@ -179,7 +196,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView  textstatus,carName, noPlate, paymentStatus,orderId,time,date,serviceType;
+        private TextView  textstatus,carName, noPlate, paymentStatus,orderId,time,date,serviceType,needHelp;
         private CardView cv_details;
         private LinearLayout connect;
         private ImageView logo;
@@ -197,6 +214,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             time=itemView.findViewById(R.id.time);
             date=itemView.findViewById(R.id.date);
             serviceType=itemView.findViewById(R.id.service_type);
+
+            needHelp=itemView.findViewById(R.id.tv_needhelp);
 
             connect=itemView.findViewById(R.id.connectButton);
 //

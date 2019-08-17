@@ -9,15 +9,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
+
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.Result;
+import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
+import com.naruto.mekvahandelivery.common_files.MySingleton;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class CaptureActivityPortrait extends AppCompatActivity   implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
 
-    private  String res ="123456";
+    private  String res ="";
+    private static final String myUrl = "https://mekvahan.com/api/delivery/upcoming_ongoing";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +47,73 @@ public class CaptureActivityPortrait extends AppCompatActivity   implements ZXin
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);
 
+        Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
+        String otp =bundle.getString("otp");
+        res=otp;
+
+
+
     }
+
+
+    private  void sendDb_pickupConfirm(String otp_input){
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl, response -> {
+
+            try{
+
+                JSONObject object=new JSONObject(response);
+                int status_1 = object.getInt("status");
+                if(status_1!=1) {
+
+                    Toast.makeText(getApplicationContext(),"Incorrect OTP",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+
+
+        },error -> {
+            Toast.makeText(getApplicationContext(),"Something get wrong",Toast.LENGTH_LONG).show();
+            Log.e("TAG", error.toString());
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> headers=new HashMap<>();
+                headers.put("otp",otp_input);
+                return headers;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers=new HashMap<>();
+                headers.put("Accept","application/json");
+                LoginSessionManager loginSessionManager=new LoginSessionManager(Objects.requireNonNull(getApplication()));
+                HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
+                String token_type=token.get(TOKEN_TYPE);
+                String acces_token= token.get(ACCESS_TOKEN);
+                headers.put("Authorization",token_type+" "+acces_token);
+
+                return headers;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
+                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
+
+
+
 
 
     @Override
@@ -52,6 +138,7 @@ public class CaptureActivityPortrait extends AppCompatActivity   implements ZXin
 
         String ans=rawResult.toString();
         if(ans.contentEquals(res)){
+            sendDb_pickupConfirm(res);
             pickupConfirm(CaptureActivityPortrait.this);
             delay(new NavActivity());
 

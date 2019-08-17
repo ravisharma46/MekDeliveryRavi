@@ -46,9 +46,6 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
         }
 
 
-
-
-
     }
 
     @Override

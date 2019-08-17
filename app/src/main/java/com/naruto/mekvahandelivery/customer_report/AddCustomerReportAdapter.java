@@ -50,11 +50,10 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
         final ImagePopup imagePopup = new ImagePopup(context);
         imagePopup.setWindowHeight(800); // Optional
         imagePopup.setWindowWidth(800); // Optional
-        imagePopup.setBackgroundColor(context.getResources().getColor(R.color.offwhite_01));
+        imagePopup.setBackgroundColor(context.getColor(R.color.offwhite_01));
         imagePopup.setFullScreen(true); // Optional
         imagePopup.setHideCloseIcon(true);  // Optional
         imagePopup.setImageOnClickClose(true);
-
 
         if (data.getPhotoUri() != null) {
 
@@ -65,22 +64,14 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
                             .placeholder(R.drawable.image_svg))
                     .into(holder.ivevent);
 
-
         } else {
             holder.ivevent.setImageDrawable(context.getDrawable(R.drawable.image_svg));
         }
 
           // Optional
 
-
-
         imagePopup.initiatePopupWithPicasso(data.getPhotoUri());
-        holder.ivevent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imagePopup.viewPopup();
-            }
-        });
+        holder.ivevent.setOnClickListener(view -> imagePopup.viewPopup());
 
 
 

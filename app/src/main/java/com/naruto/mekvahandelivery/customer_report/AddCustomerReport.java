@@ -29,22 +29,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.TimeoutError;
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
-import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.signature.SignatureActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.BASE;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
 
@@ -62,7 +63,7 @@ import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.
 public class AddCustomerReport extends AppCompatActivity implements Car_Add_fragment.OnFragmentInteractionListener,
         Bike_Add_fragment.OnFragmentInteractionListener, AddCustomerReportAdapter.OnAdapterClickListener {
     private FrameLayout car, bike;
-    private Button btn, addDetails;
+    private Button btn;
     private ImageView car_image, bike_image, img_sign;
     private TextView tvbike, tvcar, document;
     RecyclerView.Adapter imageDocumentAdapter;
@@ -70,11 +71,10 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     File mPhotoFile;
     private LoginSessionManager sessionManager;
 
-    private String addCarReportapiUrl = "https://mekvahan.com/api/CarRegularServiceReport",
-            bookingId, buttonId;
+    private String bookingId, buttonId;
     static final int REQUEST_TAKE_PHOTO = 1;
     private int rv_index = 6;
-    private Uri photoURI = null, prevPhotoUri = null;
+    private Uri photoURI = null;
     private Map<String, String> carButton, bikeButton, reportButton;
     private Map<String, Integer> dataIndex;
     private List<AddCustomerReportData> reportDocument;
@@ -111,7 +111,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             e.printStackTrace();
         }
 
-        addDetails = findViewById(R.id.bt_done);
+        Button addDetails = findViewById(R.id.bt_done);
         car = findViewById(R.id.frame_2);
         bike = findViewById(R.id.frame_1);
         car_image = findViewById(R.id.car_image);
@@ -150,110 +150,143 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         });
         img_cancel.setOnClickListener(view -> img_sign.setImageResource(R.drawable.image_svg));
 
-        addDetails.setOnClickListener(this::sendUserDetails);
+        addDetails.setOnClickListener(view -> sendUserDetails());
 
     }
 
-    private void sendUserDetails(View view) {
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, addCarReportapiUrl, response -> {
+    private void sendUserDetails() {
+
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, BASE+"CarRegularServiceReport",
+                response -> {
+
+            String resultResponse = new String(response.data);
+                    try {
+                        JSONObject jsonObject = new JSONObject(resultResponse);
+                        JSONObject dataObject = jsonObject.getJSONObject("data");
+                        JSONArray documentDataArray = dataObject.getJSONArray("rc");
+                        Log.e("response report", documentDataArray.getString(1)+" new bookingId:" +
+                                dataObject.getString("booking_id"));
+                        Glide.with(this).load(documentDataArray.getString(1)).into(img_sign);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+        }, error -> {
+            NetworkResponse networkResponse = error.networkResponse;
+            String errorMessage = "Unknown error";
+            if (networkResponse == null) {
+                if (error.getClass().equals(TimeoutError.class)) {
+                    errorMessage = "Request timeout";
+                } else if (error.getClass().equals(NoConnectionError.class)) {
+                    errorMessage = "Failed to connect server";
+                }
+            } else {
+                String result = new String(networkResponse.data);
                 try {
-    //                JSONObject jsonObject = new JSONObject(response);
-    //                JSONObject dataObject = jsonObject.getJSONObject("data");
-    //                JSONArray documentDataArray = dataObject.getJSONArray("rc");
-                    Log.e("response report", "null 123");
-                } catch (Exception e) {
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getString("status");
+                    String message = response.getString("message");
+
+                    Log.e("Error Status", status);
+                    Log.e("Error Message", message);
+
+                    if (networkResponse.statusCode == 404) {
+                        errorMessage = "Resource not found";
+                    } else if (networkResponse.statusCode == 401) {
+                        errorMessage = message+" Please login again";
+                    } else if (networkResponse.statusCode == 400) {
+                        errorMessage = message+ " Check your inputs";
+                    } else if (networkResponse.statusCode == 500) {
+                        errorMessage = message+" Something is getting wrong";
+                    }
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }, volleyError -> {
-                Log.e("volleyerror", "api not responding");
-                volleyError.printStackTrace();
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> bodyparams = new HashMap<>();
-                    //TODO add all body parameters
-                    bodyparams.put("booking_id", bookingId);
-                    bodyparams.put("tool_kit", carButton.get("toolkit"));
-                    bodyparams.put("stepney", carButton.get("stepney"));
-                    bodyparams.put("mudguard", carButton.get("mudguard"));
-                    bodyparams.put("mats", carButton.get("mats"));
-                    bodyparams.put("keychain", carButton.get("keychain"));
-                    bodyparams.put("service_book", carButton.get("servicebook"));
-                    bodyparams.put("wheel_cover", carButton.get("wheelcover"));
-                    bodyparams.put("lock", carButton.get("lock"));
-                    bodyparams.put("jack_handle", carButton.get("jackhandle"));
-                    bodyparams.put("carpet", carButton.get("carpet"));
-                    bodyparams.put("stereo_panel", carButton.get("stereopanel"));
-                    bodyparams.put("speakers", carButton.get("speakers"));
-                    bodyparams.put("car_cover", "null");    //?????
-                    bodyparams.put("seat_cover", "null");   //????
-                    bodyparams.put("meter_percentage", "null"); //?????
-                    bodyparams.put("odometer", reportButton.get("odometer"));
-                    bodyparams.put("description", reportButton.get("otherreport"));
-                    bodyparams.put("battery_info", reportButton.get("sbrand"));
-                    bodyparams.put("miscellaneous", "null");    //??????
-                    bodyparams.put("head_rest", reportButton.get("headrest"));
-                    bodyparams.put("floor_mats", reportButton.get("floormats"));
-                    bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
-                    bodyparams.put("mud_flap", reportButton.get("mudflap"));
-                    bodyparams.put("rc", "null");   //reportDocument.get(0).getPhotoUri().toString());
-                    bodyparams.put("puc", "null");
-                    bodyparams.put("insurance", "null");
-                    bodyparams.put("road_tax", "null");
-                    bodyparams.put("passenger_tax", "null");
-                    bodyparams.put("pollution_paper", "null");
-                    bodyparams.put("image", "null");
-                    bodyparams.put("signature", "null");
+            }
+            Log.i("Error", errorMessage);
+            error.printStackTrace();
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> bodyparams = new HashMap<>();
+                bodyparams.put("booking_id", bookingId);
+                bodyparams.put("tool_kit", carButton.get("toolkit"));
+                bodyparams.put("stepney", carButton.get("stepney"));
+                bodyparams.put("mudguard", carButton.get("mudguard"));
+                bodyparams.put("mats", carButton.get("mats"));
+                bodyparams.put("keychain", carButton.get("keychain"));
+                bodyparams.put("service_book", carButton.get("servicebook"));
+                bodyparams.put("wheel_cover", carButton.get("wheelcover"));
+                bodyparams.put("lock", carButton.get("lock"));
+                bodyparams.put("jack_handle", carButton.get("jackhandle"));
+                bodyparams.put("carpet", carButton.get("carpet"));
+                bodyparams.put("stereo_panel", carButton.get("stereopanel"));
+                bodyparams.put("speakers", carButton.get("speakers"));
+                bodyparams.put("car_cover", "1");    //?????
+                bodyparams.put("seat_cover", "1");   //????
+                bodyparams.put("meter_percentage", "1"); //?????
+                bodyparams.put("odometer", reportButton.get("odometer"));
+                bodyparams.put("description", reportButton.get("otherreport"));
+                bodyparams.put("battery_info", reportButton.get("sbrand"));
+                bodyparams.put("miscellaneous", "1");    //??????
+                bodyparams.put("head_rest", reportButton.get("headrest"));
+                bodyparams.put("floor_mats", reportButton.get("floormats"));
+                bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
+                bodyparams.put("mud_flap", reportButton.get("mudflap"));
 
-                    return bodyparams;
-                }
+                return bodyparams;
+            }
 
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headerParams = new HashMap<>();
-                    headerParams.put("Accept", "application/json");
-                    headerParams.put("Authorization", sessionManager.getUserDetailsFromSP()
-                            .get(LoginSessionManager.TOKEN_TYPE)+" "+sessionManager.getUserDetailsFromSP()
-                            .get(LoginSessionManager.ACCESS_TOKEN));
-                    return headerParams;
-                }
+            @Override
+            protected Map<String, DataPart> getByteData() throws IOException {
+                Map<String, DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
+                params.put("rc", new DataPart("rc.jpg", getBytes(0), "image/jpeg"));
+                params.put("puc", new DataPart("puc.jpg", getBytes(1), "image/jpeg"));
+                params.put("insurance", new DataPart("insurance", getBytes(2), "image/jpeg"));
+                params.put("road_tax", new DataPart("road_tax", getBytes(3), "image/jpeg"));
+                params.put("pollution_paper", new DataPart("pollution_paper", getBytes(4), "image/jpeg"));
+                params.put("passenger_tax", new DataPart("passenger_tax", getBytes(5), "image/jpeg"));
+                params.put("image", new DataPart("image", getBytes(6), "image/jpeg"));
+                params.put("signature", new DataPart("signature", getBytes(2), "image/jpeg"));
 
-//                @Override
-//                public byte[] getBody() throws AuthFailureError {
-//                    try {
-//                        InputStream iStream =   getContentResolver().openInputStream(reportDocument.get(0).getPhotoUri());
-//                        byte[] inputData;
-//                        inputData = getBytes(iStream);
-//                        return inputData;
-//                    } catch (IOException e) {
-//                        Log.e("byte param", "getbytes");
-//                        e.printStackTrace();
-//                    }
-//                    return super.getBody();
-//                }
 
-            };
+                return params;
+            }
 
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
-                    NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headerParams = new HashMap<>();
+                headerParams.put("Accept", "application/json");
+                headerParams.put("Authorization", sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.TOKEN_TYPE)+" "+sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.ACCESS_TOKEN));
+                return headerParams;
+            }
+        };
 
-            MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(stringRequest);
-        } catch (Exception e) {
-            Log.e("try failed", "no connection");
-            e.printStackTrace();
-        }
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
+                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
     }
 
-    public byte[] getBytes(InputStream inputStream) throws IOException {
+    public byte[] getBytes(int i) throws IOException {
+
+        InputStream iStream =   getContentResolver().openInputStream(reportDocument.get(i).getPhotoUri());
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
 
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
+        int len;
+        if (iStream != null) {
+            while ((len = iStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+        } else
+            Log.e("iStream: ", "null");
+        assert iStream != null;
+        iStream.close();
         return byteBuffer.toByteArray();
     }
 
@@ -288,7 +321,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportData.put("mudflap", "0");
         reportData.put("odometer", "0");
         reportData.put("otherreport", "0");
-        reportData.put("sbrand", "null");
+        reportData.put("sbrand", "Exide");
         return reportData;
     }
 
@@ -418,18 +451,16 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             reportDocument.set(dIndex, new AddCustomerReportData(buttonId, photoURI, "1"));
             imageDocumentAdapter.notifyItemChanged(dIndex);
             imageDocumentView.scrollToPosition(dIndex);
-            prevPhotoUri = photoURI;
             btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
             btn.setTextColor(getColor(android.R.color.white));
         } else if (requestCode == REQUEST_TAKE_PHOTO) {
-            prevPhotoUri = null;
+            Log.e("no image", "no image was captured!");
         } else if (requestCode == 3 && resultCode == RESULT_OK) {
             reportDocument.add(rv_index, new AddCustomerReportData("bt_rvcamera", photoURI, "3"));
             imageDocumentAdapter.notifyItemInserted(rv_index++);
             imageDocumentView.scrollToPosition(rv_index-1);
-            prevPhotoUri = photoURI;
         } else if (requestCode == 3) {
-            prevPhotoUri = null;
+            Log.e("no image", "no image was captured!");
         }
     }
 
@@ -492,7 +523,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             } else if (reportDocument.get(dataIndex.get(buttonId)).getBtnstate().equals("1")) {
                 reportDocument.set(dataIndex.get(buttonId), new AddCustomerReportData(buttonId, null, "0"));
                 imageDocumentAdapter.notifyItemChanged(dataIndex.get(buttonId));
-                prevPhotoUri = null;
                 btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
                 btn.setTextColor(getColor(android.R.color.black));
             }
@@ -508,7 +538,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
             reportDocument.set(dataIndex.get(buttonId), new AddCustomerReportData(buttonId, null, "0"));
             imageDocumentAdapter.notifyItemChanged(dataIndex.get(buttonId));
-            prevPhotoUri = null;
             btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
             btn.setTextColor(getColor(android.R.color.black));
         } else {

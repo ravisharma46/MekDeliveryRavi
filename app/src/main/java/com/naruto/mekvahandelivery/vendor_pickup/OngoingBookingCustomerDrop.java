@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.broooapps.otpedittext2.OtpEditText;
 import com.naruto.mekvahandelivery.R;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.dropConfirm;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
@@ -31,6 +32,9 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
     private EditText otp;
     private ImageView call;
     private TextView sub_total,tax,additional_charge,total,nameC,addressC,dateD,timeD;
+    private OtpEditText otpEditText;
+
+    private String otp_input="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,14 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         addressC=findViewById(R.id.tv_address);
         dateD=findViewById(R.id.tv_date);
         timeD=findViewById(R.id.tv_time);
+        //OTP text
+        otpEditText=findViewById(R.id.et_otp);
+        otpEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                otp_input = String.valueOf(((EditText) findViewById(R.id.et_otp)).getText());
+            }
+        });
 
 
 
@@ -69,12 +81,11 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         String mobileNo=bundle.getString("mobile");
 
 
-        //OTP text
-        otp=findViewById(R.id.et_otp);
-        String input = String.valueOf(otp.getText());
 
-        tax.setText("\u20B9" + " 00");
-        additional_charge.setText("\u20B9" + " 00");
+
+
+        tax.setText("\u20B9" + null);
+        additional_charge.setText("\u20B9" + null);
         sub_total.setText("\u20B9 " +amount );
         total.setText("\u20B9 " + amount);
         nameC.setText( name);
@@ -114,7 +125,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         bt_drop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("TAG",input);
+                Log.e("TAG",otp_input);
                 dropConfirm(OngoingBookingCustomerDrop.this);
             }
         });

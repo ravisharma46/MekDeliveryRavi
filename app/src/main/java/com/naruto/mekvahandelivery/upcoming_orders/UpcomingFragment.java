@@ -251,8 +251,7 @@ public class UpcomingFragment extends Fragment {
 
                             String status = jsonObject.getJSONObject("category").getString("status_title");
 
-                            //String licencePlate=jsonObject.getString("licence_plate");
-                            String licencePlate="DBGT1234";
+                            String licencePlate=jsonObject.getString("license_plate");
                             String paymentStatus="Payment awaiting";
 
                             mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,

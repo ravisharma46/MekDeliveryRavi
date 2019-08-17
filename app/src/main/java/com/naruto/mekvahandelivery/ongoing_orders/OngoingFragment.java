@@ -254,7 +254,7 @@ public class OngoingFragment extends Fragment {
 
 
 
-                            String licencePlate="SDF1233";
+                            String licencePlate=jsonObject.getString("license_plate");
                             String paymentStatus="Payment awaiting";
 
 

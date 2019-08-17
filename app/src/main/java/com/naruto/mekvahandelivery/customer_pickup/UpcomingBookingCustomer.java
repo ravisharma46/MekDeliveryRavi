@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.broooapps.otpedittext2.OtpEditText;
 import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
@@ -55,6 +58,9 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
     private Uri photoURI;
     private int photoIndex = 0;
 
+    private String otp_input="";
+    private OtpEditText otpEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +81,15 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         vehicleName=findViewById(R.id.tv_vehiclename);
         numberPlate=findViewById(R.id.tv_numberPlate);
         serviceName=findViewById(R.id.tv_servicename);
+
+        otpEditText=findViewById(R.id.et_otp);
+        otpEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                otp_input = String.valueOf(((EditText) findViewById(R.id.et_otp)).getText());
+                Log.e("TAG",otp_input);
+            }
+        });
 
         arrayList=new ArrayList<>();
         arrayListsend=new ArrayList<>();
@@ -206,7 +221,15 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
             startActivity(intent);
         });
 
-        confirm_booking.setOnClickListener(view -> pickupConfirm(UpcomingBookingCustomer.this));
+        confirm_booking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               pickupConfirm(UpcomingBookingCustomer.this);
+            }
+        });
+
+
 
     }
 

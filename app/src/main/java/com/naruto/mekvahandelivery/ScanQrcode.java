@@ -46,11 +46,16 @@ public class ScanQrcode extends AppCompatActivity  {
             e.printStackTrace();
         }
 
+        Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
+        String otp =bundle.getString("otp");
+
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(ScanQrcode.this,CaptureActivityPortrait.class);
+                i.putExtra("otp",otp);
                startActivity(i);
             }
         });

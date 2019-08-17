@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,23 +31,19 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
-import com.naruto.mekvahandelivery.ongoing_orders.MyListDataOngoingBooking;
 import com.naruto.mekvahandelivery.R;
+import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.dropConfirm;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getFormattedDate;
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getFormattedTime;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
@@ -58,19 +55,13 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
     private ImageView call,iv_qrcode,vehicle_image;
     private Button report_show,drop;
 
-
-
     public ArrayList<String>arrayList;
     public ArrayList<String>arrayListsend;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoingbooking_vendordrop);
-
-
 
         tvDetails = findViewById(R.id.tvDetails_1);
 
@@ -93,7 +84,6 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
         arrayList=new ArrayList<>();
         arrayListsend=new ArrayList<>();
-
 
         Bundle bundle=getIntent().getExtras();
         String name_1 =bundle.getString("name");
@@ -149,42 +139,32 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
             }
         }
 
-
-
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView_listView);
+        recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend,"ongoing");
+        adapter = new CustomListAdapter(arrayListsend,"ongoing");
         recyclerView.setAdapter(adapter);
 
-         name.setText(name_1);
-         address.setText(address_1);
+        name.setText(name_1);
+        address.setText(address_1);
 
+        date.setText(getDate(dropdate));
+        time.setText(getTime(dropTime));
+        vehicleName.setText(vehiclename);
+        vehicleBrand.setText(vehiclebrand);
+        numberPlate.setText(numberplate);
+        serviceName.setText(servicename);
 
+        try{
+            Glide.with(OnGoingBookingVendorDrop.this).load(vehicleImageUrl)
+                    .into(vehicle_image);
 
-         date.setText(getDate(dropdate));
-         time.setText(getTime(dropTime));
-         vehicleName.setText(vehiclename);
-         vehicleBrand.setText(vehiclebrand);
-         numberPlate.setText(numberplate);
-         serviceName.setText(servicename);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
-
-
-         try{
-             Glide.with(OnGoingBookingVendorDrop.this).load(vehicleImageUrl)
-                     .into(vehicle_image);
-
-         }
-         catch (Exception e){
-             e.printStackTrace();
-         }
-
-
-
-
-       generateQrcode(otp_1);
-
+        generateQrcode(otp_1);
 
         final ImagePopup imagePopup = new ImagePopup(this);
         imagePopup.setWindowHeight(800); // Optional
@@ -193,7 +173,6 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         imagePopup.setFullScreen(true); // Optional
         imagePopup.setHideCloseIcon(true);  // Optional
         imagePopup.setImageOnClickClose(true);  // Optional
-
 
         imagePopup.initiatePopup(iv_qrcode.getDrawable());
 
@@ -211,18 +190,12 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
             }
         });
 
-
-
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendNavigateIntent(OnGoingBookingVendorDrop.this,latitude,longitude);
             }
         });
-
-
-
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
@@ -231,7 +204,6 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-
         tvDetails.setOnClickListener(new View.OnClickListener() {
             int check = 1;
 
@@ -239,10 +211,10 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (check == 1) {
-                  recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     check = 0;
                 } else {
-                   recyclerView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
                     check = 1;
                 }
 
@@ -266,16 +238,12 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
     }
 
-
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -335,7 +303,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
             Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.mek_logo);
 
-           // iv_qrcode.setImageBitmap(mergeBitmaps(overlay,bitmap));
+            // iv_qrcode.setImageBitmap(mergeBitmaps(overlay,bitmap));
             iv_qrcode.setImageBitmap(bitmap);
 
         }catch (Exception er){

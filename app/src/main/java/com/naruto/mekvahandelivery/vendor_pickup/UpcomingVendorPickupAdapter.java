@@ -1,4 +1,4 @@
-package com.naruto.mekvahandelivery.customer_pickup;
+package com.naruto.mekvahandelivery.vendor_pickup;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,35 +15,34 @@ import com.naruto.mekvahandelivery.R;
 
 import java.util.List;
 
-class AddUpcomingCustomerPickupAdapter extends RecyclerView.Adapter<AddUpcomingCustomerPickupAdapter.ViewHolder> {
+public class UpcomingVendorPickupAdapter extends RecyclerView.Adapter<UpcomingVendorPickupAdapter.ViewHolder> {
 
-    private OnAdapterClickListener onAdapterClickListener;
-    private List<CustomerPickupData> customerPickupDataList;
     private Context context;
+    private List<UpcomingVendorPickupData> upcomingVendorPickupDataList;
+    private OnAdapterClickListener onAdapterClickListener;
 
-    public AddUpcomingCustomerPickupAdapter(List<CustomerPickupData> customerPickupDataList, Context context) {
-        this.customerPickupDataList = customerPickupDataList;
+    UpcomingVendorPickupAdapter(List<UpcomingVendorPickupData> upcomingVendorPickupDataList, Context context) {
         this.context = context;
+        this.upcomingVendorPickupDataList = upcomingVendorPickupDataList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+    public UpcomingVendorPickupAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.add_customer_report_images, parent, false);
 
         if (this.context instanceof OnAdapterClickListener) {
             this.onAdapterClickListener = (OnAdapterClickListener)this.context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement OnAdapterClickListener");
+            throw new RuntimeException(context.toString() + " must implement onAdapterClickListener.");
         }
-
-        return new AddUpcomingCustomerPickupAdapter.ViewHolder(view);
+        return new UpcomingVendorPickupAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final CustomerPickupData data = customerPickupDataList.get(position);
+    public void onBindViewHolder(@NonNull UpcomingVendorPickupAdapter.ViewHolder holder, int position) {
+        final UpcomingVendorPickupData data = upcomingVendorPickupDataList.get(position);
 
         if (data != null) {
             try {
@@ -57,19 +56,18 @@ class AddUpcomingCustomerPickupAdapter extends RecyclerView.Adapter<AddUpcomingC
                 e.printStackTrace();
             }
 
-            holder.ivcancel.setOnClickListener(view -> {
-                onAdapterClickListener.onAdapterInteraction(holder.getAdapterPosition());
-            });
+            holder.ivcancel.setOnClickListener(view ->
+                    onAdapterClickListener.onAdapterInteraction(holder.getAdapterPosition()));
         }
 
     }
 
     @Override
     public int getItemCount() {
-        if (customerPickupDataList == null) {
-            return 0;
+        if (upcomingVendorPickupDataList != null) {
+            return upcomingVendorPickupDataList.size();
         } else
-            return customerPickupDataList.size();
+            return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

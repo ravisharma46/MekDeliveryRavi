@@ -95,7 +95,7 @@ public class OngoingFragment extends Fragment {
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                             String bookingId = jsonObject.getString("booking_id");
+                             String bookingId = "#"+jsonObject.getString("booking_id");
 
                              String service_type=jsonObject.getString("service_type");
                              String otp=jsonObject.getString("otp");

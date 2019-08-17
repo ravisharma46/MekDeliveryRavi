@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
 import com.naruto.mekvahandelivery.vendor_pickup.OngoingBookingCustomerDrop;
 import java.util.ArrayList;
 
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 
@@ -58,6 +60,20 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
         viewHolder.tv_numberPlate.setText(data.getNumberPlate());
         viewHolder.tv_bookingid.setText(data.getOrderId());
         viewHolder.tv_serviceType.setText(data.getService_name());
+
+        viewHolder.tv_needHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callIntent(context,"123456789");
+            }
+        });
+
+        viewHolder.ll_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callIntent(context,data.getMobile());
+            }
+        });
 
         String payment_status=data.getPayment_status();
         if(payment_status.contains("Payment awaiting")){
@@ -168,9 +184,10 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_bookingid, textViewstatus, tv_numberPlate,tv_serviceType,tv_paymentStatus,tv_date,tv_time,tv_modelName;
+        private TextView tv_bookingid, textViewstatus, tv_numberPlate,tv_serviceType,tv_paymentStatus,tv_date,tv_time,tv_modelName,tv_needHelp;
         private ImageView iv_logo;
         private CardView cv_details;
+        private LinearLayout ll_connect;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -185,6 +202,8 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
             tv_time= itemView.findViewById(R.id.time);
             tv_modelName= itemView.findViewById(R.id.mode_name);
             iv_logo= itemView.findViewById(R.id.logo);
+            tv_needHelp=itemView.findViewById(R.id.tv_needhelp);
+            ll_connect=itemView.findViewById(R.id.ll_connect);
 
         }
     }

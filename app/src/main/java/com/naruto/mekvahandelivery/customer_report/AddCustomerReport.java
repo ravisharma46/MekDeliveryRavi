@@ -221,13 +221,13 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 bodyparams.put("carpet", carButton.get("carpet"));
                 bodyparams.put("stereo_panel", carButton.get("stereopanel"));
                 bodyparams.put("speakers", carButton.get("speakers"));
-                bodyparams.put("car_cover", "1");    //?????
-                bodyparams.put("seat_cover", "1");   //????
+                bodyparams.put("car_cover", "0");    //?????
+                bodyparams.put("seat_cover", "0");   //????
                 bodyparams.put("meter_percentage", "1"); //?????
                 bodyparams.put("odometer", reportButton.get("odometer"));
                 bodyparams.put("description", reportButton.get("otherreport"));
                 bodyparams.put("battery_info", reportButton.get("sbrand"));
-                bodyparams.put("miscellaneous", "1");    //??????
+                bodyparams.put("miscellaneous", "0");    //??????
                 bodyparams.put("head_rest", reportButton.get("headrest"));
                 bodyparams.put("floor_mats", reportButton.get("floormats"));
                 bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
@@ -249,7 +249,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 params.put("passenger_tax", new DataPart("passenger_tax", getBytes(5), "image/jpeg"));
                 params.put("image", new DataPart("image", getBytes(6), "image/jpeg"));
                 params.put("signature", new DataPart("signature", getBytes(2), "image/jpeg"));
-
 
                 return params;
             }

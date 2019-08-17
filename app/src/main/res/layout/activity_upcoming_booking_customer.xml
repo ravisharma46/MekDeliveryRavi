@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:ignore="HardcodedText,UnusedAttribute,SmallSp,ContentDescription,RtlSymmetry"
     android:scrollbars="none"
+    android:background="@android:color/white"
     tools:context=".customer_pickup.UpcomingBookingCustomer">
     <TextView
         android:layout_width="match_parent"

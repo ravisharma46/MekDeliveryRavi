@@ -91,7 +91,7 @@ public class UpcomingFragment extends Fragment {
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                            String bookingId = jsonObject.getString("booking_id");
+                            String bookingId = "#"+jsonObject.getString("booking_id");
 
                             String service_type=jsonObject.getString("service_type");
                             String otp=jsonObject.getString("otp");
@@ -100,6 +100,7 @@ public class UpcomingFragment extends Fragment {
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
 
                             String vehicle_name= vehicle.getString("name");
+                            String vehicle_type=vehicle.getString("vehicle_type");
                             //vehicle_logo
                             JSONArray companyId =vehicle.getJSONArray("company_id");
                             JSONObject object2 = companyId.getJSONObject(0);
@@ -257,7 +258,7 @@ public class UpcomingFragment extends Fragment {
                             mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
-                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id,vehicle_type
                             ));
 
                         }

@@ -19,6 +19,7 @@ import com.naruto.mekvahandelivery.ongoing_orders.MyListDataOngoingBooking;
 
 import java.util.ArrayList;
 
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 
@@ -53,8 +54,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.date.setText(getDate(data.getDate()));
         holder.time.setText(getTime(data.getTime()));
         holder.booking.setText(data.getOrderId());
-        Glide.with(context).load(data.getLogo())
-                .into(holder.carlogo);
+        holder.needHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callIntent(context,"123456789");
+            }
+        });
+
+        try{
+            Glide.with(context).load(data.getLogo())
+                    .into(holder.carlogo);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
 
 
 //        if (cardata.getProgress().equals("Service Cancelled")) {
@@ -110,7 +124,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
-        private TextView carName, numberPlate, service_type, progress,booking,date,time;
+        private TextView carName, numberPlate, service_type, progress,booking,date,time,needHelp;
         private ImageView carlogo, reasonimg;
         private CardView cv_details;
 
@@ -127,6 +141,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             cv_details=view.findViewById(R.id.cv_details);
             time=view.findViewById(R.id.tv_time);
             date=view.findViewById(R.id.tv_date);
+            needHelp=view.findViewById(R.id.tv_needhelp);
         }
     }
 }

@@ -3,24 +3,23 @@ package com.naruto.mekvahandelivery.ongoing_orders;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.common_files.MySingleton;
-import com.naruto.mekvahandelivery.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -215,7 +214,7 @@ public class OngoingFragment extends Fragment {
                                     address=drop_add.getString("address");
                                     try {
                                         latitude=drop_add.getString("latitude");
-                                        longitude=drop_add.getString("longitide");
+                                        longitude=drop_add.getString("longitude");
                                     }
                                     catch (Exception e){
                                         e.printStackTrace();

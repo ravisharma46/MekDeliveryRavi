@@ -98,6 +98,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         Bundle bundle=getIntent().getExtras();
         assert bundle != null;
         String name_1 =bundle.getString("name");
+        String vehicle_type =bundle.getString("vehicletype");
         String bookingid =bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
 //        double latitude= Double.parseDouble(bundle.getString("latitude"));
@@ -218,6 +219,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         report.setOnClickListener(view -> {
             Intent intent = new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class);
             intent.putExtra("bookingId", bookingid);
+            intent.putExtra("vehicletype", vehicle_type);
             startActivity(intent);
         });
 

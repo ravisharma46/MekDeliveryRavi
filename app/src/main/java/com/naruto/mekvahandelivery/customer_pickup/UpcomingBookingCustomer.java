@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,34 +18,42 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
-
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
-
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-public class UpcomingBookingCustomer extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
+
+public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpcomingCustomerPickupAdapter.OnAdapterClickListener {
+    private RecyclerView recyclerView, recyclerViewCustPickup;
+    private RecyclerView.Adapter adapter, adapterCustPickup;
     private LinearLayout navigation;
+    private ImageView call,vehicle_image;
     private TextView tvDetails,date, time,name,address,vehicleBrand,vehicleName,numberPlate,serviceName;
     private Button report,confirm_booking;
-    private ImageView call,vehicle_image;
 
-    public ArrayList<String>arrayList;
-    public ArrayList<String>arrayListsend;
+    public ArrayList<String> arrayList, arrayListsend;
+    public List<CustomerPickupData> customerPickupDataList;
+    private final int REQUEST_CODE = 10;
+    private Uri photoURI;
+    private int photoIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +78,10 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
 
         arrayList=new ArrayList<>();
         arrayListsend=new ArrayList<>();
-
+        customerPickupDataList = new ArrayList<>();
 
         Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
         String name_1 =bundle.getString("name");
         String bookingid =bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
@@ -124,13 +135,19 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             }
         }
 
-
-
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView_listView);
+        recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend,"upcoming");
+        adapter = new CustomListAdapter(arrayListsend,"upcoming");
         recyclerView.setAdapter(adapter);
+
+        recyclerViewCustPickup = findViewById(R.id.rv_imagecustomerpickup);
+        recyclerViewCustPickup.setHasFixedSize(false);
+        recyclerViewCustPickup.setLayoutManager(new LinearLayoutManager(recyclerViewCustPickup.getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+
+        adapterCustPickup = new AddUpcomingCustomerPickupAdapter(customerPickupDataList, recyclerViewCustPickup.getContext());
+        recyclerViewCustPickup.setAdapter(adapterCustPickup);
 
         name.setText(name_1);
         address.setText(address_1);
@@ -144,8 +161,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         numberPlate.setText(numberplate);
         serviceName.setText(servicename);
 
-
-
         try{
             Glide.with(UpcomingBookingCustomer.this).load(vehicleImageUrl)
                     .into(vehicle_image);
@@ -155,13 +170,11 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         getSupportActionBar().setTitle(Html.fromHtml(bookingid));
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
-        upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
+        final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
+        upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         tvDetails.setOnClickListener(new View.OnClickListener() {
@@ -178,56 +191,31 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                     check = 1;
                 }
 
-
             }
         });
 
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callIntent(UpcomingBookingCustomer.this,mobileNo);
-            }
+        call.setOnClickListener(view -> callIntent(UpcomingBookingCustomer.this,mobileNo));
+
+        navigation.setOnClickListener(view -> {
+          //  sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
         });
 
-        navigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              //  sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
-            }
+        report.setOnClickListener(view -> {
+            Intent intent = new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class);
+            intent.putExtra("bookingId", bookingid);
+            startActivity(intent);
         });
 
-
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class);
-                intent.putExtra("bookingId", bookingid);
-                startActivity(intent);
-            }
-        });
-
-        confirm_booking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               pickupConfirm(UpcomingBookingCustomer.this);
-            }
-        });
-
-
+        confirm_booking.setOnClickListener(view -> pickupConfirm(UpcomingBookingCustomer.this));
 
     }
 
-
-
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -238,9 +226,62 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    public void onAddImageButtonClick(View view) {
+        dispatchTakePictureIntent(REQUEST_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            customerPickupDataList.add(photoIndex, new CustomerPickupData(photoIndex, photoURI));
+            adapterCustPickup.notifyItemInserted(photoIndex++);
+            recyclerViewCustPickup.scrollToPosition(photoIndex-1);
+        }
+    }
 
+    private void dispatchTakePictureIntent(int requestCode) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        "com.naruto.mekvahandelivery",
+                        photoFile);
 
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, requestCode);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+    }
+
+    @Override
+    public void onAdapterInteraction(int position) {
+        customerPickupDataList.remove(position);
+        recyclerViewCustPickup.getRecycledViewPool().clear();
+        adapterCustPickup.notifyItemRemoved(position);
+    }
 }
-

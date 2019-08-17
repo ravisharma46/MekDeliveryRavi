@@ -193,7 +193,7 @@
                     android:padding="12dp">
 
                     <TextView
-                        android:id="@+id/need_help"
+                        android:id="@+id/tv_needhelp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="left"

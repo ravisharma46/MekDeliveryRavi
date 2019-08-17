@@ -9,9 +9,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.broooapps.otpedittext2.OtpEditText;
 import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 
@@ -45,6 +48,9 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     public ArrayList<String>arrayList;
     public ArrayList<String>arrayListsend;
 
+    private String otp_input="";
+    private OtpEditText otpEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,15 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         vehicleName=findViewById(R.id.tv_vehiclename);
         numberPlate=findViewById(R.id.tv_numberPlate);
         serviceName=findViewById(R.id.tv_servicename);
+
+        otpEditText=findViewById(R.id.et_otp);
+        otpEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                otp_input = String.valueOf(((EditText) findViewById(R.id.et_otp)).getText());
+                Log.e("TAG",otp_input);
+            }
+        });
 
         arrayList=new ArrayList<>();
         arrayListsend=new ArrayList<>();
@@ -209,6 +224,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                pickupConfirm(UpcomingBookingCustomer.this);
             }
         });

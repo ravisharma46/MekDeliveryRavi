@@ -189,14 +189,19 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                     Log.e("Error Status", status);
                     Log.e("Error Message", message);
 
-                    if (networkResponse.statusCode == 404) {
-                        errorMessage = "Resource not found";
-                    } else if (networkResponse.statusCode == 401) {
-                        errorMessage = message+" Please login again";
-                    } else if (networkResponse.statusCode == 400) {
-                        errorMessage = message+ " Check your inputs";
-                    } else if (networkResponse.statusCode == 500) {
-                        errorMessage = message+" Something is getting wrong";
+                    switch (networkResponse.statusCode) {
+                        case 404:
+                            errorMessage = "Resource not found";
+                            break;
+                        case 401:
+                            errorMessage = message + " Please login again";
+                            break;
+                        case 400:
+                            errorMessage = message + " Check your inputs";
+                            break;
+                        case 500:
+                            errorMessage = message + " Something is getting wrong";
+                            break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -223,7 +228,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 bodyparams.put("speakers", carButton.get("speakers"));
                 bodyparams.put("car_cover", "0");    //?????
                 bodyparams.put("seat_cover", "0");   //????
-                bodyparams.put("meter_percentage", "1"); //?????
+                bodyparams.put("meter_percentage", "1"); //fuelmeter seekbar
                 bodyparams.put("odometer", reportButton.get("odometer"));
                 bodyparams.put("description", reportButton.get("otherreport"));
                 bodyparams.put("battery_info", reportButton.get("sbrand"));
@@ -356,7 +361,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         bike.setBackgroundResource(R.color.chart_deep_red);
         tvbike.setTextColor(Color.WHITE);
         bike_image.setImageResource(R.drawable.bike_white);
-
         car.setBackgroundResource(R.color.white);
         tvcar.setTextColor(Color.BLACK);
         car_image.setImageResource(R.drawable.carblack);
@@ -367,7 +371,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         bike.setBackgroundResource(R.color.white);
         tvbike.setTextColor(Color.BLACK);
         bike_image.setImageResource(R.drawable.bike_black);
-
         car.setBackgroundResource(R.color.chart_deep_red);
         tvcar.setTextColor(Color.WHITE);
         car_image.setImageResource(R.drawable.car_white);

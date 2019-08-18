@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText"
     tools:context=".customer_report.Car_view_fragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            style="?buttonBarStyle"
             android:weightSum="3">
-
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvstepney"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Stepney"
@@ -29,10 +28,12 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvtoolkit"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Tool kit"
@@ -40,16 +41,17 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvmudguard"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Mudguard"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -57,12 +59,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3">
-
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvkeychain"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Keychain"
@@ -70,10 +73,12 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvservicebook"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Service book"
@@ -81,16 +86,17 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvmats"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Mats"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -98,12 +104,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3">
-
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvwheelcover"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Wheel cover"
@@ -111,10 +118,12 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvlock"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Lock"
@@ -122,16 +131,17 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvjackhandle"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="@string/jack_handle"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -140,12 +150,13 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             android:weightSum="3">
-
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvcarpet"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Carpet"
@@ -153,10 +164,12 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvstereopanel"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Stereo panel"
@@ -164,19 +177,17 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/bt_cvspeakers"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="?buttonBarButtonStyle"
                 android:background="@drawable/customer_rprt_bt01"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Speakers"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
-    </LinearLayout>
-
-
-</FrameLayout>
+</LinearLayout>

@@ -18,12 +18,13 @@ class ViewCustomerReportAdapter extends RecyclerView.Adapter<ViewCustomerReportA
 
     private OnReportAdapterClickListener onReportAdapterClickListener;
     
-    private List<String> imageStringList;
+    private List<String> imageStringList, keyList;
     private Context context;
     
-    ViewCustomerReportAdapter(List<String> imageStringList, Context context) {
+    ViewCustomerReportAdapter(List<String> keyList, List<String> imageStringList, Context context) {
         this.context = context;
         this.imageStringList = imageStringList;
+        this.keyList = keyList;
     }
 
     @NonNull
@@ -42,18 +43,20 @@ class ViewCustomerReportAdapter extends RecyclerView.Adapter<ViewCustomerReportA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final String data = imageStringList.get(position);
-        
-        if (data != null) {
+        final String finalKey = keyList.get(position);
+
+        if (!data.equals("https://mekvahan.com/public/")) {
             try {
-                Glide.with(context).load(data).into(holder.ivevent);
-                onReportAdapterClickListener.onReportAdapterInteraction(data);
+                Glide.with(context).load(data).fitCenter().into(holder.ivevent);
             } catch (Exception e) {
+                onReportAdapterClickListener.onReportAdapterInteraction(finalKey,"");
                 e.printStackTrace();
-                onReportAdapterClickListener.onReportAdapterInteraction("");
             }
-            holder.ivcancel.setOnClickListener(view -> onReportAdapterClickListener.onReportAdapterInteraction(holder.getAdapterPosition()));
+            onReportAdapterClickListener.onReportAdapterInteraction(finalKey, data);
+        } else {
+            onReportAdapterClickListener.onReportAdapterInteraction(finalKey,"");
         }
-        
+        holder.ivcancel.setVisibility(View.GONE);
     }
 
     @Override
@@ -77,8 +80,6 @@ class ViewCustomerReportAdapter extends RecyclerView.Adapter<ViewCustomerReportA
     }
 
     public interface OnReportAdapterClickListener {
-        void onReportAdapterInteraction(String imageString);
-
-        void onReportAdapterInteraction(int adapterPosition);
+        void onReportAdapterInteraction(String key, String imageString);
     }
 }

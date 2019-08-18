@@ -24,9 +24,9 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
-import com.android.volley.Request;
 import com.android.volley.TimeoutError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.common_files.MySingleton;
@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.BASE;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
@@ -58,8 +59,8 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     private TextView tvHeadRest, tvFloorMats, tvMudFlap, tvSeatCover, tvOtherreport, tvBatttery, tvOdometer;
 
     private Map<String, String> carButton, bikeButton, reportButton;
-    private String bookingId, key;
-    private List<String> imageStringList;
+    private String bookingId;
+    private List<String> imageStringList, keyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +68,11 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         setContentView(R.layout.activity_view_customer_report);
 
         try{
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>View customer report</font>"));
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
+            assert upArrow != null;
             upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
             getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
@@ -79,7 +81,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
             e.printStackTrace();
         }
 
-        Car_view_fragment car_view_fragment = new Car_view_fragment();
+        keyList = new ArrayList<>();
         imageStringList = new ArrayList<>();
         sessionManager = new LoginSessionManager(this);
         carButton = new HashMap<>();
@@ -115,12 +117,10 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         recyclerViewReport.setLayoutManager(new LinearLayoutManager(recyclerViewReport.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
 
-        adapterViewReport = new ViewCustomerReportAdapter(imageStringList, recyclerViewReport.getContext());
+        adapterViewReport = new ViewCustomerReportAdapter(keyList, imageStringList, recyclerViewReport.getContext());
         recyclerViewReport.setAdapter(adapterViewReport);
 
-        bookingId = getIntent().getStringExtra("bookingId");
-
-
+        bookingId = Objects.requireNonNull(getIntent().getStringExtra("bookingId")).substring(1);
 
         loadCarFragment();
         load_car();
@@ -128,13 +128,11 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         car.setOnClickListener(view -> {
             loadCarFragment();
             load_car();
-
         });
 
         bike.setOnClickListener(view -> {
             loadBikeFragment();
             load_bike();
-
         });
 
     }
@@ -247,16 +245,15 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
 
     public void getCarReport() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                BASE+"CarRegularServiceReport/"+bookingId,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(BASE+"CarRegularServiceReport/"+bookingId,
+                null,
                 response -> {
 
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
 
-                        Log.e("jsonobject", jsonObject.toString());
+                        JSONObject data = response.getJSONObject("data");
+                        Log.e("data-", bookingId+"- "+response);
 
-                        JSONObject data = jsonObject.getJSONObject("data");
                         if (bookingId.equals(data.getString("booking_id"))) {
                             Log.e("response", "booking id matched");
 
@@ -322,44 +319,47 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         tvOdometer.setText(data.getString(key));
                                         break;
                                     case "rc":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "puc":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "insurance":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "road_tax":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add("roadtax");
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "passenger_tax":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add("passengertax");
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "pollution_paper":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add("pollutionpaper");
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "image":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "signature":
-                                        this.key = key;
-                                        loadImage(data.getString(key));
+                                        Glide.with(this).load(data.getJSONArray(key).getString(1))
+                                                .placeholder(R.drawable.image_svg).into(img_sign);
                                         break;
+                                        default:
+                                            Log.e("NoKey", "No case for "+key);
                                 }
                             }
+                            adapterViewReport.notifyDataSetChanged();
                         } else {
                             throw new RuntimeException("Invalid Booking Id");
                         }
 
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 },
@@ -421,10 +421,10 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
             }
         };
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
                 NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void onBikeFragmentButtonClick(String keyId) {
@@ -445,34 +445,26 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     private void onCarFragmentButtonClick(String keyId, String state) {
         String carButtonId = "bt_cv" + keyId;
         Button btn = findViewById(getResources().getIdentifier(carButtonId, "id", getPackageName()));
-        if (state.equals("0")) {
+        if (state.equals("1")) {
             btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
             btn.setTextColor(getColor(android.R.color.white));
-        } else if (state.equals("1")) {
+        } else if (state.equals("0")) {
             btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
             btn.setTextColor(getColor(android.R.color.black));
         }
     }
 
-    public void loadImage(String imageString) {
-        imageStringList.add(0, imageString);
-        adapterViewReport.notifyItemInserted(0);
-    }
-
     @Override
-    public void onReportAdapterInteraction(String imageString) {
-        if (!imageString.equals("")) {
-            String carButtonId = "bt_v" + this.key;
-            Button btn = findViewById(getResources().getIdentifier(carButtonId, "id", getPackageName()));
-            btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
-            btn.setTextColor(getColor(android.R.color.white));
+    public void onReportAdapterInteraction(String key, String imageString) {
+        if (imageString.equals("")) {
+            String carButtonId = "bt_v" + key;
+            Log.e("key- ", carButtonId);
+            if (!key.equals("image")) {
+                Button btn = findViewById(getResources().getIdentifier(carButtonId, "id", getPackageName()));
+                btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
+                btn.setTextColor(getColor(android.R.color.white));
+            }
         }
     }
 
-    @Override
-    public void onReportAdapterInteraction(int adapterPosition) {
-        imageStringList.remove(adapterPosition);
-        recyclerViewReport.getRecycledViewPool().clear();
-        adapterViewReport.notifyItemRemoved(adapterPosition);
-    }
 }

@@ -24,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -47,6 +49,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -258,7 +261,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                sendDb_exterior_image();
+               // sendDb_exterior_image();
 
                 Intent i=new Intent(UpcomingBookingVendor.this,ScanQrcode.class);
                 i.putExtra("otp",otp_1);

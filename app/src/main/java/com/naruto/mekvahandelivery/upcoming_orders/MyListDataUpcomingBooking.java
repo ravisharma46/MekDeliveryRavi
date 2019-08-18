@@ -28,6 +28,7 @@ public class MyListDataUpcomingBooking {
     private String action14;
     private String action15;
     private int status_id;
+    private String vehicle_type;
 
 
     public MyListDataUpcomingBooking(String status,
@@ -43,7 +44,7 @@ public class MyListDataUpcomingBooking {
                                      String image_url,String otp,String name,String address,String latitude,
                                      String longitude,String drop_date,String drop_time,String amount,String  vehicleBrand,String service_type,String action1, String action2, String action3,
                                      String action4, String action5, String action6, String action7, String action8, String action9,
-                                     String action10, String action11, String action12, String action13, String action14, String action15,int status_id) {
+                                     String action10, String action11, String action12, String action13, String action14, String action15,int status_id,String vehicle_type) {
         this.status = status;
         this.date=date;
         this.time=time;
@@ -81,7 +82,12 @@ public class MyListDataUpcomingBooking {
         this.action14 = action14;
         this.action15 = action15;
         this.status_id=status_id;
+        this.vehicle_type=vehicle_type;
 
+    }
+
+    public String getVehicle_type() {
+        return vehicle_type;
     }
 
     public int getStatus_id() {

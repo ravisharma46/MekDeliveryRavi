@@ -51,20 +51,19 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="114dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/frame_rect_02"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
-
                         <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/tv_vehiclebrand"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="16dp"
@@ -78,6 +77,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="40dp"
+                            android:id="@+id/tv_vehiclename"
                             android:fontFamily="@font/montserrat_medium1"
                             android:text="WagonR"
                             android:textColor="@color/chart_deep_red"
@@ -86,6 +86,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/tv_numberPlate"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="64dp"
@@ -95,16 +96,14 @@
                             android:textSize="12sp" />
                     </FrameLayout>
 
-
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_carimage"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
                         android:layout_gravity="end"
                         android:layout_weight="1"
-                        android:padding="16dp"
                         android:src="@drawable/maruti_suzuki" />
-
-
                 </LinearLayout>
 
 
@@ -129,8 +128,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginStart="16dp"
+                        android:layout_gravity="left"
+                        android:id="@+id/tv_servicename"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:clickable="true"
                         android:fontFamily="@font/montserrat_semibold"
@@ -140,10 +140,11 @@
 
                     <TextView
                         android:id="@+id/tvDetails"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="12dp"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:layout_marginRight="12dp"
                         android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                         android:drawablePadding="4dp"
                         android:fontFamily="@font/montserrat_semibold"
@@ -310,7 +311,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:id="@+id/tv_name"
                         android:layout_marginTop="40dp"
                         android:fontFamily="@font/montserrat_medium1"
                         android:text="Name of the partner"
@@ -341,7 +343,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:id="@+id/tv_address"
                         android:layout_marginTop="116dp"
                         android:layout_marginBottom="24dp"
                         android:fontFamily="@font/montserrat_medium1"
@@ -394,7 +397,7 @@
                     android:background="@drawable/frame_rect_02">
 
                     <TextView
-                        android:id="@+id/date"
+                        android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
@@ -406,7 +409,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/time"
+                        android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -505,6 +508,7 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/montserrat_medium1"
                         android:paddingLeft="16dp"
+                        android:layout_marginRight="72dp"
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
                         android:paddingBottom="8dp"

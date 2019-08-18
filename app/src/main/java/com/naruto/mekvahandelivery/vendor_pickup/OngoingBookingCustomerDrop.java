@@ -73,7 +73,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         String bookingid =bundle.getString("bookingid");
         String address =bundle.getString("address");
        // double latitude= Double.parseDouble(bundle.getString("latitude"));
-      //  double longitude=Double.parseDouble( bundle.getString("longitude"));
+      // double longitude=Double.parseDouble( bundle.getString("longitude"));
         String dropdate=bundle.getString("dropDate");
         String dropTime= bundle.getString("dropTime");
         String amount=bundle.getString("amount");

@@ -24,8 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -39,6 +37,9 @@ import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_pickup.CustomerPickupData;
 import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
+import com.bumptech.glide.Glide;
+import com.naruto.mekvahandelivery.R;
+import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 
 import org.json.JSONObject;
@@ -46,7 +47,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +63,7 @@ import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
-public class UpcomingBookingVendor extends AppCompatActivity implements UpcomingVendorPickupAdapter.OnAdapterClickListener {
+public class UpcomingBookingVendor extends AppCompatActivity {
 
     private LinearLayout paint_linear,navigation;
     private Button report,pickup_confirm;
@@ -75,8 +75,9 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
     public ArrayList<String> arrayList, arrayListsend;
     public List<CustomerPickupData> customerPickupDataList;
     private List<UpcomingVendorPickupData> upcomingVendorPickupDataList;
+    private ImageView uvPickupImage;
+
     private final int REQUEST_CODE = 20;
-    private int photoIndex = 0;
     private Uri photoURI;
     private String bookingid="";
     private static final String myUrl_img = "https://mekvahan.com/api/delivery/dropoff_image";
@@ -180,6 +181,7 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
         adapterVendorPickup = new UpcomingVendorPickupAdapter(upcomingVendorPickupDataList,
                 recyclerViewVendorPickup.getContext());
         recyclerViewVendorPickup.setAdapter(adapterVendorPickup);
+        uvPickupImage = findViewById(R.id.iv_uvpickup);
 
         name.setText(name_1);
         address.setText(address_1);
@@ -360,9 +362,13 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            upcomingVendorPickupDataList.add(photoIndex, new UpcomingVendorPickupData(photoIndex, photoURI));
-            adapterVendorPickup.notifyItemInserted(photoIndex++);
-            recyclerViewVendorPickup.scrollToPosition(photoIndex-1);
+            try {
+                Glide.with(uvPickupImage.getContext()).load(photoURI)
+                        .fitCenter().placeholder(R.drawable.image_svg)
+                        .into(uvPickupImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -403,10 +409,4 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
         );
     }
 
-    @Override
-    public void onAdapterInteraction(int position) {
-        upcomingVendorPickupDataList.remove(position);
-        recyclerViewVendorPickup.getRecycledViewPool().clear();
-        adapterVendorPickup.notifyItemRemoved(position);
-    }
 }

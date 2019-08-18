@@ -38,6 +38,7 @@ import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.dropConfirm;
@@ -50,7 +51,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
 
-    private LinearLayout paint_linear,navigation;
+    private LinearLayout navigation;
     private TextView tvDetails, date, time,name,address,vehicleBrand,vehicleName,numberPlate,serviceName;
     private ImageView call,iv_qrcode,vehicle_image;
     private Button report_show,drop;
@@ -86,6 +87,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         arrayListsend=new ArrayList<>();
 
         Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
         String name_1 =bundle.getString("name");
         String bookingid=bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
@@ -169,39 +171,25 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         final ImagePopup imagePopup = new ImagePopup(this);
         imagePopup.setWindowHeight(800); // Optional
         imagePopup.setWindowWidth(800); // Optional
-        imagePopup.setBackgroundColor(getResources().getColor(R.color.offwhite_01));
+        imagePopup.setBackgroundColor(getColor(R.color.offwhite_01));
         imagePopup.setFullScreen(true); // Optional
         imagePopup.setHideCloseIcon(true);  // Optional
         imagePopup.setImageOnClickClose(true);  // Optional
 
         imagePopup.initiatePopup(iv_qrcode.getDrawable());
 
-        iv_qrcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imagePopup.viewPopup();
-            }
-        });
+        iv_qrcode.setOnClickListener(view -> imagePopup.viewPopup());
 
-        drop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dropConfirm(OnGoingBookingVendorDrop.this);
-            }
-        });
+        drop.setOnClickListener(view -> dropConfirm(OnGoingBookingVendorDrop.this));
 
-        navigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendNavigateIntent(OnGoingBookingVendorDrop.this,latitude,longitude);
-            }
-        });
+        navigation.setOnClickListener(view -> sendNavigateIntent(OnGoingBookingVendorDrop.this,latitude,longitude));
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         getSupportActionBar().setTitle(Html.fromHtml(bookingid));
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
-        upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
+        final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
+        assert upArrow != null;
+        upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         tvDetails.setOnClickListener(new View.OnClickListener() {
@@ -222,19 +210,12 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
             }
         });
 
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callIntent(OnGoingBookingVendorDrop.this,mobileNo);
-            }
+        call.setOnClickListener(view -> callIntent(OnGoingBookingVendorDrop.this,mobileNo));
+        report_show.setOnClickListener(view -> {
+            Intent intent = new Intent(OnGoingBookingVendorDrop.this, ViewCustomerReport.class);
+            intent.putExtra("bookingId", bookingid);
+            startActivity(intent);
         });
-        report_show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OnGoingBookingVendorDrop.this, ViewCustomerReport.class));
-            }
-        });
-
 
     }
 
@@ -253,7 +234,6 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
 
     public void generateQrcode(String otp){
         try {
@@ -313,6 +293,3 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
 
 }
-
-
-

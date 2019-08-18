@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,7 +131,6 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/frame_rect_02"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,7 +220,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center"
-                        android:text="Wheel cap"
+                        android:text="Seat Cover"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
@@ -249,7 +247,7 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
                     <EditText
-                        android:id="@+id/et_wheelcap"
+                        android:id="@+id/et_seatcover"
                         android:layout_width="0dp"
                         android:layout_height="28dp"
                         android:layout_margin="4dp"
@@ -766,7 +764,6 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
     </ScrollView>

@@ -3,93 +3,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,SmallSp,ContentDescription,RtlSymmetry"
     tools:context=".customer_report.ViewCustomerReport">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_medium1"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Please allocate your vehicle and insert following details"
                 android:textColor="@color/offwhite"
                 android:textSize="10sp" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
-
+                android:weightSum="2"
+                android:baselineAligned="false">
 
                 <FrameLayout
-                    android:id="@+id/frame_1"
+                    android:id="@+id/frame_bike"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:background="@color/chart_deep_red">
-
                     <ImageView
                         android:layout_width="12dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:background="@color/chart_deep_red" />
 
                     <ImageView
                         android:id="@+id/bike_image"
                         android:layout_width="50dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp" />
 
                     <TextView
                         android:id="@+id/tvbike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:layout_marginTop="12dp"
-                        android:layout_marginRight="40dp"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:layout_marginEnd="40dp"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="Bike"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
-
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/frame_2"
+                    android:id="@+id/frame_car"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:background="@color/white">
-
                     <ImageView
                         android:id="@+id/car_image"
                         android:layout_width="60dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp" />
 
                     <TextView
                         android:id="@+id/tvcar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:layout_marginTop="12dp"
-                        android:layout_marginRight="40dp"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:layout_marginEnd="40dp"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="Car"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
@@ -97,303 +98,205 @@
                     <ImageView
                         android:layout_width="12dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="right"
+                        android:layout_gravity="end"
                         android:background="@color/chart_deep_red" />
+                </FrameLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/frame_rect_02"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Customer Report Checkup"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 </FrameLayout>
 
             </LinearLayout>
 
-
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/frame_rect_02">
-
+                android:background="@drawable/frame_rect_02"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Customer Report Count"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Head Rest"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:padding="8dp"
-                            android:text="Customer Report Checkup"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                    </FrameLayout>
-
-
-                    <FrameLayout
-                        android:id="@+id/frameLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </FrameLayout>
-
-
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Floor Mats"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
                 </LinearLayout>
-
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/frame_rect_02">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:id="@+id/tv_vheadrest"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textColor="@color/black"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:padding="8dp"
-                            android:text="Customer Report Count"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="Head Rest"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="Floor Mats"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="Wheel cap"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="00"
-                            android:textColor="@color/black"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:textColor="@color/black"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:textColor="@color/black"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="Mud Flap"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="Mud Flap"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="Mud Flap"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:textColor="@color/black"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:textColor="@color/black"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/black"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:gravity="center"
-                            android:text="00"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-
+                    <TextView
+                        android:id="@+id/tv_vfloormats"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Mud Flap"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
-            </FrameLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Seat Cover"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:id="@+id/tv_vmudflap"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_vseatcover"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/montserrat_medium1"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="Other Report"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <FrameLayout
+            <TextView
+                android:id="@+id/tv_votherReport"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/frame_rect_02">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:id="@+id/tvotherReport"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium1"
-                    android:hint="Something Other Report..."
-                    android:padding="8dp"
-                    android:textSize="12sp" />
-
-
-            </FrameLayout>
+                android:background="@drawable/frame_rect_02"
+                android:fontFamily="@font/montserrat_medium"
+                android:hint="Something Other Report..."
+                android:padding="8dp"
+                android:textSize="12sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -401,26 +304,19 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/frame_rect_02">
 
-
-                <FrameLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:padding="8dp"
-                        android:text="Battery Info"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </FrameLayout>
-
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Battery Info"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/tvBattery"
+                    android:id="@+id/tv_vBattery"
                     android:layout_width="match_parent"
                     android:text="Oxide"
                     android:layout_height="match_parent"
@@ -428,376 +324,240 @@
                     android:gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/montserrat_medium1"
-                    />
+                    android:fontFamily="@font/montserrat_medium" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="72dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/gradient_bottom"
                     android:scaleY=".5" />
 
-
             </FrameLayout>
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/frame_rect_02">
-
+                android:background="@drawable/frame_rect_02"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvDocument"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Bike Document"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    style="?buttonBarStyle"
+                    android:weightSum="3">
+                    <Button
+                        android:id="@+id/bt_vrc"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Rc"
+                        style="?buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
+                    <Button
+                        android:id="@+id/bt_vpuc"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        style="?buttonBarButtonStyle"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Puc"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvDocument"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:padding="8dp"
-                            android:text="Bike Document"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="Rc"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="Puc"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="Insurance"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="Road tax"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="Passenger tax"
-                            android:textAllCaps="false"
-                            android:textSize="12sp" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginRight="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/customer_rprt_bt01"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="Pollution Paper"
-                            android:textAlignment="center"
-                            android:textAllCaps="false"
-                            android:textScaleX=".9"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-
+                    <Button
+                        android:id="@+id/bt_vinsurance"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        style="?buttonBarButtonStyle"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Insurance"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:fontFamily="@font/montserrat_medium1"
-                    android:padding="16dp"
-                    android:text="vehicle interior picture"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    style="?buttonBarStyle"
+                    android:weightSum="3">
+                    <Button
+                        android:id="@+id/bt_vroadtax"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Road tax"
+                        style="?buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
+                    <Button
+                        android:id="@+id/bt_vpassengertax"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Passenger tax"
+                        style="?buttonBarButtonStyle"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
 
+                    <Button
+                        android:id="@+id/bt_vpollutionpaper"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        style="?buttonBarButtonStyle"
+                        android:background="@drawable/customer_rprt_bt01"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Pollution Paper"
+                        android:textAllCaps="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
+            </LinearLayout>
 
-            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/montserrat_medium"
+                android:padding="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Vehicle interior picture"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-
-            <FrameLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_viewimagedocument"
                 android:layout_width="match_parent"
                 android:layout_height="152dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/frame_rect_02">
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-
-                        </FrameLayout>
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/image_svg" />
-
-                        </FrameLayout>
-
-
-                    </LinearLayout>
-
-
-                </HorizontalScrollView>
-
-
-            </FrameLayout>
-
+                android:background="@drawable/frame_rect_02" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/frame_rect_02"
+                android:layout_gravity="center"
                 android:orientation="vertical">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:padding="8dp"
-                        android:text="@string/petrol_diesel_meter"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </FrameLayout>
-
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="@string/petrol_diesel_meter"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginRight="56dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginEnd="56dp"
                     android:orientation="horizontal"
                     android:weightSum="6">
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="E"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="20%"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="40%"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="60%"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="80%"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_medium1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="F"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
-
                 </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="52dp"
-                    android:layout_marginRight="56dp">
-
+                    android:layout_marginStart="52dp"
+                    android:layout_marginEnd="56dp">
                     <SeekBar
+                        android:id="@+id/sb_vfuelmeter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="100"
@@ -805,12 +565,9 @@
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
                         android:progress="40" />
-
                 </FrameLayout>
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -818,38 +575,30 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/frame_rect_02"
                 android:orientation="vertical">
-
-                <FrameLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:padding="8dp"
-                        android:text="Odometer"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </FrameLayout>
-
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Odometer"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
-
                     <TextView
+                        android:id="@+id/tv_vodometer"
                         android:layout_width="match_parent"
-                        android:id="@+id/etodometer"
                         android:text="5000"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_marginRight="48dp"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:inputType="numberSigned"
-                        android:paddingLeft="16dp"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="48dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:paddingStart="16dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="4dp"
                         android:textColor="@color/black"
@@ -858,9 +607,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:paddingRight="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:paddingEnd="16dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="4dp"
                         android:text="Kms"
@@ -871,17 +620,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:background="@drawable/gradient_bottom"
                         android:scaleY=".5" />
 
-
                 </RelativeLayout>
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -889,77 +635,51 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/frame_rect_02"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:padding="8dp"
+                    android:text="Signature"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/frame_sqr">
+                    <ImageView
+                        android:id="@+id/image_vsign"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:padding="8dp"
-                        android:text="Signature"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:background="@drawable/image_svg" />
                 </FrameLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                   >
-
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/frame_sqr">
-
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:id="@+id/image_sign"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/image_svg" />
-
-                        </FrameLayout>
-
-
-
-
-                </LinearLayout>
-
 
             </LinearLayout>
 
-
             <Button
+                android:id="@+id/bt_vdone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginEnd="32dp"
                 android:background="@drawable/done_red_button"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Done"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
-
-
         </LinearLayout>
+
     </ScrollView>
-
-
-
 
 </LinearLayout>

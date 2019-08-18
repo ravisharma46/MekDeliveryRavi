@@ -14,7 +14,7 @@
         android:fontFamily="@font/montserrat_medium1"
         android:paddingStart="16dp"
         android:background="@color/chart_deep_red"
-        android:gravity="center"
+        android:gravity="left|center"
         android:paddingEnd="16dp"
         android:text="Awaiting customer pickup"
         android:textColor="@color/white"

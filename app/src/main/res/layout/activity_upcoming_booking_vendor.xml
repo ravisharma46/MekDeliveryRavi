@@ -13,7 +13,7 @@
         android:background="@color/chart_deep_red"
         android:fontFamily="@font/montserrat_medium1"
         android:paddingLeft="16dp"
-        android:gravity="center"
+        android:gravity="left|center"
         android:paddingRight="16dp"
         android:text="Awaiting Partner Pickup"
         android:textColor="@color/white"
@@ -157,127 +157,12 @@
                 </FrameLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/linear_paint"
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/frame_rect_offwhite">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Interior cleaning"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/frame_rect">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Exterior cleaning"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/frame_rect_offwhite">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="Dashboard cleaning"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/frame_rect">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_semibold"
-                            android:text="@string/rubbing"
-                            android:textColor="@color/app_grey_headline_caption"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="8dp"
-                            android:padding="16dp"
-                            android:src="@drawable/checked_svg" />
-
-
-                    </FrameLayout>
-
-
-                </LinearLayout>
+                    android:visibility="gone"
+                    android:id="@+id/recyclerView_listView"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
 
 
                 <TextView

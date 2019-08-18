@@ -39,7 +39,6 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.broooapps.otpedittext2.OtpEditText;
 import com.bumptech.glide.Glide;
-import com.naruto.mekvahandelivery.CaptureActivityPortrait;
 import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
@@ -387,16 +386,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
-
-
-
-
-
-
-
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

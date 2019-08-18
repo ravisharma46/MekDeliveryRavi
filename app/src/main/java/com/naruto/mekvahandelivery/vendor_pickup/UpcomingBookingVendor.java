@@ -13,6 +13,7 @@ import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,35 +21,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
-import com.naruto.mekvahandelivery.customer_pickup.CustomerPickupData;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
 
-public class UpcomingBookingVendor extends AppCompatActivity implements UpcomingVendorPickupAdapter.OnAdapterClickListener {
+public class UpcomingBookingVendor extends AppCompatActivity {
 
     private LinearLayout paint_linear,navigation;
     private Button report,pickup_confirm;
     private TextView tvDetails;
-    private RecyclerView recyclerViewVendorPickup;
-    private RecyclerView.Adapter adapterVendorPickup;
+    private ImageView uvPickupImage;
 
-    private List<UpcomingVendorPickupData> upcomingVendorPickupDataList;
     private final int REQUEST_CODE = 20;
-    private int photoIndex = 0;
     private Uri photoURI;
 
     @Override
@@ -61,17 +55,7 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
         paint_linear = findViewById(R.id.linear_paint);
         pickup_confirm=findViewById(R.id.btpickup);
         navigation=findViewById(R.id.ll_navigation);
-        recyclerViewVendorPickup = findViewById(R.id.rv_imagevendorpickup);
-
-        upcomingVendorPickupDataList = new ArrayList<>();
-
-        recyclerViewVendorPickup.setHasFixedSize(false);
-        recyclerViewVendorPickup.setLayoutManager(new LinearLayoutManager(recyclerViewVendorPickup.getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-
-        adapterVendorPickup = new UpcomingVendorPickupAdapter(upcomingVendorPickupDataList,
-                recyclerViewVendorPickup.getContext());
-        recyclerViewVendorPickup.setAdapter(adapterVendorPickup);
+        uvPickupImage = findViewById(R.id.iv_uvpickup);
 
         try{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -136,9 +120,13 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            upcomingVendorPickupDataList.add(photoIndex, new UpcomingVendorPickupData(photoIndex, photoURI));
-            adapterVendorPickup.notifyItemInserted(photoIndex++);
-            recyclerViewVendorPickup.scrollToPosition(photoIndex-1);
+            try {
+                Glide.with(uvPickupImage.getContext()).load(photoURI)
+                        .fitCenter().placeholder(R.drawable.image_svg)
+                        .into(uvPickupImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -179,10 +167,4 @@ public class UpcomingBookingVendor extends AppCompatActivity implements Upcoming
         );
     }
 
-    @Override
-    public void onAdapterInteraction(int position) {
-        upcomingVendorPickupDataList.remove(position);
-        recyclerViewVendorPickup.getRecycledViewPool().clear();
-        adapterVendorPickup.notifyItemRemoved(position);
-    }
 }

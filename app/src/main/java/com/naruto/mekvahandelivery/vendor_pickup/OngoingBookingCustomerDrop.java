@@ -106,6 +106,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         String amount=bundle.getString("amount");
         String otp_1=bundle.getString("otp");
         String mobileNo=bundle.getString("mobile");
+        String vehicle_type=bundle.getString("vehicletype");
 
 
 
@@ -145,7 +146,10 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         btadd_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OngoingBookingCustomerDrop.this, ViewCustomerReport.class));
+               Intent i=new Intent(OngoingBookingCustomerDrop.this,ViewCustomerReport.class);
+               i.putExtra("vehicletype",vehicle_type);
+                i.putExtra("bookingId", bookingid);
+               startActivity(i);
             }
         });
 

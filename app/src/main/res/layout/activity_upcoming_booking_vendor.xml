@@ -157,12 +157,14 @@
                 </FrameLayout>
 
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:visibility="gone"
                     android:id="@+id/recyclerView_listView"
                     android:layout_height="wrap_content">
                 </androidx.recyclerview.widget.RecyclerView>
+
 
 
                 <TextView
@@ -315,30 +317,30 @@
                     android:background="@drawable/frame_rect"
                     android:weightSum="3"
                     android:baselineAligned="false">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="2dp"
-                            android:layout_weight="1"
-                            android:background="@color/app_divider_list"
-                            android:padding="12dp"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="1.2 km"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="2dp"
-                            android:layout_weight="1"
-                            android:background="@color/app_divider_list"
-                            android:padding="12dp"
-                            android:fontFamily="@font/montserrat_medium1"
-                            android:text="@string/_15_min_approx"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/app_divider_list"
+                        android:padding="12dp"
+                        android:fontFamily="@font/montserrat_medium1"
+                        android:text="1.2 km"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/app_divider_list"
+                        android:padding="12dp"
+                        android:fontFamily="@font/montserrat_medium1"
+                        android:text="@string/_15_min_approx"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -366,21 +368,21 @@
 
                 </LinearLayout>
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:layout_marginTop="16dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/grey_button"
-                        android:fontFamily="@font/montserrat_medium1"
-                        android:paddingLeft="28dp"
-                        android:paddingRight="28dp"
-                        android:id="@+id/bt_addReport"
-                        android:text="Add Customer Report"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/grey_button"
+                    android:fontFamily="@font/montserrat_medium1"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:id="@+id/bt_addReport"
+                    android:text="Add Customer Report"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -439,6 +441,7 @@
                     <ImageView
                         android:id="@+id/iv_uvpickup"
                         android:layout_width="wrap_content"
+                        android:padding="8dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:src="@drawable/image_svg" />

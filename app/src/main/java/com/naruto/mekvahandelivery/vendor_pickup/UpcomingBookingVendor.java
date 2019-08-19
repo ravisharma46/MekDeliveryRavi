@@ -1,7 +1,9 @@
 package com.naruto.mekvahandelivery.vendor_pickup;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +36,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
@@ -68,7 +73,7 @@ import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN
 
 public class UpcomingBookingVendor extends AppCompatActivity {
 
-    private LinearLayout paint_linear,navigation;
+    private LinearLayout navigation;
     private Button report,pickup_confirm;
     private TextView tvDetails,date, time,name,address,vehicleBrand,vehicleName,numberPlate,serviceName;
     private RecyclerView recyclerView,recyclerViewVendorPickup;
@@ -77,7 +82,6 @@ public class UpcomingBookingVendor extends AppCompatActivity {
 
     public ArrayList<String> arrayList, arrayListsend;
     public List<CustomerPickupData> customerPickupDataList;
-    private List<UpcomingVendorPickupData> upcomingVendorPickupDataList;
     private ImageView uvPickupImage;
 
     private final int REQUEST_CODE = 20;
@@ -85,6 +89,8 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     private String bookingid="";
     private static final String myUrl_img = "https://mekvahan.com/api/delivery/dropoff_image";
     private ProgressDialog mProgressDialog;
+    private ImagePopup imagePopup;
+    private Boolean aBoolean=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +101,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         call = findViewById(R.id.call);
         pickup_confirm=findViewById(R.id.btpickup);
         navigation=findViewById(R.id.ll_navigation);
-        recyclerViewVendorPickup = findViewById(R.id.rv_imagevendorpickup);
+        uvPickupImage = findViewById(R.id.iv_uvpickup);
 
         vehicle_image=findViewById(R.id.iv_carimage);
         date=findViewById(R.id.tv_date);
@@ -169,22 +175,13 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.recyclerView_listView);
-        recyclerView.hasFixedSize();
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
         adapter = new CustomListAdapter(arrayListsend,"upcoming");
         recyclerView.setAdapter(adapter);
 
 
-        upcomingVendorPickupDataList = new ArrayList<>();
 
-        recyclerViewVendorPickup.setHasFixedSize(false);
-        recyclerViewVendorPickup.setLayoutManager(new LinearLayoutManager(recyclerViewVendorPickup.getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-
-        adapterVendorPickup = new UpcomingVendorPickupAdapter(upcomingVendorPickupDataList,
-                recyclerViewVendorPickup.getContext());
-        recyclerViewVendorPickup.setAdapter(adapterVendorPickup);
-        uvPickupImage = findViewById(R.id.iv_uvpickup);
 
         name.setText(name_1);
         address.setText(address_1);
@@ -269,8 +266,30 @@ public class UpcomingBookingVendor extends AppCompatActivity {
             }
         });
 
+
+
+
         mProgressDialog = new ProgressDialog(getApplicationContext());
         mProgressDialog.setMessage("Please wait...");
+
+        imagePopup = new ImagePopup(UpcomingBookingVendor.this);
+        imagePopup.setWindowHeight(800); // Optional
+        imagePopup.setWindowWidth(800); // Optional
+        imagePopup.setBackgroundColor(getColor(R.color.offwhite_01));
+        imagePopup.setFullScreen(true); // Optional
+        imagePopup.setHideCloseIcon(true);  // Optional
+        imagePopup.setImageOnClickClose(true);
+
+
+
+if(aBoolean==false){
+    imagePopup.initiatePopup(imagePopup.getDrawable());
+}
+        uvPickupImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {imagePopup.viewPopup();
+            }
+        });
 
     }
 
@@ -300,7 +319,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
 
 
         },error -> {
-            Toast.makeText(getApplicationContext(),"Something get wrong",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){
             @Override
@@ -357,6 +376,12 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     }
 
     public void onAddImageButtonClick(View view) {
+        if (ContextCompat.checkSelfPermission(UpcomingBookingVendor.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(UpcomingBookingVendor.this,
+                    new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
+            return;
+        }
         dispatchTakePictureIntent(REQUEST_CODE);
     }
 
@@ -369,13 +394,18 @@ public class UpcomingBookingVendor extends AppCompatActivity {
                 Glide.with(uvPickupImage.getContext()).load(photoURI)
                         .fitCenter().placeholder(R.drawable.image_svg)
                         .into(uvPickupImage);
+                aBoolean=true;
+                imagePopup.initiatePopupWithPicasso(photoURI);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
         }
     }
 
     private void dispatchTakePictureIntent(int requestCode) {
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {

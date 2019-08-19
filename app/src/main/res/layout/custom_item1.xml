@@ -110,7 +110,7 @@
                             android:layout_width="20dp"
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="8dp"
-                            android:layout_height="24dp"
+                            android:layout_height="match_parent"
                             android:src="@drawable/suzuki_logo" />
 
                         <TextView

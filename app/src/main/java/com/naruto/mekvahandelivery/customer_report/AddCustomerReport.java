@@ -137,12 +137,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         imageDocumentAdapter = new AddCustomerReportAdapter(reportDocument, imageDocumentView.getContext());
         imageDocumentView.setAdapter(imageDocumentAdapter);
 
-
-
         Bundle bundle=getIntent().getExtras();
         assert bundle != null;
         String vehicle_type =bundle.getString("vehicletype");
-
 
         if(vehicle_type.contains("car")){
             loadCarFragment();

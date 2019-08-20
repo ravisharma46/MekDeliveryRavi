@@ -4,6 +4,7 @@ package com.naruto.mekvahandelivery;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -11,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -30,6 +32,7 @@ import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.user_profile.Checklist;
 import com.naruto.mekvahandelivery.user_profile.ShowAccountDetails;
 
+import java.net.URI;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,6 +54,9 @@ public class UserProfile extends AppCompatActivity {
     private CircleImageView imageView;
     private int mFlag = 0;
     private LoginSessionManager msessionManager;
+    private Uri mImageUri;
+    SharedPreferences sharedpreferences;
+
 
 
     @Override
@@ -141,6 +147,7 @@ public class UserProfile extends AppCompatActivity {
 
 
         bt_done.setOnClickListener(view -> onBackPressed());
+
 
 
 
@@ -244,9 +251,19 @@ public class UserProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri imageUri = data.getData();
+            mImageUri = data.getData();
 
-            imageView.setImageURI(imageUri);
+
+            SharedPreferences preferences =
+                    PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("ProfileImageUri",mImageUri.toString());
+            editor.commit();
+
+            // Sets the ImageView with the Image URI
+            imageView.setImageURI(mImageUri);
+            //imageView.invalidate();
+
 
 
         }

@@ -1,7 +1,9 @@
 package com.naruto.mekvahandelivery.customer_report;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +42,7 @@ import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.signature.SignatureActivity;
+import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +68,7 @@ import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.
 public class AddCustomerReport extends AppCompatActivity implements Car_Add_fragment.OnFragmentInteractionListener,
         Bike_Add_fragment.OnFragmentInteractionListener, AddCustomerReportAdapter.OnAdapterClickListener {
     private FrameLayout car, bike;
-    private Button btn;
+    private Button btn,addDetails;
     private ImageView car_image, bike_image, img_sign;
     private TextView tvbike, tvcar, document;
     RecyclerView.Adapter imageDocumentAdapter;
@@ -111,7 +116,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             e.printStackTrace();
         }
 
-        Button addDetails = findViewById(R.id.bt_done);
+        addDetails = findViewById(R.id.bt_done);
         car = findViewById(R.id.frame_2);
         bike = findViewById(R.id.frame_1);
         car_image = findViewById(R.id.car_image);
@@ -525,6 +530,12 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         if (!buttonId.equals("bt_rvcamera")) {
             btn = findViewById(view.getId());
             if (reportDocument.get(dataIndex.get(buttonId)).getBtnstate().equals("0")) {
+                if (ContextCompat.checkSelfPermission(AddCustomerReport.this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(AddCustomerReport.this,
+                            new String[]{Manifest.permission.CAMERA}, REQUEST_TAKE_PHOTO);
+                    return;
+                }
                 dispatchTakePictureIntent(REQUEST_TAKE_PHOTO);
             } else if (reportDocument.get(dataIndex.get(buttonId)).getBtnstate().equals("1")) {
                 reportDocument.set(dataIndex.get(buttonId), new AddCustomerReportData(buttonId, null, "0"));
@@ -533,6 +544,12 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 btn.setTextColor(getColor(android.R.color.black));
             }
         } else {
+            if (ContextCompat.checkSelfPermission(AddCustomerReport.this, Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(AddCustomerReport.this,
+                        new String[]{Manifest.permission.CAMERA}, REQUEST_TAKE_PHOTO);
+                return;
+            }
             dispatchTakePictureIntent(3);
         }
     }

@@ -2,6 +2,7 @@ package com.naruto.mekvahandelivery.customer_report;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -39,10 +40,11 @@ import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.TimeoutError;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.signature.SignatureActivity;
-import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,7 +102,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportDocument = new ArrayList<>();
         reportDocument = initDocumentData();
 
-        bookingId = getIntent().getStringExtra("bookingId");
+        bookingId = getIntent().getStringExtra("bookingId").substring(1);
 
         try{
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
@@ -165,17 +167,29 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
     private void sendUserDetails() {
 
+        if (reportDocument.size()<8) {
+            Snackbar.make(addDetails, "Please upload all images!",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
+
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, BASE+"CarRegularServiceReport",
                 response -> {
 
             String resultResponse = new String(response.data);
                     try {
                         JSONObject jsonObject = new JSONObject(resultResponse);
+                        Log.e("data check", jsonObject.toString());
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray documentDataArray = dataObject.getJSONArray("rc");
                         Log.e("response report", documentDataArray.getString(1)+" new bookingId:" +
                                 dataObject.getString("booking_id"));
                         Glide.with(this).load(documentDataArray.getString(1)).into(img_sign);
+                        progressDialog.dismiss();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -191,6 +205,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             } else {
                 String result = new String(networkResponse.data);
                 try {
+                    Log.e("result string", bookingId+" "+result);
                     JSONObject response = new JSONObject(result);
                     String status = response.getString("status");
                     String message = response.getString("message");
@@ -255,14 +270,15 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 Map<String, DataPart> params = new HashMap<>();
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
-                params.put("rc", new DataPart("rc.jpg", getBytes(0), "image/jpeg"));
-                params.put("puc", new DataPart("puc.jpg", getBytes(1), "image/jpeg"));
-                params.put("insurance", new DataPart("insurance", getBytes(2), "image/jpeg"));
-                params.put("road_tax", new DataPart("road_tax", getBytes(3), "image/jpeg"));
-                params.put("pollution_paper", new DataPart("pollution_paper", getBytes(4), "image/jpeg"));
-                params.put("passenger_tax", new DataPart("passenger_tax", getBytes(5), "image/jpeg"));
-                params.put("image", new DataPart("image", getBytes(6), "image/jpeg"));
-                params.put("signature", new DataPart("signature", getBytes(2), "image/jpeg"));
+
+                params.put("rc", new DataPart(getFilename(0), getBytes(0), "image/jpeg"));
+                params.put("puc", new DataPart(getFilename(1), getBytes(1), "image/jpeg"));
+                params.put("insurance", new DataPart(getFilename(2), getBytes(2), "image/jpeg"));
+                params.put("road_tax", new DataPart(getFilename(3), getBytes(3), "image/jpeg"));
+                params.put("pollution_paper", new DataPart(getFilename(4), getBytes(4), "image/jpeg"));
+                params.put("passenger_tax", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
+                params.put("image", new DataPart(getFilename(6), getBytes(6), "image/jpeg"));
+                params.put("signature", new DataPart(getFilename(7), getBytes(7), "image/jpeg"));
 
                 return params;
             }
@@ -282,6 +298,12 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
+    }
+
+    private String getFilename(int indx) {
+        String fileName = reportDocument.get(indx).getPhotoUri().toString();
+        int lindex = fileName.lastIndexOf('/');
+        return  fileName.substring(lindex+1);
     }
 
     public byte[] getBytes(int i) throws IOException {
@@ -430,7 +452,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "MEK_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         // Save a file: path for use with ACTION_VIEW intents
 //        File image = File.createTempFile(

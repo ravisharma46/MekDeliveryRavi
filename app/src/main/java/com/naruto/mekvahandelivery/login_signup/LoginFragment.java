@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ import java.util.Objects;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendEmailIntent;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
 public class LoginFragment extends Fragment {
 
@@ -45,6 +48,8 @@ public class LoginFragment extends Fragment {
 	private LoginSessionManager mSession;
 	private String  tokenType,accessToken,profile_id,name,mobile,email,type,latitude,longitude,partner_id,active,pan_number,account_number,ifsc_code,
 			         cancelled_check_number,cancelled_check;
+
+	private EditText et_mobile,et_password;
 
 	public LoginFragment() {
 		// Required empty public constructor
@@ -57,6 +62,8 @@ public class LoginFragment extends Fragment {
 		mRootView= inflater.inflate(R.layout.fragment_login, container, false);
 
 		TextView faq = mRootView.findViewById(R.id.btv_faqs);
+		et_mobile = mRootView.findViewById(R.id.emp_id);
+		et_password = mRootView.findViewById(R.id.emp_psw);
 
 		faq.setOnClickListener(view -> {
 			Intent faqIntent = new Intent(getActivity(), Faq_activity.class);
@@ -74,12 +81,7 @@ public class LoginFragment extends Fragment {
 
 			forgotPassword();
 
-			Fragment fragment = new FragmentOTP();
-			FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.replace(R.id.fragment_container, fragment);
-			ft.addToBackStack(null);
-			ft.commit();
+
 		});
 
 		mRootView.findViewById(R.id.btn_login).setOnClickListener(view -> {
@@ -95,6 +97,27 @@ public class LoginFragment extends Fragment {
 
 	private void userLogin() {
 
+
+		final String mobileNo = et_mobile.getText().toString();
+		final String password = et_password.getText().toString();
+
+		//----- validating inputs-----
+		if (mobileNo.isEmpty()) {
+			et_mobile.setError("Please enter your valid mobile number");
+			et_mobile.requestFocus();
+			return;
+		}
+		if(mobileNo.length()<10) {
+			et_mobile.setError("Please enter 10 digit mobile number");
+			et_mobile.requestFocus();
+			return;
+		}
+
+		if (password.isEmpty()) {
+			et_password.setError("Please enter your password");
+			et_password.requestFocus();
+			return;
+		}
 
 		final ProgressDialog progressDialog = new ProgressDialog(getContext());
 		progressDialog.setMessage("Loading....");
@@ -163,8 +186,8 @@ public class LoginFragment extends Fragment {
 				Map<String, String> params = new HashMap<>();
 
 				// params.put("delivery_boy_id","1");
-				params.put("mobile", "8800329290");
-				params.put("password", "mridul");
+				params.put("mobile", mobileNo);
+				params.put("password", password);
 				params.put("provider", "deliverys");
 
 				Log.e("TAG", params.toString());
@@ -186,6 +209,24 @@ public class LoginFragment extends Fragment {
 	}
 
 	private void forgotPassword(){
+
+
+		final String mobileNo = et_mobile.getText().toString();
+
+
+		//----- validating inputs-----
+		if (mobileNo.isEmpty()) {
+			et_mobile.setError("Please enter valid mobile number");
+			et_mobile.requestFocus();
+			return;
+		}
+
+		if(mobileNo.length()<10) {
+			et_mobile.setError("Please enter 10 digit mobile number");
+			et_mobile.requestFocus();
+			return;
+		}
+
 		final ProgressDialog progressDialog = new ProgressDialog(getContext());
 		progressDialog.setMessage("Loading....");
 		progressDialog.show();
@@ -200,15 +241,26 @@ public class LoginFragment extends Fragment {
 
 						int status = jsonObject.getInt("status");
 						String resp=jsonObject.getString("response");
+						if(status!=1) {
+							Toast.makeText(getActivity(),resp,Toast.LENGTH_SHORT).show();
+							return;
+						}
 						if(status==1) {
 							Toast.makeText(getActivity(),resp,Toast.LENGTH_SHORT).show();
 						}
 
+
+						replaceFragment(new FragmentOTP(),mobileNo);
+
+
+
 					} catch (JSONException e) {
+
 						e.printStackTrace();
 					}
 				},
 				error -> {
+					progressDialog.dismiss();
 					Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
 					Log.e("TAGR", error.toString());
 
@@ -218,18 +270,17 @@ public class LoginFragment extends Fragment {
 				Map<String, String> params = new HashMap<>();
 
 				// params.put("delivery_boy_id","1");
-				params.put("mobile", "9487420625");
-				Log.e("TAG", params.toString());
+				params.put("mobile", mobileNo);
+
 				return params;
 			}
 
 			@Override
 			public Map<String, String> getHeaders() throws AuthFailureError {
-				Map<String, String> params = new HashMap<>();
+				Map<String,String> headers=new HashMap<>();
+				headers.put("Accept","application/json");
 
-				params.put("Accept","application/json");
-
-				return params;
+				return headers;
 			}
 		};
 
@@ -237,6 +288,21 @@ public class LoginFragment extends Fragment {
 				NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 		MySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+	}
+
+	private void replaceFragment(Fragment fragment,String mobile){
+
+		Bundle bundle = new Bundle();
+		bundle.putString("phoneNumber",mobile);
+		fragment.setArguments(bundle);
+
+
+		FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+		FragmentTransaction ft = fragmentManager.beginTransaction();
+		ft.replace(R.id.fragment_container, fragment);
+		ft.addToBackStack(null);
+		ft.commit();
 
 	}
 

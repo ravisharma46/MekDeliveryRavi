@@ -93,10 +93,11 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
             viewHolder.cv_details.setOnClickListener(view -> {
                 Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                 i1.putExtra("name",data.getName());
+                i1.putExtra("vehicletype",data.getVehicle_type());
                 i1.putExtra("bookingid",data.getOrderId());
                 i1.putExtra("address",data.getAddress());
-                //i1.putExtra("latitude",data.getLatitude());
-                // i1.putExtra("longitude",data.getLongitude());
+                i1.putExtra("latitude",data.getLatitude());
+                i1.putExtra("longitude",data.getLongitude());
                 i1.putExtra("dropDate",data.getDrop_date());
                 i1.putExtra("dropTime",data.getDrop_time());
                 i1.putExtra("amount",data.getAmount());
@@ -116,6 +117,7 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1 = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
                     i1.putExtra("name",data.getName());
+                    i1.putExtra("vehicletype",data.getVehicle_type());
                     i1.putExtra("bookingid",data.getOrderId());
                     i1.putExtra("address",data.getAddress());
                     i1.putExtra("latitude",data.getLatitude());
@@ -155,10 +157,11 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                     i1.putExtra("name",data.getName());
+                    i1.putExtra("vehicletype",data.getVehicle_type());
                     i1.putExtra("bookingid",data.getOrderId());
                     i1.putExtra("address",data.getAddress());
-                    //i1.putExtra("latitude",data.getLatitude());
-                    // i1.putExtra("longitude",data.getLongitude());
+                    i1.putExtra("latitude",data.getLatitude());
+                     i1.putExtra("longitude",data.getLongitude());
                     i1.putExtra("dropDate",data.getDrop_date());
                     i1.putExtra("dropTime",data.getDrop_time());
                     i1.putExtra("amount",data.getAmount());

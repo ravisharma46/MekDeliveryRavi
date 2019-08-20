@@ -89,6 +89,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         assert bundle != null;
         String name_1 =bundle.getString("name");
+        String vehicle_type=bundle.getString("vehicletype");
         String bookingid=bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
         double latitude= Double.parseDouble(bundle.getString("latitude"));
@@ -214,6 +215,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         report_show.setOnClickListener(view -> {
             Intent intent = new Intent(OnGoingBookingVendorDrop.this, ViewCustomerReport.class);
             intent.putExtra("bookingId", bookingid);
+            intent.putExtra("vehicletype", vehicle_type);
             startActivity(intent);
         });
 

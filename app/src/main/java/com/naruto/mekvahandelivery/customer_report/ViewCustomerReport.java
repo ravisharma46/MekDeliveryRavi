@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,13 +62,16 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     private TextView tvHeadRest, tvFloorMats, tvMudFlap, tvSeatCover, tvOtherreport, tvBatttery, tvOdometer;
 
     private Map<String, String> carButton, bikeButton, reportButton;
-    private String bookingId;
+    private String bookingId,vehicle_type;
     private List<String> imageStringList, keyList;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_customer_report);
+
+        mProgressBar = findViewById(R.id.progress_bar);
 
         try{
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -121,19 +127,24 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         recyclerViewReport.setAdapter(adapterViewReport);
 
         bookingId = Objects.requireNonNull(getIntent().getStringExtra("bookingId")).substring(1);
+        Bundle bundle=getIntent().getExtras();
+        vehicle_type=bundle.getString("vehicletype");
 
-        loadCarFragment();
-        load_car();
-
-        car.setOnClickListener(view -> {
+        if(vehicle_type.contains("car")){
+            getCarReport();
             loadCarFragment();
             load_car();
-        });
 
-        bike.setOnClickListener(view -> {
+        }
+        else if(vehicle_type.contains("bike")){
+            getBikeReport();
             loadBikeFragment();
             load_bike();
-        });
+        }
+
+
+
+
 
     }
 
@@ -224,7 +235,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     @Override
     protected void onResume() {
         super.onResume();
-        getCarReport();
+
     }
 
     @Override
@@ -244,6 +255,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     }
 
     public void getCarReport() {
+        mProgressBar.setVisibility(View.VISIBLE);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(BASE+"CarRegularServiceReport/"+bookingId,
                 null,
@@ -353,17 +365,200 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         default:
                                             Log.e("NoKey", "No case for "+key);
                                 }
+                                mProgressBar.setVisibility(View.GONE);
                             }
                             adapterViewReport.notifyDataSetChanged();
                         } else {
+                            mProgressBar.setVisibility(View.GONE);
                             throw new RuntimeException("Invalid Booking Id");
+
                         }
 
                     } catch (Exception e) {
+                        mProgressBar.setVisibility(View.GONE);
                         e.printStackTrace();
                     }
                 },
                 error -> {
+                    mProgressBar.setVisibility(View.GONE);
+                    NetworkResponse networkResponse = error.networkResponse;
+                    String errorMessage = "Unknown error";
+                    if (networkResponse == null) {
+                        if (error.getClass().equals(TimeoutError.class)) {
+                            errorMessage = "Request timeout";
+                        } else if (error.getClass().equals(NoConnectionError.class)) {
+                            errorMessage = "Failed to connect server";
+                        }
+                    } else {
+                        String result = new String(networkResponse.data);
+                        try {
+                            JSONObject response = new JSONObject(result);
+                            String status = response.getString("status");
+                            String message = response.getString("message");
+
+                            Log.e("Error Status", status);
+                            Log.e("Error Message", message);
+
+                            switch (networkResponse.statusCode) {
+                                case 404:
+                                    errorMessage = "Resource not found";
+                                    break;
+                                case 401:
+                                    errorMessage = message + " Please login again";
+                                    break;
+                                case 400:
+                                    errorMessage = message + " Check your inputs";
+                                    break;
+                                case 500:
+                                    errorMessage = message + " Something is getting wrong";
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            mProgressBar.setVisibility(View.GONE);
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.i("Error", errorMessage);
+                    error.printStackTrace();
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("Accept","application/json");
+                params.put("Authorization", sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.TOKEN_TYPE)+" "+sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.ACCESS_TOKEN));
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
+                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void getBikeReport() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(BASE+"BikeRegularServiceReport/"+bookingId,
+                null,
+                response -> {
+
+                    try {
+//                        JSONObject Object = response.getJSONObject("status");
+//                        int status_1 = Object.getInt("status");
+//                        if(status_1!=1) {
+//                            Toast.makeText(getApplicationContext(),"There is no data",Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+
+                        JSONObject data = response.getJSONObject("data");
+                        Log.e("data-", bookingId+"- "+response);
+
+                        if (bookingId.equals(data.getString("booking_id"))) {
+                            Log.e("response", "booking id matched");
+
+                            Iterator<String> iterator = data.keys();
+                            while (iterator.hasNext()) {
+                                String key = iterator.next();
+                                switch (key) {
+                                    case "tool_kit":
+                                        onBikeFragmentButtonClick("toolkit", data.getString(key));
+                                        break;
+                                    case "first_aid_kit":
+                                        onBikeFragmentButtonClick("firstadkit", data.getString(key));
+                                        break;
+                                    case "keychain":
+                                        onBikeFragmentButtonClick("keychain", data.getString(key));
+                                        break;
+                                    case "bike_cover":
+                                        onBikeFragmentButtonClick("bikecover", data.getString(key));
+                                        break;
+                                    case "service_book":
+                                        onBikeFragmentButtonClick("servicebook", data.getString(key));
+                                        break;
+//                                    case "miscellneous_tool":
+//                                        onCarFragmentButtonClick("miscellenoustool", data.getString(key));
+//                                        break;
+
+                                    case "head_rest":
+                                        tvHeadRest.setText(data.getString(key));
+                                        break;
+                                    case "floor_mats":
+                                        tvFloorMats.setText(data.getString(key));
+                                        break;
+                                    case "seat_cover":
+                                        tvSeatCover.setText(data.getString(key));
+                                        break;
+                                    case "mud_flap":
+                                        tvMudFlap.setText(data.getString(key));
+                                        break;
+                                    case "description":
+                                        tvOtherreport.setText(data.getString(key));
+                                        break;
+                                    case "battery_info":
+                                        tvBatttery.setText(data.getString(key));
+                                        break;
+                                    case "odometer":
+                                        tvOdometer.setText(data.getString(key));
+                                        break;
+                                    case "rc":
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "puc":
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "insurance":
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "road_tax":
+                                        keyList.add("roadtax");
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "passenger_tax":
+                                        keyList.add("passengertax");
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "pollution_paper":
+                                        keyList.add("pollutionpaper");
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "image":
+                                        keyList.add(key);
+                                        imageStringList.add(data.getJSONArray(key).getString(1));
+                                        break;
+                                    case "signature":
+                                        Glide.with(this).load(data.getJSONArray(key).getString(1))
+                                                .placeholder(R.drawable.image_svg).into(img_sign);
+                                        break;
+                                    default:
+                                        Log.e("NoKey", "No case for "+key);
+                                }
+                                mProgressBar.setVisibility(View.GONE);
+                            }
+                            adapterViewReport.notifyDataSetChanged();
+                        } else {
+                            mProgressBar.setVisibility(View.GONE);
+                            throw new RuntimeException("Invalid Booking Id");
+                        }
+
+                    } catch (Exception e) {
+                        mProgressBar.setVisibility(View.GONE);
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    mProgressBar.setVisibility(View.GONE);
                     NetworkResponse networkResponse = error.networkResponse;
                     String errorMessage = "Unknown error";
                     if (networkResponse == null) {
@@ -427,18 +622,22 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
-    private void onBikeFragmentButtonClick(String keyId) {
+
+
+
+
+    private void onBikeFragmentButtonClick(String keyId,String state) {
         String bikeButtonId = "bt_bv" + keyId;
         Button btn = findViewById(getResources().getIdentifier(bikeButtonId, "id", getPackageName()));
-        bikeButtonId = bikeButtonId.substring(5);
-        if (bikeButton.get(bikeButtonId).equals("0")) {
+        //bikeButtonId = bikeButtonId.substring(5);
+        if (state.equals("1")) {
             btn.setBackgroundResource(R.drawable.customer_reprt_bt02);
             btn.setTextColor(getColor(android.R.color.white));
-            bikeButton.put(bikeButtonId, "1");
-        } else if (carButton.get(bikeButtonId).equals("1")) {
+           // bikeButton.put(bikeButtonId, "1");
+        } else if (state.equals("0")) {
             btn.setBackgroundResource(R.drawable.customer_rprt_bt01);
             btn.setTextColor(getColor(android.R.color.black));
-            bikeButton.put(bikeButtonId, "0");
+           // bikeButton.put(bikeButtonId, "0");
         }
     }
 

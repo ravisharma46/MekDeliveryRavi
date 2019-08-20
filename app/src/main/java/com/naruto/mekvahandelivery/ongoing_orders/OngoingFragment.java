@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -43,7 +44,7 @@ public class OngoingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private static final String myUrl = "https://mekvahan.com/api/delivery/ongoing_booking";
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressBar;
 
     private List<MyListDataOngoingBooking> mBookingList;
     public OngoingFragment() {
@@ -57,9 +58,7 @@ public class OngoingFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_ongoing, container, false);
 
-        mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setMessage("Please wait...");
-
+        mProgressBar = v.findViewById(R.id.progress_bar);
         mBookingList = new ArrayList<>();
 
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
@@ -73,7 +72,7 @@ public class OngoingFragment extends Fragment {
     }
 
     private void ongoing() {
-        mProgressDialog.show();
+        mProgressBar.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
@@ -105,6 +104,7 @@ public class OngoingFragment extends Fragment {
                             JSONObject vehicle=jsonObject.getJSONObject("vehicle");
 
                              String vehicle_name= vehicle.getString("name");
+                            String vehicle_type=vehicle.getString("vehicle_type");
                             //vehicle_logo
                             JSONArray companyId =vehicle.getJSONArray("company_id");
                             JSONObject object2 = companyId.getJSONObject(0);
@@ -262,7 +262,7 @@ public class OngoingFragment extends Fragment {
                             mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
-                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id,vehicle_type
                             ));
 
 
@@ -273,15 +273,17 @@ public class OngoingFragment extends Fragment {
                         adapter = new OngoingAdapter_1(getActivity(), (ArrayList<MyListDataOngoingBooking>) mBookingList);
                         recyclerView.setAdapter(adapter);
 
-                        mProgressDialog.dismiss();
+                        mProgressBar.setVisibility(View.GONE);
 
 
 
                     } catch (JSONException e) {
+                        mProgressBar.setVisibility(View.GONE);
                         e.printStackTrace();
                     }
                 }, error -> {
-            Toast.makeText(getContext(),"Something get wrong",Toast.LENGTH_LONG).show();
+            mProgressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){
             @Override

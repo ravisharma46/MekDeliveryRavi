@@ -1,10 +1,12 @@
 package com.naruto.mekvahandelivery.customer_pickup;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -29,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,12 +43,14 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.broooapps.otpedittext2.OtpEditText;
 import com.bumptech.glide.Glide;
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
+import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
 
 import org.json.JSONObject;
 
@@ -66,7 +72,7 @@ import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
-public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpcomingCustomerPickupAdapter.OnAdapterClickListener {
+public class UpcomingBookingCustomer extends AppCompatActivity {
     private RecyclerView recyclerView, recyclerViewCustPickup;
     private RecyclerView.Adapter adapter, adapterCustPickup;
     private LinearLayout navigation;
@@ -87,6 +93,9 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
     private static final String myUrl_img = "https://mekvahan.com/api/delivery/pickup_image";
 
     private ProgressDialog mProgressDialog;
+    private ImageView uvPickupImage;
+    private ImagePopup imagePopup;
+    private Boolean aBoolean=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +117,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         vehicleName=findViewById(R.id.tv_vehiclename);
         numberPlate=findViewById(R.id.tv_numberPlate);
         serviceName=findViewById(R.id.tv_servicename);
+        uvPickupImage = findViewById(R.id.iv_uvpickup);
 
         otpEditText=findViewById(R.id.et_otp);
         otpEditText.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +139,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         bookingid =bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
 //        double latitude= Double.parseDouble(bundle.getString("latitude"));
-    //    double longitude=Double.parseDouble( bundle.getString("longitude"));
+        //    double longitude=Double.parseDouble( bundle.getString("longitude"));
         String dropdate=bundle.getString("dropDate");
         String dropTime= bundle.getString("dropTime");
         String amount=bundle.getString("amount");
@@ -186,13 +196,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
 
 
 
-        recyclerViewCustPickup = findViewById(R.id.rv_imagecustomerpickup);
-        recyclerViewCustPickup.setHasFixedSize(false);
-        recyclerViewCustPickup.setLayoutManager(new LinearLayoutManager(recyclerViewCustPickup.getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-
-        adapterCustPickup = new AddUpcomingCustomerPickupAdapter(customerPickupDataList, recyclerViewCustPickup.getContext());
-        recyclerViewCustPickup.setAdapter(adapterCustPickup);
 
         name.setText(name_1);
         address.setText(address_1);
@@ -242,7 +245,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         call.setOnClickListener(view -> callIntent(UpcomingBookingCustomer.this,mobileNo));
 
         navigation.setOnClickListener(view -> {
-          //  sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
+            //  sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
         });
 
         report.setOnClickListener(view -> {
@@ -264,6 +267,28 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         mProgressDialog = new ProgressDialog(getApplicationContext());
         mProgressDialog.setMessage("Please wait...");
 
+        imagePopup = new ImagePopup(UpcomingBookingCustomer.this);
+        imagePopup.setWindowHeight(800); // Optional
+        imagePopup.setWindowWidth(800); // Optional
+        imagePopup.setBackgroundColor(getColor(R.color.offwhite_01));
+        imagePopup.setFullScreen(true); // Optional
+        imagePopup.setHideCloseIcon(true);  // Optional
+        imagePopup.setImageOnClickClose(true);
+
+
+
+        if(aBoolean==false){
+            imagePopup.initiatePopup(imagePopup.getDrawable());
+        }
+        uvPickupImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {imagePopup.viewPopup();
+            }
+        });
+
+
+
+
     }
 
 
@@ -276,7 +301,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
                 JSONObject object=new JSONObject(response);
                 int status_1 = object.getInt("status");
                 if(status_1!=1) {
-                     dialogpop();
+                    dialogpop();
                     //Toast.makeText(getApplicationContext(),"Incorrect OTP",Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -404,6 +429,13 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
     }
 
     public void onAddImageButtonClick(View view) {
+        if (ContextCompat.checkSelfPermission(UpcomingBookingCustomer.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(UpcomingBookingCustomer.this,
+                    new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
+            return;
+        }
+
         dispatchTakePictureIntent(REQUEST_CODE);
     }
 
@@ -412,9 +444,15 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            customerPickupDataList.add(photoIndex, new CustomerPickupData(photoIndex, photoURI));
-            adapterCustPickup.notifyItemInserted(photoIndex++);
-            recyclerViewCustPickup.scrollToPosition(photoIndex-1);
+            try {
+                Glide.with(uvPickupImage.getContext()).load(photoURI)
+                        .fitCenter().placeholder(R.drawable.image_svg)
+                        .into(uvPickupImage);
+                aBoolean=true;
+                imagePopup.initiatePopupWithPicasso(photoURI);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -455,15 +493,10 @@ public class UpcomingBookingCustomer extends AppCompatActivity implements AddUpc
         );
     }
 
-    @Override
-    public void onAdapterInteraction(int position) {
-        customerPickupDataList.remove(position);
-        recyclerViewCustPickup.getRecycledViewPool().clear();
-        adapterCustPickup.notifyItemRemoved(position);
-    }
+
 
     private void dialogpop(){
-       // mProgressDialog.dismiss();
+        // mProgressDialog.dismiss();
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         alertBuilder.setMessage("Incorrect OTP").setCancelable(false);

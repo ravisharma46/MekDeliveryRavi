@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,7 +42,7 @@ public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private static final String myUrl = "https://mekvahan.com/api/delivery/upcoming_booking";
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressBar;
 
     private List<MyListDataUpcomingBooking> mBookingList;
 
@@ -55,8 +56,7 @@ public class UpcomingFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_upcoming, container, false);
 
-        mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setMessage("Please wait...");
+        mProgressBar = v.findViewById(R.id.progress_bar);
 
         mBookingList = new ArrayList<>();
 
@@ -71,7 +71,7 @@ public class UpcomingFragment extends Fragment {
     }
 
     private void upcoming() {
-        mProgressDialog.show();
+        mProgressBar.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
@@ -266,13 +266,15 @@ public class UpcomingFragment extends Fragment {
                         adapter = new UpcomingAdapter(getActivity(), (ArrayList<MyListDataUpcomingBooking>) mBookingList);
                         recyclerView.setAdapter(adapter);
 
-                        mProgressDialog.dismiss();
+                        mProgressBar.setVisibility(View.GONE);
 
                     } catch (JSONException e) {
+                        mProgressBar.setVisibility(View.GONE);
                         e.printStackTrace();
                     }
                 }, error -> {
-            Toast.makeText(getContext(),"Something get wrong",Toast.LENGTH_LONG).show();
+            mProgressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){
             @Override

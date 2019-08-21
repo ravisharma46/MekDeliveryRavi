@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +67,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     private String bookingId,vehicle_type;
     private List<String> imageStringList, keyList;
     private ProgressBar mProgressBar;
+    private SeekBar sk_fuelmeter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +120,14 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         tvSeatCover = findViewById(R.id.tv_vseatcover);
         tvOtherreport = findViewById(R.id.tv_votherReport);
         tvBatttery = findViewById(R.id.tv_vBattery);
+        sk_fuelmeter=findViewById(R.id.sb_vfuelmeter);
+
+        sk_fuelmeter.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
         recyclerViewReport = findViewById(R.id.rv_viewimagedocument);
         recyclerViewReport.setHasFixedSize(false);
@@ -321,6 +332,10 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                     case "mud_flap":
                                         tvMudFlap.setText(data.getString(key));
                                         break;
+                                    case "meter_percentage":
+                                        int meter_percnt=Integer.parseInt(data.getString(key));
+                                        sk_fuelmeter.setProgress(meter_percnt);
+                                        break;
                                     case "description":
                                         tvOtherreport.setText(data.getString(key));
                                         break;
@@ -499,6 +514,10 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         break;
                                     case "mud_flap":
                                         tvMudFlap.setText(data.getString(key));
+                                        break;
+                                    case "meter_percentage":
+                                        int meter_percnt=Integer.parseInt(data.getString(key));
+                                        sk_fuelmeter.setProgress(meter_percnt);
                                         break;
                                     case "description":
                                         tvOtherreport.setText(data.getString(key));

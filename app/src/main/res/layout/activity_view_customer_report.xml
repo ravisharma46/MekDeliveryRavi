@@ -564,7 +564,7 @@
                         android:clickable="false"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:progress="40" />
+                        android:progress="0" />
                 </FrameLayout>
 
             </LinearLayout>

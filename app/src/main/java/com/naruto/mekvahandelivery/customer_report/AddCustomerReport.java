@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -83,6 +84,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     private Map<String, String> carButton, bikeButton, reportButton;
     private Map<String, Integer> dataIndex;
     private List<AddCustomerReportData> reportDocument;
+    private SeekBar sk_fuelmeter;
+    private String meter_percentage="40";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +130,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         img_sign=findViewById(R.id.image_sign);
         sessionManager = new LoginSessionManager(this);
         Button take_sign = findViewById(R.id.bt_sign);
+
+        sk_fuelmeter=findViewById(R.id.sb_fuelmeter);
+
         ImageView img_cancel = findViewById(R.id.image_cross);
         imageDocumentView = findViewById(R.id.rv_imagedocument);
         imageDocumentView.setHasFixedSize(false);
@@ -151,6 +157,31 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             loadBikeFragment();
             load_bike();
         }
+
+
+        sk_fuelmeter.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                progressChangedValue = i;
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                meter_percentage=(Integer.toString(progressChangedValue));
+                Log.e("TAG",meter_percentage);
+            }
+        });
+
+
+
 
         take_sign.setOnClickListener(view -> {
             Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
@@ -237,7 +268,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 bodyparams.put("speakers", carButton.get("speakers"));
                 bodyparams.put("car_cover", "0");    //?????
                 bodyparams.put("seat_cover", "0");   //????
-                bodyparams.put("meter_percentage", "1"); //fuelmeter seekbar
+                bodyparams.put("meter_percentage", meter_percentage); //fuelmeter seekbar
                 bodyparams.put("odometer", reportButton.get("odometer"));
                 bodyparams.put("description", reportButton.get("otherreport"));
                 bodyparams.put("battery_info", reportButton.get("sbrand"));

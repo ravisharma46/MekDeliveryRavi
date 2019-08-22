@@ -157,7 +157,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             load_bike();
         }
 
-
+//fuel meter
         sk_fuelmeter.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
             @Override

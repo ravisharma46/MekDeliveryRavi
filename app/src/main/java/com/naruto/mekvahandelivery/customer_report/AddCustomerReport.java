@@ -202,8 +202,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         }
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading....");
+        progressDialog.setMessage("Uploading report....");
         progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, BASE+"CarRegularServiceReport",
                 response -> {
@@ -218,6 +219,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                                 dataObject.getString("booking_id"));
                         Glide.with(this).load(documentDataArray.getString(1)).into(img_sign);
                         progressDialog.dismiss();
+                        onBackPressed();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -327,6 +329,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
     }
+
+
 
     private String getFilename(int indx) {
         String fileName = reportDocument.get(indx).getPhotoUri().toString();

@@ -318,15 +318,12 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 							//startActivity(new Intent(NavActivity.this, UserProfile.class));
 							break;
 						case 1: //startActivity(new Intent(AppHomePage.this, MyAddressHomePage.class));
-
 							delay(new UserProfile());
-
 							break;
 						case 2: //startActivity(new Intent(AppHomePage.this,MekCoinsWallet.class));break;
 							break;
 						case 3:
 							delay(new OrderHistory());
-
 							break;
 						case 4:
 							break;

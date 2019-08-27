@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.naruto.mekvahandelivery.R;
 
 import java.text.DateFormat;
@@ -105,22 +107,22 @@ public class CommonVaribalesFunctions {
 
     }
 
-//    public static LatLng getDeviceLocation(Context context) throws Exception {
-//
-//        LocationRequest.create()
-//                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                .setInterval(10 * 1000)
-//                .setFastestInterval(1 * 1000);
-//
-//        GPSTracker tracker = new GPSTracker(context);
-//
-//        if (!tracker.canGetLocation()) {
-//            Log.e("asdf","shoud show aleart");
-//            tracker.showSettingsAlert();
-//        }
-//
-//        return new LatLng(tracker.getLatitude(), tracker.getLongitude());
-//    }
+    public static LatLng getDeviceLocation(Context context) throws Exception {
+
+        LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)
+                .setFastestInterval(1 * 1000);
+
+        GPSTracker tracker = new GPSTracker(context);
+
+        if (!tracker.canGetLocation()) {
+            Log.e("asdf","shoud show aleart");
+            tracker.showSettingsAlert();
+        }
+
+        return new LatLng(tracker.getLatitude(), tracker.getLongitude());
+    }
 
     // Format : 06:45 PM
     public static String getFormattedTime(String TAG, String s) {

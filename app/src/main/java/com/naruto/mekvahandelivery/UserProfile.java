@@ -10,10 +10,13 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,13 +35,19 @@ import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.user_profile.Checklist;
 import com.naruto.mekvahandelivery.user_profile.ShowAccountDetails;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.accounts.AccountManager.KEY_PASSWORD;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.LOCATION_NOT_FOUND;
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.EMAIL;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.LATITUDE;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.LONGITUDE;
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.MOBILE;
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.NAME;
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.PROFILE_ID;
@@ -75,7 +84,6 @@ public class UserProfile extends AppCompatActivity {
         name_1 = findViewById(R.id.tvname1);
         mobile = findViewById(R.id.tvmobile);
         email = findViewById(R.id.tvemail);
-        address = findViewById(R.id.tvaddress);
         partnerType = findViewById(R.id.tvpartner);
         executive_id = findViewById(R.id.tvprofileid);
         update_pic = findViewById(R.id.tvupdatepic);
@@ -105,9 +113,15 @@ public class UserProfile extends AppCompatActivity {
         partnerType.setText(userInfo.get(TYPE));
         executive_id.setText(userInfo.get(PROFILE_ID));
 
+        String a=userInfo.get(LATITUDE);
+        String b=userInfo.get(LONGITUDE);
 
 
 
+        double lat=	Double.parseDouble(a);
+        double longitude=	Double.parseDouble(b);
+
+setAddress(lat,longitude);
 
 
 
@@ -279,7 +293,64 @@ public class UserProfile extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setAddress(double lat, double lang) {
+        Log.e("TAG", "called : setAddress");
 
+        TextView tv_address  = findViewById(R.id.tv_address);
+
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(lat, lang, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("TAG","address found="+addresses);
+
+        if(addresses==null ) {
+            tv_address.setText(LOCATION_NOT_FOUND);
+          //  tv_address.setSelection(et_address.getText().length());
+           // mProgressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        else if(addresses.size()==0){
+            tv_address.setText(LOCATION_NOT_FOUND);
+           // tv_address.setSelection(et_address.getText().length());
+            //mProgressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        String address = addresses.get(0).getAddressLine(0);
+
+        int countComma = 0;
+        int indexOf2ndComma = -1;
+
+        int i=0;
+
+        for (i=0;i<address.length();i++)
+        {
+            if(address.charAt(i) == ',')
+                countComma++;
+            if(countComma == 5){
+                break;
+            }
+        }
+        indexOf2ndComma = i;
+
+        address = address.substring(0,indexOf2ndComma);
+
+        tv_address.setText(address);
+        //tv_address.setSelection(et_address.getText().length());
+
+        //mProgressBar.setVisibility(View.GONE);
+
+
+
+    }
 
 
 

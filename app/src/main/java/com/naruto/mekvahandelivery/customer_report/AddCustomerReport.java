@@ -105,7 +105,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportDocument = new ArrayList<>();
         reportDocument = initDocumentData();
 
-        bookingId = getIntent().getStringExtra("bookingId").substring(1);
+        bookingId = getIntent().getStringExtra("bookingId");
 
         try{
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);

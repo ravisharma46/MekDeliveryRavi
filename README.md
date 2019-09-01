@@ -11,7 +11,7 @@
 
 # Some Scrrenshots of App.
 
-<img src="https://user-images.githubusercontent.com/35134157/64073874-bb9e9f00-ccc1-11e9-8a31-73021f4a5f90.png" width="200" height="500">
+<img src="https://user-images.githubusercontent.com/35134157/64073874-bb9e9f00-ccc1-11e9-8a31-73021f4a5f90.png" width="300" height="500">
 ![Screenshot_20190824-153438](https://user-images.githubusercontent.com/35134157/64073877-c0635300-ccc1-11e9-9baf-563ab2423b45.png)
 ![Screenshot_20190824-153458](https://user-images.githubusercontent.com/35134157/64073878-c0635300-ccc1-11e9-897f-0623247057dd.png)
 ![Screenshot_20190824-153513](https://user-images.githubusercontent.com/35134157/64073879-c0635300-ccc1-11e9-967d-b883575ec7fc.png)

@@ -1,4 +1,4 @@
-# MekDeliveryRavi
+# MekDelivery
 
 - Built Android apps with back-end API integration and tested all ***APIs using Postman tool***. 
 - Implemented JSON parsing for data interchange between the web services and the Mobile application. 

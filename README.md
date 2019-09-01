@@ -11,11 +11,11 @@
 
 # Some Scrrenshots of App.
 
-<img src="https://user-images.githubusercontent.com/35134157/64073874-bb9e9f00-ccc1-11e9-8a31-73021f4a5f90.png" width="200" height="350">  <img src="https://user-images.githubusercontent.com/35134157/64073877-c0635300-ccc1-11e9-9baf-563ab2423b45.png" width="200" height="350">  <img src="https://user-images.githubusercontent.com/35134157/64073878-c0635300-ccc1-11e9-897f-0623247057dd" width="200" height="350">
+<img src="https://user-images.githubusercontent.com/35134157/64073874-bb9e9f00-ccc1-11e9-8a31-73021f4a5f90.png" width="200" height="350">  <img src="https://user-images.githubusercontent.com/35134157/64073877-c0635300-ccc1-11e9-9baf-563ab2423b45.png" width="200" height="350">  <img src="https://user-images.githubusercontent.com/35134157/64073878-c0635300-ccc1-11e9-897f-0623247057dd.png" width="200" height="350">
 
 
 
-![Screenshot_20190824-153458](.png)
+
 ![Screenshot_20190824-153513](https://user-images.githubusercontent.com/35134157/64073879-c0635300-ccc1-11e9-967d-b883575ec7fc.png)
 ![Screenshot_20190824-153557](https://user-images.githubusercontent.com/35134157/64073882-c0635300-ccc1-11e9-9335-ab17b41940b2.png)
 ![Screenshot_20190824-153606](https://user-images.githubusercontent.com/35134157/64073883-c0fbe980-ccc1-11e9-8aeb-4aac3a5b0d2b.png)

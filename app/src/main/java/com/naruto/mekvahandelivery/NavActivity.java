@@ -1,7 +1,6 @@
 package com.naruto.mekvahandelivery;
 
 import android.app.Activity;
-import android.app.NativeActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,16 +27,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.naruto.mekvahandelivery.about_us.AboutUs;
 import com.naruto.mekvahandelivery.Adapter.ExpandableListAdapter;
+import com.naruto.mekvahandelivery.about_us.AboutUs;
 import com.naruto.mekvahandelivery.chauffeur_partner.Chauffer;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
-import com.naruto.mekvahandelivery.common_files.MyLocationService;
 import com.naruto.mekvahandelivery.help_and_support.Help;
 import com.naruto.mekvahandelivery.history.BookingHistoryFragment;
 import com.naruto.mekvahandelivery.ongoing_orders.OngoingFragment;
-import com.naruto.mekvahandelivery.upcoming_orders.UpcomingFragment;
 import com.naruto.mekvahandelivery.transaction_history.OrderHistory;
+import com.naruto.mekvahandelivery.upcoming_orders.UpcomingFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,9 +95,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 		setTabLayout();
 
-		MyLocationService myLocationService=new MyLocationService(this);
-
-		startService(new Intent(NavActivity.this, MyLocationService.class));
+//		MyLocationService myLocationService=new MyLocationService(this);
+//
+//		startService(new Intent(NavActivity.this, MyLocationService.class));
 
 
 	}

@@ -1,10 +1,8 @@
 package com.naruto.mekvahandelivery.customer_pickup;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -21,7 +19,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +34,6 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
@@ -50,7 +46,6 @@ import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
-import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
 
 import org.json.JSONObject;
 
@@ -73,6 +68,7 @@ import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCES
 import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
 public class UpcomingBookingCustomer extends AppCompatActivity {
+
     private RecyclerView recyclerView, recyclerViewCustPickup;
     private RecyclerView.Adapter adapter, adapterCustPickup;
     private LinearLayout navigation;
@@ -107,7 +103,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         call = findViewById(R.id.call);
         confirm_booking=findViewById(R.id.bt_confirm);
         navigation=findViewById(R.id.ll_navigation);
-
         vehicle_image=findViewById(R.id.iv_carimage);
         date=findViewById(R.id.tv_date);
         time=findViewById(R.id.tv_time);
@@ -120,12 +115,9 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         uvPickupImage = findViewById(R.id.iv_uvpickup);
 
         otpEditText=findViewById(R.id.et_otp);
-        otpEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                otp_input = String.valueOf(((EditText) findViewById(R.id.et_otp)).getText());
-                Log.e("TAG",otp_input);
-            }
+        otpEditText.setOnClickListener(view -> {
+            otp_input = String.valueOf(otpEditText.getText());
+            Log.e("TAG",otp_input);
         });
 
         arrayList=new ArrayList<>();
@@ -139,7 +131,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         bookingid =bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
 //        double latitude= Double.parseDouble(bundle.getString("latitude"));
-        //    double longitude=Double.parseDouble( bundle.getString("longitude"));
+//        double longitude=Double.parseDouble( bundle.getString("longitude"));
         String dropdate=bundle.getString("dropDate");
         String dropTime= bundle.getString("dropTime");
         String amount=bundle.getString("amount");
@@ -194,9 +186,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         adapter = new CustomListAdapter(arrayListsend,"upcoming");
         recyclerView.setAdapter(adapter);
 
-
-
-
         name.setText(name_1);
         address.setText(address_1);
 
@@ -212,16 +201,16 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         try{
             Glide.with(UpcomingBookingCustomer.this).load(vehicleImageUrl)
                     .into(vehicle_image);
-
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         getSupportActionBar().setTitle(Html.fromHtml(bookingid));
         final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
+        assert upArrow != null;
         upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
@@ -255,14 +244,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             startActivity(intent);
         });
 
-        confirm_booking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                sendDb_pickupConfirm();
-
-            }
-        });
+        confirm_booking.setOnClickListener(view -> sendDb_pickupConfirm());
 
         mProgressDialog = new ProgressDialog(getApplicationContext());
         mProgressDialog.setMessage("Please wait...");
@@ -275,29 +257,18 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         imagePopup.setHideCloseIcon(true);  // Optional
         imagePopup.setImageOnClickClose(true);
 
-
-
-        if(aBoolean==false){
+        if(!aBoolean){
             imagePopup.initiatePopup(imagePopup.getDrawable());
         }
-        uvPickupImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {imagePopup.viewPopup();
-            }
-        });
-
-
-
+        uvPickupImage.setOnClickListener(view -> imagePopup.viewPopup());
 
     }
-
 
     private void sendDb_pickupConfirm(){
         //mProgressDialog.show();
         StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl,response -> {
 
             try{
-
                 JSONObject object=new JSONObject(response);
                 int status_1 = object.getInt("status");
                 if(status_1!=1) {
@@ -308,30 +279,24 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 //mProgressDialog.dismiss();
                 pickupConfirm(UpcomingBookingCustomer.this);
                 delay(new NavActivity());
-
-
-
             }
             catch (Exception e){
                 e.printStackTrace();
             }
-
-
-
 
         },error -> {
             Toast.makeText(getApplicationContext(),"Something get wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("otp",otp_input);
                 return headers;
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("Accept","application/json");
                 LoginSessionManager loginSessionManager=new LoginSessionManager(Objects.requireNonNull(getApplication()));
@@ -351,14 +316,11 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
 
     }
 
-
-
     private void sendDb_exterior_image(){
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl_img,response -> {
 
             try{
-
                 JSONObject object=new JSONObject(response);
                 int status_1 = object.getInt("status");
                 if(status_1!=1) {
@@ -368,21 +330,17 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 }
                 sendDb_pickupConfirm();
 
-
             }
             catch (Exception e){
                 e.printStackTrace();
             }
-
-
-
 
         },error -> {
             Toast.makeText(getApplicationContext(),"Something get wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("pickup_image","pickupimage");
                 String bookingID=bookingid.replace("#","");
@@ -392,7 +350,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String,String> headers=new HashMap<>();
                 headers.put("Accept","application/json");
                 LoginSessionManager loginSessionManager=new LoginSessionManager(Objects.requireNonNull(getApplication()));
@@ -493,22 +451,13 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         );
     }
 
-
-
     private void dialogpop(){
         // mProgressDialog.dismiss();
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         alertBuilder.setMessage("Incorrect OTP").setCancelable(false);
 
-        alertBuilder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-
-            }
-        });
-
+        alertBuilder.setPositiveButton("Retry", (dialog, which) -> dialog.cancel());
 
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.setTitle("OTP Results");
@@ -523,7 +472,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-
 
             startActivity(intent);
 

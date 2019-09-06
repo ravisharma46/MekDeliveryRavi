@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -24,6 +25,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -31,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.user_profile.Checklist;
 import com.naruto.mekvahandelivery.user_profile.ShowAccountDetails;
@@ -56,17 +59,22 @@ import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TYPE;
 public class UserProfile extends AppCompatActivity {
 
     private static final int GALLARY_REQUEST = 1;
+    private static  final int PARKING_PIC=1000;
+    private static  final int PROFILE_PIC=2000;
     private Button change_passWord, bt_done,bt_checklist;
-    private FrameLayout account_details;
-    private TextView name, mobile, email, address, partnerType, executive_id, name_1, update_pic;
-    //private static final String myUrl="https://mekvahan.com/api/user/delivery/completeDelivery";
+    private FrameLayout account_details,fl_park;
+    private TextView name, mobile, email, address, partnerType, executive_id, name_1, update_pic,addmore,remove;
     private CircleImageView imageView;
     private int mFlag = 0;
     private LoginSessionManager msessionManager;
-    private Uri mImageUri;
-    SharedPreferences sharedpreferences;
+    private Uri mImageUri,mImageUri_1;
+    private  SharedPreferences sharedpreferences;
+    private ImageView iv_plus,iv_park;
 
 
+    private static final int PICK_IMAGE_REQUEST = 0;
+    private static final int PICK_IMAGE_REQUEST_PARKING = 1;
+    private final String TAG = "Main Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,13 @@ public class UserProfile extends AppCompatActivity {
         executive_id = findViewById(R.id.tvprofileid);
         update_pic = findViewById(R.id.tvupdatepic);
         bt_checklist=findViewById(R.id.bt_checklist);
+        addmore=findViewById(R.id.tv_addmore);
+        iv_plus=findViewById(R.id.iv_plus);
+        iv_park=findViewById(R.id.iv_parking);
+        fl_park=findViewById(R.id.fl_parking);
+        remove=findViewById(R.id.tv_remove);
+
+
 
 
 
@@ -127,22 +142,62 @@ setAddress(lat,longitude);
 
 
 
-        update_pic.setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(UserProfile.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
 
-                ActivityCompat.requestPermissions(UserProfile.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-                return;
+        update_pic.setOnClickListener(view -> {
+            imageSelect(2000);
+        });
+
+        fl_park.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageSelect(1000);
+            }
+        });
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String mImageUri = preferences.getString("image", null);
+        String mImageUri_1 = preferences.getString("image_park", null);
+
+        if(true){
+
+            if (mImageUri != null) {
+                imageView.setImageURI(Uri.parse(mImageUri));
+            }
+            else {
+                imageView.setImageResource(R.drawable.user_dummy_pic);
+            }
+        }
+        if(true){
+
+            if(mImageUri_1!=null){
+                iv_park.setImageURI(Uri.parse(mImageUri_1));
+                 addmore.setVisibility(View.GONE);
+                iv_plus.setVisibility(View.GONE);
+            }
+            else{
+                iv_park.setImageResource(R.drawable.frame_rect);
+                addmore.setVisibility(View.VISIBLE);
+                iv_plus.setVisibility(View.VISIBLE);
             }
 
-            mFlag = 2;
-            Intent gallaryIntent = new Intent(Intent.ACTION_PICK);
-            gallaryIntent.setType("image/*");
-            gallaryIntent.putExtra("flag", 1);
+        }
 
-            startActivityForResult(gallaryIntent, GALLARY_REQUEST);
+
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+                iv_park.setImageResource(R.drawable.frame_rect);
+                addmore.setVisibility(View.VISIBLE);
+                iv_plus.setVisibility(View.VISIBLE);
+            }
         });
+
+
 
         bt_checklist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,31 +312,105 @@ setAddress(lat,longitude);
 
     }
 
+    public void imageSelect(int check) {
+        permissionsCheck();
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        }
+        intent.setType("image/*");
+        if(check==2000){
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        }
+        if(check==1000){
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST_PARKING);
+        }
 
+    }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLARY_REQUEST && resultCode == RESULT_OK && data != null) {
-            mImageUri = data.getData();
-
-
-            SharedPreferences preferences =
-                    PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("ProfileImageUri",mImageUri.toString());
-            editor.commit();
-
-            // Sets the ImageView with the Image URI
-            imageView.setImageURI(mImageUri);
-            //imageView.invalidate();
-
-
-
+    public void permissionsCheck() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            return;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // The user picked a image.
+                // The Intent's data Uri identifies which item was selected.
+                if (data != null) {
+
+                    // This is the key line item, URI specifies the name of the data
+                    mImageUri = data.getData();
+
+                    // Saves image URI as string to Default Shared Preferences
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("image", String.valueOf(mImageUri));
+                    editor.commit();
+
+                    // Sets the ImageView with the Image URI
+                    imageView.setImageURI(mImageUri);
+                    imageView.invalidate();
+                }
+            }
+        }
+        if (requestCode == PICK_IMAGE_REQUEST_PARKING) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // The user picked a image.
+                // The Intent's data Uri identifies which item was selected.
+                if (data != null) {
+
+                    // This is the key line item, URI specifies the name of the data
+                    mImageUri_1 = data.getData();
+
+                    // Saves image URI as string to Default Shared Preferences
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("image_park", String.valueOf(mImageUri_1));
+                    editor.commit();
+
+                    // Sets the ImageView with the Image URI
+                    try {
+                        Glide.with(iv_park.getContext()).load(mImageUri_1)
+                                .fitCenter().placeholder(R.drawable.image_svg)
+                                .into(iv_park);
+
+
+
+                        // imagePopup.initiatePopupWithPicasso(photoURI);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    iv_plus.setVisibility(View.GONE);
+                    addmore.setVisibility(View.GONE);
+                   // iv_park.invalidate();
+                }
+            }
+        }
+
+
+
+    }
+
+
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

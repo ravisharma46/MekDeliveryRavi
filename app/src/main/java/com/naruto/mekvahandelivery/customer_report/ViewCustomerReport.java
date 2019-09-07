@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -153,10 +152,6 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
             load_bike();
         }
 
-
-
-
-
     }
 
     private void load_bike() {
@@ -246,7 +241,6 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -273,7 +267,6 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                 response -> {
 
                     try {
-
                         JSONObject data = response.getJSONObject("data");
                         Log.e("data-", bookingId+"- "+response);
 
@@ -346,14 +339,9 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         tvOdometer.setText(data.getString(key));
                                         break;
                                     case "rc":
-                                        keyList.add(key);
-                                        imageStringList.add(data.getJSONArray(key).getString(1));
-                                        break;
-                                    case "puc":
-                                        keyList.add(key);
-                                        imageStringList.add(data.getJSONArray(key).getString(1));
-                                        break;
+                                    case "image":
                                     case "insurance":
+                                    case "puc":
                                         keyList.add(key);
                                         imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
@@ -367,10 +355,6 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         break;
                                     case "pollution_paper":
                                         keyList.add("pollutionpaper");
-                                        imageStringList.add(data.getJSONArray(key).getString(1));
-                                        break;
-                                    case "image":
-                                        keyList.add(key);
                                         imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "signature":
@@ -529,14 +513,9 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         tvOdometer.setText(data.getString(key));
                                         break;
                                     case "rc":
-                                        keyList.add(key);
-                                        imageStringList.add(data.getJSONArray(key).getString(1));
-                                        break;
                                     case "puc":
-                                        keyList.add(key);
-                                        imageStringList.add(data.getJSONArray(key).getString(1));
-                                        break;
                                     case "insurance":
+                                    case "image":
                                         keyList.add(key);
                                         imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
@@ -550,10 +529,6 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         break;
                                     case "pollution_paper":
                                         keyList.add("pollutionpaper");
-                                        imageStringList.add(data.getJSONArray(key).getString(1));
-                                        break;
-                                    case "image":
-                                        keyList.add(key);
                                         imageStringList.add(data.getJSONArray(key).getString(1));
                                         break;
                                     case "signature":
@@ -641,10 +616,6 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
-
-
-
-
     private void onBikeFragmentButtonClick(String keyId,String state) {
         String bikeButtonId = "bt_bv" + keyId;
         Button btn = findViewById(getResources().getIdentifier(bikeButtonId, "id", getPackageName()));
@@ -674,7 +645,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
 
     @Override
     public void onReportAdapterInteraction(String key, String imageString) {
-        if (imageString.equals("")) {
+        if (!imageString.equals("")) {
             String carButtonId = "bt_v" + key;
             Log.e("key- ", carButtonId);
             if (!key.equals("image")) {

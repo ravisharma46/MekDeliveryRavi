@@ -40,7 +40,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.TimeoutError;
-import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.naruto.mekvahandelivery.R;
@@ -70,6 +69,7 @@ import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.
 @SuppressLint("SetTextI18n")
 public class AddCustomerReport extends AppCompatActivity implements Car_Add_fragment.OnFragmentInteractionListener,
         Bike_Add_fragment.OnFragmentInteractionListener, AddCustomerReportAdapter.OnAdapterClickListener {
+
     private FrameLayout car, bike;
     private Button btn,addDetails;
     private ImageView car_image, bike_image, img_sign;
@@ -79,7 +79,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     File mPhotoFile;
     private LoginSessionManager sessionManager;
 
-    private String bookingId, buttonId;
+    Bitmap bmp = null;
+
+    private String bookingId, newBId, buttonId, vehicle_type;
     static final int REQUEST_TAKE_PHOTO = 1;
     private int rv_index = 6;
     private Uri photoURI = null;
@@ -106,6 +108,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportDocument = initDocumentData();
 
         bookingId = getIntent().getStringExtra("bookingId");
+        assert bookingId != null;
+        newBId = bookingId.substring(1);
 
         try{
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
@@ -143,21 +147,21 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         imageDocumentAdapter = new AddCustomerReportAdapter(reportDocument, imageDocumentView.getContext());
         imageDocumentView.setAdapter(imageDocumentAdapter);
 
-        Bundle bundle=getIntent().getExtras();
-        assert bundle != null;
-        String vehicle_type =bundle.getString("vehicletype");
+        vehicle_type =getIntent().getStringExtra("vehicletype");
 
-        if(vehicle_type.contains("car")){
-            loadCarFragment();
-            load_car();
+        if (vehicle_type != null) {
+            if(vehicle_type.equalsIgnoreCase("car")){
+                loadCarFragment();
+                load_car();
+            }
+
+            else if(vehicle_type.equalsIgnoreCase("bike")){
+                loadBikeFragment();
+                load_bike();
+            }
         }
 
-        else if(vehicle_type.contains("bike")){
-            loadBikeFragment();
-            load_bike();
-        }
-
-//fuel meter
+//        fuel meter
         sk_fuelmeter.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
             @Override
@@ -179,9 +183,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             }
         });
 
-
-
-
         take_sign.setOnClickListener(view -> {
             Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
             startActivityForResult(i,2);
@@ -189,11 +190,17 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         });
         img_cancel.setOnClickListener(view -> img_sign.setImageResource(R.drawable.image_svg));
 
-        addDetails.setOnClickListener(view -> sendUserDetails());
+        addDetails.setOnClickListener(view -> {
+            if (vehicle_type.equalsIgnoreCase("car")) {
+                sendCarReport();
+            } else {
+                sendBikeReport();
+            }
+        });
 
     }
 
-    private void sendUserDetails() {
+    private void sendCarReport() {
 
         if (reportDocument.size()<8) {
             Snackbar.make(addDetails, "Please upload all images!",
@@ -217,7 +224,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                         JSONArray documentDataArray = dataObject.getJSONArray("rc");
                         Log.e("response report", documentDataArray.getString(1)+" new bookingId:" +
                                 dataObject.getString("booking_id"));
-                        Glide.with(this).load(documentDataArray.getString(1)).into(img_sign);
+
                         progressDialog.dismiss();
                         onBackPressed();
                     } catch (Exception e) {
@@ -235,7 +242,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             } else {
                 String result = new String(networkResponse.data);
                 try {
-                    Log.e("result string", bookingId+" "+result);
+                    Log.e("result string", newBId+" "+result);
                     JSONObject response = new JSONObject(result);
                     String status = response.getString("status");
                     String message = response.getString("message");
@@ -267,7 +274,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> bodyparams = new HashMap<>();
-                bodyparams.put("booking_id", bookingId);
+                bodyparams.put("booking_id", newBId);
                 bodyparams.put("tool_kit", carButton.get("toolkit"));
                 bodyparams.put("stepney", carButton.get("stepney"));
                 bodyparams.put("mudguard", carButton.get("mudguard"));
@@ -330,7 +337,138 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
     }
 
+    private void sendBikeReport() {
+        if (reportDocument.size()<8) {
+            Snackbar.make(addDetails, "Please upload all images!",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Uploading report....");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, BASE+"BikeRegularServiceReport",
+                response -> {
+
+                    String resultResponse = new String(response.data);
+                    try {
+                        JSONObject jsonObject = new JSONObject(resultResponse);
+                        Log.e("data check", jsonObject.toString());
+                        JSONObject dataObject = jsonObject.getJSONObject("data");
+                        JSONArray documentDataArray = dataObject.getJSONArray("rc");
+                        Log.e("response report", documentDataArray.getString(1)+" new bookingId:" +
+                                dataObject.getString("booking_id"));
+
+                        progressDialog.dismiss();
+                        onBackPressed();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            NetworkResponse networkResponse = error.networkResponse;
+            String errorMessage = "Unknown error";
+            if (networkResponse == null) {
+                if (error.getClass().equals(TimeoutError.class)) {
+                    errorMessage = "Request timeout";
+                } else if (error.getClass().equals(NoConnectionError.class)) {
+                    errorMessage = "Failed to connect server";
+                }
+            } else {
+                String result = new String(networkResponse.data);
+                try {
+                    Log.e("result string", newBId+" "+result);
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getString("status");
+                    String message = response.getString("message");
+
+                    Log.e("Error Status", status);
+                    Log.e("Error Message", message);
+
+                    switch (networkResponse.statusCode) {
+                        case 404:
+                            errorMessage = "Resource not found";
+                            break;
+                        case 401:
+                            errorMessage = message + " Please login again";
+                            break;
+                        case 400:
+                            errorMessage = message + " Check your inputs";
+                            break;
+                        case 500:
+                            errorMessage = message + " Something is getting wrong";
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.i("Error", errorMessage);
+            error.printStackTrace();
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> bodyparams = new HashMap<>();
+                bodyparams.put("booking_id", newBId);
+                bodyparams.put("tool_kit", bikeButton.get("toolkit"));
+                bodyparams.put("first_aid_kit", bikeButton.get("firstadkit"));
+                bodyparams.put("key_chain", bikeButton.get("keychain"));
+                bodyparams.put("bike_cover", bikeButton.get("bikecover"));
+                bodyparams.put("keychain", bikeButton.get("keychain"));
+                bodyparams.put("service_book", bikeButton.get("servicebook"));
+                bodyparams.put("miscellaneous", bikeButton.get("miscellenoustool"));
+                bodyparams.put("helmet_lock", "0");    //?????
+                bodyparams.put("seat_cover", "0");   //????
+                bodyparams.put("mobile_holder", "0");   //????
+                bodyparams.put("puncture_kit", "0");   //????
+                bodyparams.put("wheel_lock", "0");   //????
+                bodyparams.put("meter_percentage", meter_percentage); //fuelmeter seekbar
+                bodyparams.put("odometer", reportButton.get("odometer"));
+                bodyparams.put("description", reportButton.get("otherreport"));
+                bodyparams.put("battery_info", reportButton.get("sbrand"));
+                bodyparams.put("head_rest", reportButton.get("headrest"));
+                bodyparams.put("floor_mats", reportButton.get("floormats"));
+                bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
+                bodyparams.put("mud_flap", reportButton.get("mudflap"));
+
+                return bodyparams;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() throws IOException {
+                Map<String, DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
+
+                params.put("rc", new DataPart(getFilename(0), getBytes(0), "image/jpeg"));
+                params.put("puc", new DataPart(getFilename(1), getBytes(1), "image/jpeg"));
+                params.put("insurance", new DataPart(getFilename(2), getBytes(2), "image/jpeg"));
+                params.put("road_tax", new DataPart(getFilename(3), getBytes(3), "image/jpeg"));
+                params.put("pollution_paper", new DataPart(getFilename(4), getBytes(4), "image/jpeg"));
+                params.put("passenger_tax", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
+                params.put("image", new DataPart(getFilename(6), getBytes(6), "image/jpeg"));
+                params.put("signature", new DataPart(getFilename(7), getBytes(7), "image/jpeg"));
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headerParams = new HashMap<>();
+                headerParams.put("Accept", "application/json");
+                headerParams.put("Authorization", sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.TOKEN_TYPE)+" "+sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.ACCESS_TOKEN));
+                return headerParams;
+            }
+        };
+
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
+                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
+    }
 
     private String getFilename(int indx) {
         String fileName = reportDocument.get(indx).getPhotoUri().toString();
@@ -339,8 +477,15 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     }
 
     public byte[] getBytes(int i) throws IOException {
+        InputStream iStream;
+        if (i==7) {
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "sign", null);
+            photoURI = Uri.parse(path);
+            iStream = getContentResolver().openInputStream(photoURI);
+        } else {
+            iStream = getContentResolver().openInputStream(reportDocument.get(i).getPhotoUri());
+        }
 
-        InputStream iStream =   getContentResolver().openInputStream(reportDocument.get(i).getPhotoUri());
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
@@ -506,7 +651,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
         if(requestCode==2 && data!=null){
             byte[] bytes = data.getByteArrayExtra("image");
-            Bitmap bmp = null;
             if (bytes != null) {
                 bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             }

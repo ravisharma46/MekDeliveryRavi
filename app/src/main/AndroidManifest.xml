@@ -31,10 +31,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <service android:name=".services.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <service
-            android:name=".common_files.MyLocationService"
-            android:enabled="true"
-            ></service>
+            android:name=".services.MyLocationService"
+            android:enabled="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -104,6 +116,10 @@
             android:name=".onboarding.OnBoardingActivity"
             android:noHistory="true"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="df8b0bcf9c494e053159c10a6be0055154233dc5" />
     </application>
 
 </manifest>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "153772849524",
+    "firebase_url": "https://mekdeliveryravi.firebaseio.com",
+    "project_id": "mekdeliveryravi",
+    "storage_bucket": "mekdeliveryravi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153772849524:android:dd24b3d96fb6f9609bd421",
+        "android_client_info": {
+          "package_name": "com.naruto.mekvahandelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153772849524-18q95lt874dmheh08npgmttqljspp3bu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.naruto.mekvahandelivery",
+            "certificate_hash": "f458384edb619f6493e56650c5508db439f4df18"
+          }
+        },
+        {
+          "client_id": "153772849524-rm0gu5c2mfgndstu0gkql4ft538cnal9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA50MxH221VHah8zJkPZxEZYiprMcLDhYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153772849524-rm0gu5c2mfgndstu0gkql4ft538cnal9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

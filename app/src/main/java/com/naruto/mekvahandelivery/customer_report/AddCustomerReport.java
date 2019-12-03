@@ -645,6 +645,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         );
     }
 
+//    adding all camera images to the adapter and changing button colour
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -683,6 +684,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         return super.onOptionsItemSelected(item);
     }
 
+//    interface imlemented by this class for click listeners from car and bike fragments
     @Override
     public void onFragmentInteraction(View view) {
         if (getSupportFragmentManager().findFragmentById(R.id.frameLayout) instanceof Car_Add_fragment) {
@@ -692,6 +694,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         }
     }
 
+//    click listeners for buttons present in bike fragment
     private void onBikeFragmentButtonClick(View view) {
         String bikeButtonId = getResources().getResourceEntryName(view.getId());
         Button btn = findViewById(view.getId());
@@ -707,6 +710,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         }
     }
 
+//    click listeners for buttons present in car fragment
     private void onCarFragmentButtonClick(View view) {
         String carButtonId = getResources().getResourceEntryName(view.getId());
         Button btn = findViewById(view.getId());
@@ -722,6 +726,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         }
     }
 
+//    click lsitener for buttons present in Add Report Activity
     public void onAddReportButton(View view) {
         buttonId = getResources().getResourceEntryName(view.getId());
 
@@ -752,6 +757,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         }
     }
 
+//    click listener interface from recycler adapter to implement cross imagebutton click
     public void onAddReportButton(String buttonId) {
         this.buttonId = buttonId;
         if (!buttonId.endsWith("z")) {

@@ -31,7 +31,6 @@ import com.naruto.mekvahandelivery.Adapter.ExpandableListAdapter;
 import com.naruto.mekvahandelivery.about_us.AboutUs;
 import com.naruto.mekvahandelivery.chauffeur_partner.Chauffer;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
-import com.naruto.mekvahandelivery.common_files.MyLocationService;
 import com.naruto.mekvahandelivery.help_and_support.Help;
 import com.naruto.mekvahandelivery.history.BookingHistoryFragment;
 import com.naruto.mekvahandelivery.ongoing_orders.OngoingFragment;
@@ -83,12 +82,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 
 		chaufer= findViewById(R.id.chaufer);
-		chaufer.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(NavActivity.this, Chauffer.class));
-			}
-		});
+		chaufer.setOnClickListener(view -> startActivity(new Intent(NavActivity.this, Chauffer.class)));
 
 		setNavigationDrawer();
 
@@ -96,10 +90,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 		setTabLayout();
 
-		MyLocationService myLocationService=new MyLocationService(this);
-
-		startService(new Intent(NavActivity.this, MyLocationService.class));
-
+//		MyLocationService myLocationService=new MyLocationService(this);
+//
+//		startService(new Intent(NavActivity.this, MyLocationService.class));
 
 	}
 
@@ -357,8 +350,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 			if (childList.get(headerList.get(groupPosition)) != null) {
 
-
-
 				if (groupPosition == 2) {
 					switch (childPosition) {
 						case 0:
@@ -422,8 +413,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
-
-
 
 	@Override
 	protected void onResume() {

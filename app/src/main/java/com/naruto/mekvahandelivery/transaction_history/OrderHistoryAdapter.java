@@ -10,21 +10,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naruto.mekvahandelivery.R;
+import com.naruto.mekvahandelivery.upcoming_orders.MyListDataUpcomingBooking;
+import com.naruto.mekvahandelivery.vendor_pickup.UpcomingBookingVendor;
+
+import java.util.ArrayList;
+
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
 
-    //   private List<Listitem> listitems;
     private Context context;
-    //ValueFilter valueFilter;
+    private ArrayList<MyListDataUpcomingBooking> dataArrayList;
 
-    public OrderHistoryAdapter(Context context) {
-        //this.listitems = listitems;
-
-        this.context = context;
+   public OrderHistoryAdapter (Context context, ArrayList<MyListDataUpcomingBooking> dataArrayList) {
+        this.context=context;
+        this.dataArrayList=dataArrayList;
     }
+
 
     @NonNull
     @Override
@@ -39,26 +46,28 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-//        final Listitem listitem=listitems.get(i);
-//
-//        viewHolder.textViewname.setText(listitem.getName());
-//        viewHolder.textViewrent.setText(listitem.getRent_from());
-//        viewHolder.textViewdeposite.setText(listitem.getSecurity_deposit_from());
-//        viewHolder.textViewaccomd.setText(listitem.getAccomodation_allowed_str());
-//        viewHolder.textViewbed.setText(listitem.getAvailable_bed_count()+" Beds");
-//
-//        String state_city= listitem.getCity()+","+listitem.getState();
-//        viewHolder.textViewcity.setText(state_city);
+
+        final MyListDataUpcomingBooking data = dataArrayList.get(i);
+
+        viewHolder.textViewtotal.setText("Total " + "\u20B9 " + data.getMy_amount());
+        viewHolder.tv_date.setText(getDate(data.getDate()));
+        viewHolder.tv_time.setText(getTime(data.getTime()));
 
 
-        viewHolder.textViewtotal.setText("Total " + "\u20B9" + " 100.00");
-
-        viewHolder.textViewdetail.setOnClickListener(new View.OnClickListener() {
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), Transaction.class);
-                view.getContext().startActivity(i);
-
+                Intent i1 = new Intent(view.getContext(), Transaction.class);
+                i1.putExtra("date",getDate(data.getDate()));
+                i1.putExtra("time",getTime(data.getTime()));
+                i1.putExtra("booking_id",data.getOrderId());
+                i1.putExtra("vehicletype",data.getVehicle_type());
+                i1.putExtra("booking_id",data.getOrderId());
+                i1.putExtra("logo",data.getLogo());
+                i1.putExtra("brand_name",data.getModelName());
+                i1.putExtra("licence_plate",data.getNumberPlate());
+                i1.putExtra("amount",data.getMy_amount());
+                view.getContext().startActivity(i1);
             }
         });
 
@@ -67,26 +76,27 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public int getItemCount() {
-        return 1;
+        if (dataArrayList != null) {
+            return dataArrayList.size();
+        } else {
+            return 0;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewtotal, textViewdetail, textViewstate, textViewrent, textViewdeposite, textViewaccomd, textViewbed;
-        private ImageView imageView;
-        private LinearLayout linearLayout;
+        private TextView textViewtotal, textViewdetail, tv_date,tv_time;
+        private CardView cardView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewtotal = itemView.findViewById(R.id.tvTotal);
             textViewdetail = itemView.findViewById(R.id.tvDetails);
-//            textViewrent= (TextView) itemView.findViewById(R.id.rent_tv);
-//            textViewdeposite= (TextView) itemView.findViewById(R.id.deposite_tv);
-//            textViewaccomd= (TextView) itemView.findViewById(R.id.accomd_tv);
-//            textViewbed= (TextView)itemView.findViewById(R.id.bed_tv);
-//
-//            imageView =(ImageView) itemView.findViewById(R.id.image_View);
-//            linearLayout=(LinearLayout) itemView.findViewById(R.id.linearLayout);
+            tv_date = itemView.findViewById(R.id.tv_date);
+            tv_time = itemView.findViewById(R.id.tv_time);
+            cardView = itemView.findViewById(R.id.cardView);
+
         }
     }
 

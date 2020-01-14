@@ -657,7 +657,8 @@
                     android:background="@drawable/frame_sqr">
                     <ImageView
                         android:id="@+id/image_vsign"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         android:background="@drawable/image_svg" />
                 </FrameLayout>

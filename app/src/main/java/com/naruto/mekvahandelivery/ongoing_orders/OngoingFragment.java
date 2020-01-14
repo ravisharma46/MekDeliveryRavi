@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -44,8 +45,8 @@ public class OngoingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private static final String myUrl = "https://mekvahan.com/api/delivery/ongoing_booking";
-    private ProgressBar mProgressBar;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<MyListDataOngoingBooking> mBookingList;
     public OngoingFragment() {
         // Required empty public constructor
@@ -58,27 +59,42 @@ public class OngoingFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_ongoing, container, false);
 
-        mProgressBar = v.findViewById(R.id.progress_bar);
+
         mBookingList = new ArrayList<>();
 
+        mSwipeRefreshLayout  = v.findViewById(R.id.swipe_to_refresh);
+
+
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         ongoing();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Need to fetch all orders
+                ongoing();
+            }
+        });
 
 
         return v;
     }
 
     private void ongoing() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
+
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
                     try {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (mBookingList.size() > 0)
+                            mBookingList.clear();
 
                         JSONObject Object = new JSONObject(response);
+
 
 
                         int status_1 = Object.getInt("status");
@@ -173,7 +189,7 @@ public class OngoingFragment extends Fragment {
 
 
 
-                                if(status_id==6 ){
+                                if(status_id==3 ){
                                     JSONArray partner=jsonObject.getJSONArray("partner");
                                     JSONObject part=partner.getJSONObject(0);
 
@@ -186,7 +202,7 @@ public class OngoingFragment extends Fragment {
                                 }
 
 
-                                if(status_id==9 || status_id==10){
+                                if(status_id==5){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
                                     JSONObject cust=customer.getJSONObject(0);
 
@@ -200,40 +216,32 @@ public class OngoingFragment extends Fragment {
 
                             }
 
-                            if(service_type.contains("sos_service")){
-                                serviceName=jsonObject.getJSONObject("sos_service").getString("service_name");
-
-
-                                if(status_id==6 || status_id==9){
-                                    JSONArray customer=jsonObject.getJSONArray("customer");
-                                    JSONObject cust=customer.getJSONObject(0);
-
-                                    name=cust.getString("name");
-                                    mobile=cust.getString("mobile");
-                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
-                                    address=drop_add.getString("address");
-                                    try {
-                                        latitude=drop_add.getString("latitude");
-                                        longitude=drop_add.getString("longitude");
-                                    }
-                                    catch (Exception e){
-                                        e.printStackTrace();
-                                    }
-
-
-
-
-                                }
-
-                            }
-
-
-
-
-
-
-
-
+//                            if(service_type.contains("sos_service")){
+//                                serviceName=jsonObject.getJSONObject("sos_service").getString("service_name");
+//
+//
+//                                if(status_id==6 || status_id==9){
+//                                    JSONArray customer=jsonObject.getJSONArray("customer");
+//                                    JSONObject cust=customer.getJSONObject(0);
+//
+//                                    name=cust.getString("name");
+//                                    mobile=cust.getString("mobile");
+//                                    JSONObject drop_add=jsonObject.getJSONObject("drop_address");
+//                                    address=drop_add.getString("address");
+//                                    try {
+//                                        latitude=drop_add.getString("latitude");
+//                                        longitude=drop_add.getString("longitude");
+//                                    }
+//                                    catch (Exception e){
+//                                        e.printStackTrace();
+//                                    }
+//
+//
+//
+//
+//                                }
+//
+//                            }
 
 
                             String drop_date=jsonObject.getString("pickup_date");
@@ -259,6 +267,7 @@ public class OngoingFragment extends Fragment {
 
 
 
+
                             mBookingList.add(new  MyListDataOngoingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
@@ -267,22 +276,27 @@ public class OngoingFragment extends Fragment {
 
 
 
+
+
                         }
 
 
+
                         adapter = new OngoingAdapter_1(getActivity(), (ArrayList<MyListDataOngoingBooking>) mBookingList);
+                        recyclerView.hasFixedSize();
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         recyclerView.setAdapter(adapter);
 
-                        mProgressBar.setVisibility(View.GONE);
+
 
 
 
                     } catch (JSONException e) {
-                        mProgressBar.setVisibility(View.GONE);
+
                         e.printStackTrace();
                     }
                 }, error -> {
-            mProgressBar.setVisibility(View.GONE);
+            mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){

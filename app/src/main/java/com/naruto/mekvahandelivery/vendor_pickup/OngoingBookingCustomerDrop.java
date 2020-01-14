@@ -60,7 +60,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
     private TextView sub_total,tax,additional_charge,total,nameC,addressC,dateD,timeD;
     private OtpEditText otpEditText;
     private ProgressDialog mProgressDialog;
-    private String otp_input="";
+    private String otp_input="0000";
     private static final String myUrl = "https://mekvahan.com/api/delivery/ongoing_history";
 
     @Override
@@ -92,9 +92,6 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
 
 
-
-
-
         Bundle bundle=getIntent().getExtras();
         String name =bundle.getString("name");
         String bookingid =bundle.getString("bookingid");
@@ -107,8 +104,6 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         String otp_1=bundle.getString("otp");
         String mobileNo=bundle.getString("mobile");
         String vehicle_type=bundle.getString("vehicletype");
-
-
 
 
 
@@ -148,7 +143,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
             public void onClick(View view) {
                Intent i=new Intent(OngoingBookingCustomerDrop.this,ViewCustomerReport.class);
                i.putExtra("vehicletype",vehicle_type);
-                i.putExtra("bookingId", bookingid);
+               i.putExtra("bookingId", bookingid);
                startActivity(i);
             }
         });
@@ -175,7 +170,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
 
     private void sendDb_pickupConfirm(){
-       //mProgressDialog.show();
+
+//       mProgressDialog.show();
         StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl, response -> {
 
             try{
@@ -183,7 +179,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
                 JSONObject object=new JSONObject(response);
                 int status_1 = object.getInt("status");
                 if(status_1!=1) {
-                   // mProgressDialog.dismiss();
+                 //   mProgressDialog.dismiss();
                     dialogpop();
                     //Toast.makeText(getApplicationContext(),"Incorrect OTP",Toast.LENGTH_SHORT).show();
                     return;
@@ -202,7 +198,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
 
         },error -> {
-            Toast.makeText(getApplicationContext(),"Something get wrong",Toast.LENGTH_LONG).show();
+            //mProgressDialog.dismiss();
+            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){
             @Override
@@ -254,7 +251,6 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
     public void delay(Activity activity){
         Handler handler = new Handler();
-
         handler.postDelayed(() -> {
             Intent intent = new Intent(OngoingBookingCustomerDrop.this, activity.getClass());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -270,9 +266,7 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
     private void dialogpop(){
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-
         alertBuilder.setMessage("Incorrect OTP").setCancelable(false);
-
         alertBuilder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -280,8 +274,6 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
             }
         });
-
-
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.setTitle("OTP Results");
         alertDialog.show();

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.R;
 
 public class Transaction extends AppCompatActivity {
@@ -24,8 +25,8 @@ public class Transaction extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private FrameLayout car, bike;
-    private ImageView car_image, bike_image;
-    private TextView tvbike, tvcar, document;
+    private ImageView car_image, bike_image,iv_brandLogo;
+    private TextView tvbike, tvcar,tv_date,tv_time,tv_bookingId,tv_brandName,tv_licencePlate,tv_amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +46,49 @@ public class Transaction extends AppCompatActivity {
         bike_image = findViewById(R.id.bike_image);
         tvbike = findViewById(R.id.tvbike);
         tvcar = findViewById(R.id.tvcar);
-
-        //load_bike();
-
-        car.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                load_car();
-            }
-        });
-
-        bike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                load_bike();
-            }
-        });
+        tv_date = findViewById(R.id.tv_date);
+        tv_time = findViewById(R.id.tv_time);
+        tv_bookingId = findViewById(R.id.tv_bookingId);
+        tv_brandName = findViewById(R.id.tv_brandName);
+        tv_licencePlate = findViewById(R.id.tv_licencePlate);
+        tv_amount = findViewById(R.id.tv_amount);
+        iv_brandLogo = findViewById(R.id.iv_brandLogo);
 
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Bundle bundle=getIntent().getExtras();
+        assert bundle != null;
 
 
-        loadRecyclerViewData();
+        String vehicle_type = bundle.getString("vehicletype");
+        String date = bundle.getString("date");
+        String time = bundle.getString("time");
+        String booking_id = bundle.getString("booking_id");
+        String logo = bundle.getString("logo");
+        String brand_name = bundle.getString("brand_name");
+        String licence_plate = bundle.getString("licence_plate");
+        String amount = bundle.getString("amount");
 
+        if(vehicle_type.contains("car")){
+           load_car();
+        }
+        else{
+            load_car();
+        }
+        tv_amount.setText("\u20B9 " + amount);
+        tv_date.setText(date);
+        tv_time.setText(time);
+        tv_bookingId.setText("Order id: "+booking_id);
+        tv_brandName.setText(brand_name);
+        tv_licencePlate.setText(licence_plate);
+
+        try{
+            Glide.with(getApplicationContext()).load(logo)
+                    .into(iv_brandLogo);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -95,12 +114,7 @@ public class Transaction extends AppCompatActivity {
 
     }
 
-    private void loadRecyclerViewData() {
 
-
-        adapter = new TransactionAdapter(getApplicationContext());
-        recyclerView.setAdapter(adapter);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

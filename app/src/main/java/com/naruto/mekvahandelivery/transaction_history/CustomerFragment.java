@@ -27,18 +27,18 @@ public class CustomerFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_customer, container, false);
 
 
-        recyclerView = v.findViewById(R.id.recyclerView_1);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+      //  recyclerView = v.findViewById(R.id.recyclerView_1);
+        //recyclerView.hasFixedSize();
+       // recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        loadRecyclerViewData();
+        //loadRecyclerViewData();
 
         return v;
     }
     private void loadRecyclerViewData() {
-        adapter = new OrderHistoryAdapter(getActivity());
-        recyclerView.setAdapter(adapter);
+      //  adapter = new OrderHistoryAdapter(getActivity());
+     //   recyclerView.setAdapter(adapter);
     }
 
 

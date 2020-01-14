@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,9 +43,9 @@ public class UpcomingFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private static final String myUrl = "https://mekvahan.com/api/delivery/upcoming_booking";
-    private ProgressBar mProgressBar;
 
     private List<MyListDataUpcomingBooking> mBookingList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public UpcomingFragment() {
         // Required empty public constructor
@@ -56,26 +57,39 @@ public class UpcomingFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_upcoming, container, false);
 
-        mProgressBar = v.findViewById(R.id.progress_bar);
+
+        recyclerView = v.findViewById(R.id.recyclerView_1);
 
         mBookingList = new ArrayList<>();
 
-        recyclerView = v.findViewById(R.id.recyclerView_1);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mSwipeRefreshLayout  = v.findViewById(R.id.swipe_to_refresh);
 
         upcoming();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Need to fetch all orders
+                upcoming();
+            }
+        });
 
 
         return v;
     }
 
     private void upcoming() {
-        mProgressBar.setVisibility(View.VISIBLE);
+
+        mSwipeRefreshLayout.setRefreshing(true);
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
                     try {
+
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (mBookingList.size() > 0)
+                            mBookingList.clear();
 
                         JSONObject Object = new JSONObject(response);
 
@@ -92,6 +106,7 @@ public class UpcomingFragment extends Fragment {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                             String bookingId = "#"+jsonObject.getString("booking_id");
+                            String my_amount = jsonObject.getString("my_amount");
 
                             String service_type=jsonObject.getString("service_type");
                             String otp=jsonObject.getString("otp");
@@ -162,7 +177,7 @@ public class UpcomingFragment extends Fragment {
 
 
 
-                                if(status_id==8 ){
+                                if(status_id==9 ){
                                     JSONArray partner=jsonObject.getJSONArray("partner");
                                     JSONObject part=partner.getJSONObject(0);
 
@@ -174,7 +189,7 @@ public class UpcomingFragment extends Fragment {
 
                                 }
 
-                                if(status_id==5){
+                                if(status_id==1 || status_id==2){
                                     JSONArray customer=jsonObject.getJSONArray("customer");
                                     JSONObject cust=customer.getJSONObject(0);
 
@@ -258,22 +273,24 @@ public class UpcomingFragment extends Fragment {
                             mBookingList.add(new MyListDataUpcomingBooking(status,serviceDate,serviceTime, logo_url,mobile,vehicle_name,
                                     licencePlate, bookingId, paymentStatus,serviceName,image_url,otp,name,address,latitude,longitude,
                                     drop_date,drop_time,amount,vehicleBrand,service_type,action1,action2,action3,action4,action5,action6,
-                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id,vehicle_type
+                                    action7,action8,action9,action10,action11,action12,action13,action14,action15,status_id,vehicle_type,my_amount
                             ));
 
                         }
 
                         adapter = new UpcomingAdapter(getActivity(), (ArrayList<MyListDataUpcomingBooking>) mBookingList);
+
+                        recyclerView.hasFixedSize();
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         recyclerView.setAdapter(adapter);
 
-                        mProgressBar.setVisibility(View.GONE);
+
 
                     } catch (JSONException e) {
-                        mProgressBar.setVisibility(View.GONE);
                         e.printStackTrace();
                     }
                 }, error -> {
-            mProgressBar.setVisibility(View.GONE);
+            mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){

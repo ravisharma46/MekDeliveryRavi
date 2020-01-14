@@ -37,6 +37,8 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
@@ -91,6 +93,8 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private ImagePopup imagePopup;
     private Boolean aBoolean=false;
+    private double latitude=0.0,longitude=0.0;
+    private Boolean isCustomerReportUpload=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,8 +128,16 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         String vehicle_type =bundle.getString("vehicletype");
         bookingid =bundle.getString("bookingid");
         String address_1 =bundle.getString("address");
-        double latitude= Double.parseDouble(bundle.getString("latitude"));
-        double longitude=Double.parseDouble( bundle.getString("longitude"));
+        try{
+            latitude= Double.parseDouble(bundle.getString("latitude"));
+            longitude=Double.parseDouble( bundle.getString("longitude"));
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
         String dropdate=bundle.getString("dropDate");
         String dropTime= bundle.getString("dropTime");
         String amount=bundle.getString("amount");
@@ -223,7 +235,8 @@ public class UpcomingBookingVendor extends AppCompatActivity {
                 Intent i=new Intent(UpcomingBookingVendor.this,AddCustomerReport.class);
                 i.putExtra("bookingid",bookingid);
                 i.putExtra("vehicletype",vehicle_type);
-                startActivity(i);
+                startActivityForResult(i,101);
+
             }
         });
 
@@ -259,6 +272,11 @@ public class UpcomingBookingVendor extends AppCompatActivity {
             public void onClick(View view) {
 
                // sendDb_exterior_image();
+                if (isCustomerReportUpload!=true) {
+                    Snackbar.make(pickup_confirm, "Please add customer report..!",
+                            BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+                    return;
+                }
 
                 Intent i=new Intent(UpcomingBookingVendor.this,ScanQrcode.class);
                 i.putExtra("otp",otp_1);
@@ -296,6 +314,7 @@ if(aBoolean==false){
 
 
     private void sendDb_exterior_image(){
+
        // mProgressDialog.show();
         StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl_img, response -> {
 
@@ -402,6 +421,21 @@ if(aBoolean==false){
 
 
         }
+
+        if (requestCode == 101 ) {
+            try{
+                String status =data.getStringExtra("upload_status");
+                if(status.contains("true")){
+                    isCustomerReportUpload=true;
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }
+
     }
 
     private void dispatchTakePictureIntent(int requestCode) {

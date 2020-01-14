@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -90,6 +91,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     private List<AddCustomerReportData> reportDocument;
     private SeekBar sk_fuelmeter;
     private String meter_percentage="40";
+    private EditText headRest,floorMats,mudFlaps,seatCover,otherReport,odoMeter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +111,12 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportDocument = new ArrayList<>();
         reportDocument = initDocumentData();
 
-        bookingId = getIntent().getStringExtra("bookingId");
+        bookingId = getIntent().getStringExtra("bookingid");
+
         assert bookingId != null;
         newBId = bookingId.substring(1);
+
+
 
         try{
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
@@ -125,6 +132,12 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             e.printStackTrace();
         }
 
+        headRest= findViewById(R.id.et_headrest);
+        floorMats = findViewById(R.id.et_floormats);
+        mudFlaps = findViewById(R.id.et_mudflap);
+        seatCover = findViewById(R.id.et_seatcover);
+        otherReport = findViewById(R.id.et_otherreport);
+        odoMeter = findViewById(R.id.et_odometer);
         addDetails = findViewById(R.id.bt_done);
         car = findViewById(R.id.frame_2);
         bike = findViewById(R.id.frame_1);
@@ -192,11 +205,29 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
         addDetails.setOnClickListener(view -> {
             if (vehicle_type.equalsIgnoreCase("car")) {
-                sendCarReport();
+              //  Log.e("TAG","CLICKED YES");
+               // Log.e("odometer", odoMeter.getText().toString());
+               // Log.e("odometer1", reportButton.get("odometer"));
+//                Log.e("description", reportButton.get("otherreport"));
+//                Log.e("battery_info", reportButton.get("sbrand"));
+//                Log.e("miscellaneous", "0");    //??????
+//                Log.e("head_rest", reportButton.get("headrest"));
+//                Log.e("floor_mats", reportButton.get("floormats"));
+//                Log.e("wheel_cap", reportButton.get("wheelcap"));
+//                Log.e("mud_flap", reportButton.get("mudflap"));
+
+
+
+
+               sendCarReport();
             } else {
                 sendBikeReport();
             }
         });
+
+
+
+
 
     }
 
@@ -226,7 +257,10 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                                 dataObject.getString("booking_id"));
 
                         progressDialog.dismiss();
-                        onBackPressed();
+                        Intent intent = new Intent();
+                        intent.putExtra("upload_status", "true");
+                        setResult(101, intent);
+                        finish();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -288,16 +322,16 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 bodyparams.put("stereo_panel", carButton.get("stereopanel"));
                 bodyparams.put("speakers", carButton.get("speakers"));
                 bodyparams.put("car_cover", "0");    //?????
-                bodyparams.put("seat_cover", "0");   //????
+                bodyparams.put("seat_cover",seatCover.getText().toString() );   
                 bodyparams.put("meter_percentage", meter_percentage); //fuelmeter seekbar
-                bodyparams.put("odometer", reportButton.get("odometer"));
-                bodyparams.put("description", reportButton.get("otherreport"));
+                bodyparams.put("odometer", odoMeter.getText().toString());
+                bodyparams.put("description", otherReport.getText().toString());
                 bodyparams.put("battery_info", reportButton.get("sbrand"));
                 bodyparams.put("miscellaneous", "0");    //??????
-                bodyparams.put("head_rest", reportButton.get("headrest"));
-                bodyparams.put("floor_mats", reportButton.get("floormats"));
+                bodyparams.put("head_rest", headRest.getText().toString());
+                bodyparams.put("floor_mats", floorMats.getText().toString());
                 bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
-                bodyparams.put("mud_flap", reportButton.get("mudflap"));
+                bodyparams.put("mud_flap", mudFlaps.getText().toString());
 
                 return bodyparams;
             }
@@ -316,7 +350,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 params.put("passenger_tax", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
                 params.put("image", new DataPart(getFilename(6), getBytes(6), "image/jpeg"));
                 params.put("signature", new DataPart(getFilename(7), getBytes(7), "image/jpeg"));
-
                 return params;
             }
 
@@ -362,7 +395,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                                 dataObject.getString("booking_id"));
 
                         progressDialog.dismiss();
-                        onBackPressed();
+                        finish();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -419,18 +452,18 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 bodyparams.put("service_book", bikeButton.get("servicebook"));
                 bodyparams.put("miscellaneous", bikeButton.get("miscellenoustool"));
                 bodyparams.put("helmet_lock", "0");    //?????
-                bodyparams.put("seat_cover", "0");   //????
+                bodyparams.put("seat_cover", seatCover.getText().toString());   //????
                 bodyparams.put("mobile_holder", "0");   //????
                 bodyparams.put("puncture_kit", "0");   //????
                 bodyparams.put("wheel_lock", "0");   //????
                 bodyparams.put("meter_percentage", meter_percentage); //fuelmeter seekbar
-                bodyparams.put("odometer", reportButton.get("odometer"));
-                bodyparams.put("description", reportButton.get("otherreport"));
+                bodyparams.put("odometer", odoMeter.getText().toString());
+                bodyparams.put("description", otherReport.getText().toString());
                 bodyparams.put("battery_info", reportButton.get("sbrand"));
-                bodyparams.put("head_rest", reportButton.get("headrest"));
-                bodyparams.put("floor_mats", reportButton.get("floormats"));
+                bodyparams.put("head_rest",headRest.getText().toString());
+                bodyparams.put("floor_mats", floorMats.getText().toString());
                 bodyparams.put("wheel_cap", reportButton.get("wheelcap"));
-                bodyparams.put("mud_flap", reportButton.get("mudflap"));
+                bodyparams.put("mud_flap", mudFlaps.getText().toString());
 
                 return bodyparams;
             }
@@ -524,6 +557,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         reportDocument.add(new AddCustomerReportData("bt_pollutionpaper", null, "0"));
         return reportDocument;
     }
+
+
 
     private Map<String, String> initReportData() {
         Map<String, String> reportData = new HashMap<>();
@@ -774,6 +809,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             rv_index--;
         }
     }
+
+
 
     @Override
     public void onAdapterInteraction(String buttonId) {

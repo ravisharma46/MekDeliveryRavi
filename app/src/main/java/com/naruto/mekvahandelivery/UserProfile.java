@@ -26,7 +26,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,8 @@ import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.user_profile.Checklist;
 import com.naruto.mekvahandelivery.user_profile.ShowAccountDetails;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 import java.net.URI;
@@ -58,18 +62,19 @@ import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TYPE;
 
 public class UserProfile extends AppCompatActivity {
 
-    private static final int GALLARY_REQUEST = 1;
-    private static  final int PARKING_PIC=1000;
-    private static  final int PROFILE_PIC=2000;
+    private static  final int PARKING_PIC=3;
+    private static final int CROP_PARKING= 4;
+    private static final int PROFILE_REQUEST = 1;
+    private static final int CROP_PROFILE = 2;
+
+
     private Button change_passWord, bt_done,bt_checklist;
     private FrameLayout account_details,fl_park;
-    private TextView name, mobile, email, address, partnerType, executive_id, name_1, update_pic,addmore,remove;
+    private TextView name, mobile, email, address, partnerType, executive_id, name_1,addmore,remove;
     private CircleImageView imageView;
-    private int mFlag = 0;
     private LoginSessionManager msessionManager;
-    private Uri mImageUri,mImageUri_1;
-    private  SharedPreferences sharedpreferences;
     private ImageView iv_plus,iv_park;
+    private LinearLayout update_pic;
 
 
     private static final int PICK_IMAGE_REQUEST = 0;
@@ -144,53 +149,48 @@ setAddress(lat,longitude);
 
 
         update_pic.setOnClickListener(view -> {
-            imageSelect(2000);
+            //imageSelect(2000);
+
+            if (ContextCompat.checkSelfPermission(UserProfile.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(UserProfile.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                return;
+            }
+            Intent gallaryIntent = new Intent(Intent.ACTION_PICK);
+            gallaryIntent.setType("image/*");
+            gallaryIntent.putExtra("flag", 1);
+
+            startActivityForResult(gallaryIntent, PROFILE_REQUEST);
+
+
         });
 
         fl_park.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageSelect(1000);
+                if (ContextCompat.checkSelfPermission(UserProfile.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(UserProfile.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                    return;
+                }
+                Intent gallaryIntent = new Intent(Intent.ACTION_PICK);
+                gallaryIntent.setType("image/*");
+                gallaryIntent.putExtra("flag", 1);
+
+                startActivityForResult(gallaryIntent, PARKING_PIC);
             }
         });
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String mImageUri = preferences.getString("image", null);
-        String mImageUri_1 = preferences.getString("image_park", null);
 
-        if(true){
-
-            if (mImageUri != null) {
-                imageView.setImageURI(Uri.parse(mImageUri));
-            }
-            else {
-                imageView.setImageResource(R.drawable.user_dummy_pic);
-            }
-        }
-        if(true){
-
-            if(mImageUri_1!=null){
-                iv_park.setImageURI(Uri.parse(mImageUri_1));
-                 addmore.setVisibility(View.GONE);
-                iv_plus.setVisibility(View.GONE);
-            }
-            else{
-                iv_park.setImageResource(R.drawable.frame_rect);
-                addmore.setVisibility(View.VISIBLE);
-                iv_plus.setVisibility(View.VISIBLE);
-            }
-
-        }
 
 
 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.commit();
+
                 iv_park.setImageResource(R.drawable.frame_rect);
                 addmore.setVisibility(View.VISIBLE);
                 iv_plus.setVisibility(View.VISIBLE);
@@ -345,62 +345,81 @@ setAddress(lat,longitude);
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST) {
-            // Make sure the request was successful
+
+
+
+        if (requestCode == PROFILE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+
+            Intent cropIntent = CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .getIntent(this);
+            startActivityForResult(cropIntent, CROP_PROFILE);
+
+        }
+        if (requestCode == CROP_PROFILE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                // The user picked a image.
-                // The Intent's data Uri identifies which item was selected.
-                if (data != null) {
+               // mProgressDialog.show();
 
-                    // This is the key line item, URI specifies the name of the data
-                    mImageUri = data.getData();
+                Uri resultUri = result.getUri();
+                // sendProfilePicToServer(resultUri);
+               // Glide.with(this).load(resultUri).into(imageView);
+                imageView.setImageURI(resultUri);
+                imageView.invalidate();
 
-                    // Saves image URI as string to Default Shared Preferences
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("image", String.valueOf(mImageUri));
-                    editor.commit();
 
-                    // Sets the ImageView with the Image URI
-                    imageView.setImageURI(mImageUri);
-                    imageView.invalidate();
-                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(UserProfile.this,error.toString(),Toast.LENGTH_SHORT).show();
             }
         }
-        if (requestCode == PICK_IMAGE_REQUEST_PARKING) {
-            // Make sure the request was successful
+
+        if (requestCode == PARKING_PIC && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+
+            Intent cropIntent = CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .getIntent(this);
+            startActivityForResult(cropIntent, CROP_PARKING);
+
+        }
+        if (requestCode == CROP_PARKING) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                // The user picked a image.
-                // The Intent's data Uri identifies which item was selected.
-                if (data != null) {
+                // mProgressDialog.show();
 
-                    // This is the key line item, URI specifies the name of the data
-                    mImageUri_1 = data.getData();
+                Uri resultUri = result.getUri();
+                // sendProfilePicToServer(resultUri);
 
-                    // Saves image URI as string to Default Shared Preferences
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("image_park", String.valueOf(mImageUri_1));
-                    editor.commit();
 
-                    // Sets the ImageView with the Image URI
-                    try {
-                        Glide.with(iv_park.getContext()).load(mImageUri_1)
-                                .fitCenter().placeholder(R.drawable.image_svg)
-                                .into(iv_park);
+                try {
+                    Glide.with(iv_park.getContext()).load(resultUri)
+                            .fitCenter().placeholder(R.drawable.image_svg)
+                            .into(iv_park);
 
 
 
-                        // imagePopup.initiatePopupWithPicasso(photoURI);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    iv_plus.setVisibility(View.GONE);
-                    addmore.setVisibility(View.GONE);
-                   // iv_park.invalidate();
+                    // imagePopup.initiatePopupWithPicasso(photoURI);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                iv_plus.setVisibility(View.GONE);
+                addmore.setVisibility(View.GONE);
+
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(UserProfile.this,error.toString(),Toast.LENGTH_SHORT).show();
             }
         }
+
+
+
+
+
+
+
 
 
 

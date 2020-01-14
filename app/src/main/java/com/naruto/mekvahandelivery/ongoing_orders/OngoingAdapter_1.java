@@ -103,7 +103,6 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                 i1.putExtra("amount",data.getAmount());
                 i1.putExtra("otp",data.getOtp());
                 i1.putExtra("mobile",data.getMobile());
-
                 view.getContext().startActivity(i1);
 
             });
@@ -112,7 +111,7 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
         else if (service_name.contains("regular_service")) {
 
-            if(statusid==6){
+            if(statusid==3){
 
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1 = new Intent(view.getContext(), OnGoingBookingVendorDrop.class);
@@ -153,7 +152,7 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
 
             }
 
-            if(statusid==9){
+            if(statusid==5){
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1= new Intent(view.getContext(), OngoingBookingCustomerDrop.class);
                     i1.putExtra("name",data.getName());

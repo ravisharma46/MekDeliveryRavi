@@ -31,18 +31,18 @@ public class ServiceFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v= inflater.inflate(R.layout.fragment_service, container, false);
-        recyclerView = v.findViewById(R.id.recyclerView_1);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+       // recyclerView = v.findViewById(R.id.recyclerView_1);
+       // recyclerView.hasFixedSize();
+       // recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        loadRecyclerViewData();
+        //loadRecyclerViewData();
 
         return v;
     }
     private void loadRecyclerViewData() {
-        adapter = new OrderHistoryAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        //adapter = new OrderHistoryAdapter(getContext());
+        //recyclerView.setAdapter(adapter);
     }
 
 }

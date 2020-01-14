@@ -11,40 +11,20 @@
 
 
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_to_refresh"
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="wrap_content">
-        <com.google.android.material.appbar.AppBarLayout
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/recyclerView_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabBackground="@color/white"
-                app:tabTextAppearance="@style/tab_text"
-                app:tabSelectedTextColor="@color/red_dark"
-                app:tabIndicatorColor="@color/chart_deep_red"
-                app:tabMode="fixed"
-                app:tabGravity="fill"/>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:id="@+id/frame1"
-            android:layout_height="match_parent">
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
-        </FrameLayout>
-    </LinearLayout>
 
 
 

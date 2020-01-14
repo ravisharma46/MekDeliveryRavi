@@ -76,7 +76,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         int statusid=data.getStatus_id();
 
         if(service_name.contains("regular_service")){
-            if(statusid==5){
+            if(statusid==1 || statusid==2){
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1 = new Intent(view.getContext(), UpcomingBookingCustomer.class);
                     i1.putExtra("name",data.getName());
@@ -113,7 +113,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                     view.getContext().startActivity(i1);
                 });
             }
-            if(statusid==8){
+            if(statusid==9){
                 viewHolder.cv_details.setOnClickListener(view -> {
                     Intent i1 = new Intent(view.getContext(), UpcomingBookingVendor.class);
                     i1.putExtra("name",data.getName());
@@ -225,7 +225,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             needHelp=itemView.findViewById(R.id.tv_needhelp);
 
             connect=itemView.findViewById(R.id.connectButton);
-//
+
 //            imageView =(ImageView) itemView.findViewById(R.id.image_View);
 //            linearLayout=(LinearLayout) itemView.findViewById(R.id.linearLayout);
         }

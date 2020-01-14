@@ -23,6 +23,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:id="@+id/tvupdatepic"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
@@ -36,7 +37,6 @@
                         android:src="@drawable/user_dummy_pic" />
 
                     <TextView
-                        android:id="@+id/tvupdatepic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_medium1"
@@ -877,6 +877,7 @@
 
 
         </LinearLayout>
+
     </ScrollView>
 
 

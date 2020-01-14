@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,9 +48,10 @@ public class BookingHistoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private static final String myUrl = "https://mekvahan.com/api/delivery/completeDelivery";
-    private ProgressBar mProgressBar;
+
 
     private List<MyListDataOngoingBooking> mBookingList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public BookingHistoryFragment() {
         // Required empty public constructor
     }
@@ -61,26 +63,34 @@ public class BookingHistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_booking_history, container, false);
 
-        mProgressBar = v.findViewById(R.id.progress_bar);
-
+        mSwipeRefreshLayout  = v.findViewById(R.id.swipe_to_refresh);
         mBookingList = new ArrayList<>();
 
         recyclerView = (RecyclerView)v.findViewById(R.id.carRecycleView);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
 
         historyBooking();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Need to fetch all orders
+                historyBooking();
+            }
+        });
+
         return v;
     }
 
     private void historyBooking() {
-        mProgressBar.setVisibility(View.VISIBLE);
-
-
+        mSwipeRefreshLayout.setRefreshing(true);
         StringRequest stringRequest=new StringRequest(Request.Method.POST, myUrl,
                 response -> {
                     try {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        if (mBookingList.size() > 0)
+                            mBookingList.clear();
 
                         JSONObject Object = new JSONObject(response);
 
@@ -233,14 +243,6 @@ public class BookingHistoryFragment extends Fragment {
                             }
 
 
-
-
-
-
-
-
-
-
                             String drop_date=jsonObject.getString("pickup_date");
                             String drop_time=jsonObject.getString("pickup_time");
 
@@ -251,11 +253,6 @@ public class BookingHistoryFragment extends Fragment {
                             String serviceTime=str[1];
 
                             String amount=jsonObject.getString("cod");
-
-
-
-
-
                             String status = jsonObject.getJSONObject("category").getString("status_title");
 
 
@@ -279,18 +276,20 @@ public class BookingHistoryFragment extends Fragment {
 
 
                         adapter = new HistoryAdapter(getActivity(), (ArrayList<MyListDataOngoingBooking>) mBookingList);
+                        recyclerView.hasFixedSize();
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         recyclerView.setAdapter(adapter);
 
-                        mProgressBar.setVisibility(View.GONE);
+
 
 
 
                     } catch (JSONException e) {
-                        mProgressBar.setVisibility(View.GONE);
+
                         e.printStackTrace();
                     }
                 }, error -> {
-            mProgressBar.setVisibility(View.GONE);
+            mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
         }){

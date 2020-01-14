@@ -1,7 +1,13 @@
 package com.naruto.mekvahandelivery;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,11 +18,14 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -24,9 +33,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.naruto.mekvahandelivery.Adapter.ExpandableListAdapter;
 import com.naruto.mekvahandelivery.about_us.AboutUs;
 import com.naruto.mekvahandelivery.chauffeur_partner.Chauffer;
@@ -37,6 +50,7 @@ import com.naruto.mekvahandelivery.history.BookingHistoryFragment;
 import com.naruto.mekvahandelivery.ongoing_orders.OngoingFragment;
 import com.naruto.mekvahandelivery.transaction_history.OrderHistory;
 import com.naruto.mekvahandelivery.upcoming_orders.UpcomingFragment;
+import com.naruto.mekvahandelivery.user_profile.Checklist;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +74,12 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 	private ViewPager viewPager;
 	private ImageView chaufer;
 
+	private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+	private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+	private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+	private Boolean mLocationPermissionsGranted = false;
+	private BottomNavigationView navigation;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,11 +102,18 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 		Log.e(TAG,"Login successfully");
 
 
+
+
+
+
+
+
 		chaufer= findViewById(R.id.chaufer);
 		chaufer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(NavActivity.this, Chauffer.class));
+				//startActivity(new Intent(NavActivity.this, Chauffer.class));
+				Toast.makeText(NavActivity.this,"To be Implemented",Toast.LENGTH_LONG).show();
 			}
 		});
 
@@ -96,11 +123,70 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 		setTabLayout();
 
-		MyLocationService myLocationService=new MyLocationService(this);
-
-		startService(new Intent(NavActivity.this, MyLocationService.class));
+		getLocationPermission();
 
 
+
+
+
+
+
+	}
+
+	private void getLocationPermission() {
+
+		Log.e(TAG, "getLocationPermission");
+
+		String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
+				Manifest.permission.ACCESS_COARSE_LOCATION};
+
+		if (ContextCompat.checkSelfPermission(this,
+				FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+			if (ContextCompat.checkSelfPermission(this,
+					COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+				mLocationPermissionsGranted = true;
+				enableGPS();
+			} else {
+				ActivityCompat.requestPermissions(NavActivity.this,
+						permissions,
+						LOCATION_PERMISSION_REQUEST_CODE);
+			}
+		} else {
+			ActivityCompat.requestPermissions(NavActivity.this,
+					permissions,
+					LOCATION_PERMISSION_REQUEST_CODE);
+		}
+	}
+
+
+
+
+	private void enableGPS() {
+
+		Log.e(TAG, "getLocationPermission");
+
+		final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			buildAlertMessageNoGps();
+		}
+		else{
+			MyLocationService myLocationService=new MyLocationService(this);
+			startService(new Intent(NavActivity.this, MyLocationService.class));
+		}
+	}
+	private void buildAlertMessageNoGps() {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Your GPS seems to be disabled, Please enable it..!")
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, final int id) {
+						startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+					}
+				});
+
+		final AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 	private void setTabLayout(){
@@ -152,7 +238,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 	private  void setBottomNavigation(){
 
-		BottomNavigationView navigation = findViewById(R.id.navigation);
+		 navigation = findViewById(R.id.navigation);
 		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 	}
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -164,6 +250,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 //                        Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
 				return true;
 			case R.id.navigation_location:
+				startActivity(new Intent(NavActivity.this, Checklist.class));
 				//toolbar.setTitle("My Gifts");
 				return true;
 			// case R.id.navigation_sm:
@@ -362,18 +449,13 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 				if (groupPosition == 2) {
 					switch (childPosition) {
 						case 0:
-
 							tabLayout.getTabAt(0).select();
-
-
 							break;
 						case 1:
 							tabLayout.getTabAt(1).select();
-
 							break;
 						case 2:
 							tabLayout.getTabAt(2).select();
-
 							break;
 					}
 				}
@@ -429,13 +511,13 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 	protected void onResume() {
 		super.onResume();
 		Log.e(TAG,"onResume");
-//        fetchSavedVehicle();
-//        loadFragment();
+
+		enableGPS();
+		navigation.setSelectedItemId(R.id.navigation_home);
+
 	}
 
-//    public void loadFragment(){
-//        replaceFragment(new FragmentMainContent());
-//    }
+
 
 	public void delay(Activity activity){
 		Handler handler = new Handler();

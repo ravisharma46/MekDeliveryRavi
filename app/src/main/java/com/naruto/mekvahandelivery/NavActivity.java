@@ -444,8 +444,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 			if (childList.get(headerList.get(groupPosition)) != null) {
 
-
-
 				if (groupPosition == 2) {
 					switch (childPosition) {
 						case 0:
@@ -504,8 +502,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
-
-
 
 	@Override
 	protected void onResume() {

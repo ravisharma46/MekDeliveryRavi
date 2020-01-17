@@ -43,8 +43,6 @@ public class Service_Completed extends AppCompatActivity {
 
 
 
-
-
         rupeeAmount = findViewById(R.id.rupeeAmount);
         rupeepaytm = findViewById(R.id.rupeePaytm);
         tvDetails=findViewById(R.id.tvDetails);
@@ -148,7 +146,7 @@ public class Service_Completed extends AppCompatActivity {
         //Action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle(Html.fromHtml(bookingid));
+        getSupportActionBar().setTitle(Html.fromHtml("Order id: "+bookingid));
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);

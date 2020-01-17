@@ -31,10 +31,11 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.TimeoutError;
 import com.bumptech.glide.Glide;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -42,19 +43,20 @@ import com.google.android.material.snackbar.Snackbar;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
-import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_pickup.CustomerPickupData;
-import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
-import com.bumptech.glide.Glide;
-import com.naruto.mekvahandelivery.R;
-import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
+import com.naruto.mekvahandelivery.customer_report.VolleyMultipartRequest;
+import com.naruto.mekvahandelivery.customer_report.VolleySingleton;
+import com.naruto.mekvahandelivery.upcoming_orders.PickupImageAdapter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,7 +64,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
@@ -70,99 +71,98 @@ import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
-import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
-import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
 public class UpcomingBookingVendor extends AppCompatActivity {
 
-    private LinearLayout navigation;
-    private Button report,pickup_confirm;
-    private TextView tvDetails,date, time,name,address,vehicleBrand,vehicleName,numberPlate,serviceName;
-    private RecyclerView recyclerView,recyclerViewVendorPickup;
-    private RecyclerView.Adapter adapter,adapterVendorPickup;
-    private ImageView call,vehicle_image;
-
+    private static final String myUrl_img = "https://mekvahan.com/api/delivery/dropoff_image";
+    private final int REQUEST_CODE = 20;
     public ArrayList<String> arrayList, arrayListsend;
     public List<CustomerPickupData> customerPickupDataList;
-    private ImageView uvPickupImage;
-
-    private final int REQUEST_CODE = 20;
+    private LinearLayout navigation;
+    private Button report, pickup_confirm;
+    private TextView tvDetails, date, time, name, address, vehicleBrand, vehicleName, numberPlate, serviceName;
+    private RecyclerView recyclerView, recyclerViewPickupImage;
+    private RecyclerView.Adapter adapter, pickupImageAdapter;
+    private ImageView call, vehicle_image;
     private Uri photoURI;
-    private String bookingid="";
-    private static final String myUrl_img = "https://mekvahan.com/api/delivery/dropoff_image";
+    private String bookingid = "";
     private ProgressDialog mProgressDialog;
     private ImagePopup imagePopup;
-    private Boolean aBoolean=false;
-    private double latitude=0.0,longitude=0.0;
-    private Boolean isCustomerReportUpload=false;
+    private Boolean aBoolean = false;
+    private double latitude = 0.0, longitude = 0.0;
+    private Boolean isCustomerReportUpload = false;
+
+    private ArrayList<Uri> pickup_image;
+    private LoginSessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_booking_vendor);
 
-        report= findViewById(R.id.bt_addReport);
-        tvDetails=findViewById(R.id.tvDetails);
+        report = findViewById(R.id.bt_addReport);
+        tvDetails = findViewById(R.id.tvDetails);
         call = findViewById(R.id.call);
-        pickup_confirm=findViewById(R.id.btpickup);
-        navigation=findViewById(R.id.ll_navigation);
-        uvPickupImage = findViewById(R.id.iv_uvpickup);
-
-        vehicle_image=findViewById(R.id.iv_carimage);
-        date=findViewById(R.id.tv_date);
-        time=findViewById(R.id.tv_time);
-        name=findViewById(R.id.tv_name);
-        address=findViewById(R.id.tv_address);
-        vehicleBrand=findViewById(R.id.tv_vehiclebrand);
-        vehicleName=findViewById(R.id.tv_vehiclename);
-        numberPlate=findViewById(R.id.tv_numberPlate);
-        serviceName=findViewById(R.id.tv_servicename);
+        pickup_confirm = findViewById(R.id.btpickup);
+        navigation = findViewById(R.id.ll_navigation);
 
 
-        arrayList=new ArrayList<>();
-        arrayListsend=new ArrayList<>();
+        vehicle_image = findViewById(R.id.iv_carimage);
+        date = findViewById(R.id.tv_date);
+        time = findViewById(R.id.tv_time);
+        name = findViewById(R.id.tv_name);
+        address = findViewById(R.id.tv_address);
+        vehicleBrand = findViewById(R.id.tv_vehiclebrand);
+        vehicleName = findViewById(R.id.tv_vehiclename);
+        numberPlate = findViewById(R.id.tv_numberPlate);
+        serviceName = findViewById(R.id.tv_servicename);
+        sessionManager = new LoginSessionManager(this);
+
+        arrayList = new ArrayList<>();
+        arrayListsend = new ArrayList<>();
         customerPickupDataList = new ArrayList<>();
 
-        Bundle bundle=getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         assert bundle != null;
-        String name_1 =bundle.getString("name");
-        String vehicle_type =bundle.getString("vehicletype");
-        bookingid =bundle.getString("bookingid");
-        String address_1 =bundle.getString("address");
-        try{
-            latitude= Double.parseDouble(bundle.getString("latitude"));
-            longitude=Double.parseDouble( bundle.getString("longitude"));
+        String name_1 = bundle.getString("name");
+        String vehicle_type = bundle.getString("vehicletype");
+        bookingid = bundle.getString("bookingid");
+        String address_1 = bundle.getString("address");
+        try {
+            latitude = Double.parseDouble(bundle.getString("latitude"));
+            longitude = Double.parseDouble(bundle.getString("longitude"));
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        String dropdate=bundle.getString("dropDate");
-        String dropTime= bundle.getString("dropTime");
-        String amount=bundle.getString("amount");
-        String otp_1=bundle.getString("otp");
-        String mobileNo=bundle.getString("mobile");
-        String vehiclename=bundle.getString("vehiclename");
-        String vehiclebrand=bundle.getString("vehiclebrand");
-        String numberplate=bundle.getString("numberplate");
-        String vehicleImageUrl=bundle.getString("imageurl");
-        String servicename=bundle.getString("servicename");
-        String action1=bundle.getString("action1");
-        String action2=bundle.getString("action2");
-        String action3=bundle.getString("action3");
-        String action4=bundle.getString("action4");
-        String action5=bundle.getString("action5");
-        String action6=bundle.getString("action6");
-        String action7=bundle.getString("action7");
-        String action8=bundle.getString("action8");
-        String action9=bundle.getString("action9");
-        String action10=bundle.getString("action10");
-        String action11=bundle.getString("action11");
-        String action12=bundle.getString("action12");
-        String action13=bundle.getString("action13");
-        String action14=bundle.getString("action14");
-        String action15=bundle.getString("action15");
+        String dropdate = bundle.getString("dropDate");
+        String dropTime = bundle.getString("dropTime");
+        String amount = bundle.getString("amount");
+        String otp_1 = bundle.getString("otp");
+        String mobileNo = bundle.getString("mobile");
+        String vehiclename = bundle.getString("vehiclename");
+        String vehiclebrand = bundle.getString("vehiclebrand");
+        String numberplate = bundle.getString("numberplate");
+        String vehicleImageUrl = bundle.getString("imageurl");
+        String servicename = bundle.getString("servicename");
+        String action1 = bundle.getString("action1");
+        String action2 = bundle.getString("action2");
+        String action3 = bundle.getString("action3");
+        String action4 = bundle.getString("action4");
+        String action5 = bundle.getString("action5");
+        String action6 = bundle.getString("action6");
+        String action7 = bundle.getString("action7");
+        String action8 = bundle.getString("action8");
+        String action9 = bundle.getString("action9");
+        String action10 = bundle.getString("action10");
+        String action11 = bundle.getString("action11");
+        String action12 = bundle.getString("action12");
+        String action13 = bundle.getString("action13");
+        String action14 = bundle.getString("action14");
+        String action15 = bundle.getString("action15");
+
         arrayList.add(action1);
         arrayList.add(action2);
         arrayList.add(action3);
@@ -178,21 +178,26 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         arrayList.add(action14);
         arrayList.add(action15);
 
-        for(int i=0;i<arrayList.size();i++){
-            if(arrayList.get(i).isEmpty()){
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i).isEmpty()) {
                 break;
-            }else{
+            } else {
                 arrayListsend.add(arrayList.get(i));
             }
         }
 
+        //    --pickup image adapter set----
+        pickup_image = new ArrayList<>();
+        recyclerViewPickupImage = findViewById(R.id.rv_pickup_image);
+        recyclerViewPickupImage.hasFixedSize();
+        recyclerViewPickupImage.setLayoutManager(new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false));
+
+
         recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter(arrayListsend,"upcoming");
+        adapter = new CustomListAdapter(arrayListsend, "upcoming");
         recyclerView.setAdapter(adapter);
-
-
 
 
         name.setText(name_1);
@@ -207,35 +212,33 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         numberPlate.setText(numberplate);
         serviceName.setText(servicename);
 
-        try{
+        try {
             Glide.with(UpcomingBookingVendor.this).load(vehicleImageUrl)
                     .into(vehicle_image);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-
-        try{
+        try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-            getSupportActionBar().setTitle(Html.fromHtml(bookingid));
+            getSupportActionBar().setTitle(Html.fromHtml("Order id: " + bookingid));
             final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
             upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
             getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(UpcomingBookingVendor.this,AddCustomerReport.class);
-                i.putExtra("bookingid",bookingid);
-                i.putExtra("vehicletype",vehicle_type);
-                startActivityForResult(i,101);
+                Intent i = new Intent(UpcomingBookingVendor.this, AddCustomerReport.class);
+                i.putExtra("bookingid", bookingid);
+                i.putExtra("vehicletype", vehicle_type);
+                startActivityForResult(i, 101);
 
             }
         });
@@ -258,12 +261,12 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         });
 
         navigation.setOnClickListener(view -> sendNavigateIntent(UpcomingBookingVendor.this,
-                latitude,longitude));
+                latitude, longitude));
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callIntent(UpcomingBookingVendor.this,mobileNo);
+                callIntent(UpcomingBookingVendor.this, mobileNo);
             }
         });
 
@@ -271,111 +274,161 @@ public class UpcomingBookingVendor extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               // sendDb_exterior_image();
-                if (isCustomerReportUpload!=true) {
+                // sendDb_exterior_image();
+                if (isCustomerReportUpload != true) {
                     Snackbar.make(pickup_confirm, "Please add customer report..!",
                             BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
                     return;
                 }
 
-                Intent i=new Intent(UpcomingBookingVendor.this,ScanQrcode.class);
-                i.putExtra("otp",otp_1);
+                Intent i = new Intent(UpcomingBookingVendor.this, ScanQrcode.class);
+                i.putExtra("otp", otp_1);
                 startActivity(i);
             }
         });
 
 
-
-
-        mProgressDialog = new ProgressDialog(getApplicationContext());
-        mProgressDialog.setMessage("Please wait...");
-
-        imagePopup = new ImagePopup(UpcomingBookingVendor.this);
-        imagePopup.setWindowHeight(800); // Optional
-        imagePopup.setWindowWidth(800); // Optional
-        imagePopup.setBackgroundColor(getColor(R.color.offwhite_01));
-        imagePopup.setFullScreen(true); // Optional
-        imagePopup.setHideCloseIcon(true);  // Optional
-        imagePopup.setImageOnClickClose(true);
-
-
-
-if(aBoolean==false){
-    imagePopup.initiatePopup(imagePopup.getDrawable());
-}
-        uvPickupImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {imagePopup.viewPopup();
-            }
-        });
-
     }
 
 
+    private void sendDb_exterior_image() {
 
-    private void sendDb_exterior_image(){
+        if (pickup_image.size() < 6) {
+            Snackbar.make(pickup_confirm, "Please upload all images!",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
 
-       // mProgressDialog.show();
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl_img, response -> {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Uploading exterior images..!");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
 
-            try{
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, myUrl_img,
+                response -> {
 
-                JSONObject object=new JSONObject(response);
-                int status_1 = object.getInt("status");
-                if(status_1!=1) {
+                    String resultResponse = new String(response.data);
+                    Log.e("PICKUPIMAGE", resultResponse);
 
-                    Toast.makeText(getApplicationContext(),"Incorrect OTP",Toast.LENGTH_SHORT).show();
-                    return;
+                    try {
+                        JSONObject jsonObject = new JSONObject(resultResponse);
+                        progressDialog.dismiss();
+                    } catch (Exception e) {
+                        progressDialog.dismiss();
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            progressDialog.dismiss();
+            NetworkResponse networkResponse = error.networkResponse;
+            String errorMessage = "Unknown error";
+            if (networkResponse == null) {
+                if (error.getClass().equals(TimeoutError.class)) {
+                    errorMessage = "Request timeout";
+                } else if (error.getClass().equals(NoConnectionError.class)) {
+                    errorMessage = "Failed to connect server";
                 }
-             //   mProgressDialog.dismiss();
+            } else {
+                String result = new String(networkResponse.data);
+                try {
+                    // Log.e("result string", newBId+" "+result);
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getString("status");
+                    String message = response.getString("message");
 
+                    Log.e("Error Status", status);
+                    Log.e("Error Message", message);
+
+                    switch (networkResponse.statusCode) {
+                        case 404:
+                            errorMessage = "Resource not found";
+                            break;
+                        case 401:
+                            errorMessage = message + " Please login again";
+                            break;
+                        case 400:
+                            errorMessage = message + " Check your inputs";
+                            break;
+                        case 500:
+                            errorMessage = message + " Something is getting wrong";
+                            break;
+                    }
+                } catch (JSONException e) {
+                    progressDialog.dismiss();
+                    e.printStackTrace();
+                }
             }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-
-
-
-        },error -> {
-            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
-            Log.e("TAG", error.toString());
-        }){
+            Log.i("Error", errorMessage);
+            error.printStackTrace();
+        }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> headers=new HashMap<>();
-                headers.put("pickup_image","pickupimage");
-                String bookingID=bookingid.replace("#","");
-                headers.put("booking_id",bookingID);
-
-                return headers;
+            protected Map<String, String> getParams() {
+                Map<String, String> bodyparams = new HashMap<>();
+                String bookinID = bookingid.substring(1);
+                bodyparams.put("booking_id", bookinID);
+                return bodyparams;
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers=new HashMap<>();
-                headers.put("Accept","application/json");
-                LoginSessionManager loginSessionManager=new LoginSessionManager(Objects.requireNonNull(getApplication()));
-                HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
-                String token_type=token.get(TOKEN_TYPE);
-                String acces_token= token.get(ACCESS_TOKEN);
-                headers.put("Authorization",token_type+" "+acces_token);
+            protected Map<String, DataPart> getByteData() throws IOException {
+                Map<String, DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
 
-                return headers;
+                params.put("pickup_image", new DataPart(getFilename(0), getBytes(0), "image/jpeg"));
+                params.put("pickup_image1", new DataPart(getFilename(1), getBytes(1), "image/jpeg"));
+                params.put("pickup_image2", new DataPart(getFilename(2), getBytes(2), "image/jpeg"));
+                params.put("pickup_image3", new DataPart(getFilename(3), getBytes(3), "image/jpeg"));
+                params.put("pickup_image4", new DataPart(getFilename(4), getBytes(4), "image/jpeg"));
+                params.put("pickup_image5", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headerParams = new HashMap<>();
+                headerParams.put("Accept", "application/json");
+                headerParams.put("Authorization", sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.TOKEN_TYPE) + " " + sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.ACCESS_TOKEN));
+                return headerParams;
             }
         };
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
-                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS * 1000),
+                NO_OF_RETRY, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
 
     }
 
+    private String getFilename(int indx) {
+        String fileName = pickup_image.get(indx).toString();
+        int lindex = fileName.lastIndexOf('/');
+        return fileName.substring(lindex + 1);
+    }
+
+    public byte[] getBytes(int i) throws IOException {
+        InputStream iStream;
+
+        iStream = getContentResolver().openInputStream(pickup_image.get(i));
 
 
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
 
-
+        int len;
+        if (iStream != null) {
+            while ((len = iStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+        } else
+            Log.e("iStream: ", "null");
+        assert iStream != null;
+        iStream.close();
+        return byteBuffer.toByteArray();
+    }
 
 
     @Override
@@ -401,6 +454,12 @@ if(aBoolean==false){
                     new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
             return;
         }
+
+        if (pickup_image.size() > 5) {
+            Toast.makeText(getApplicationContext(), "You can't add more than 6 images", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         dispatchTakePictureIntent(REQUEST_CODE);
     }
 
@@ -410,11 +469,7 @@ if(aBoolean==false){
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             try {
-                Glide.with(uvPickupImage.getContext()).load(photoURI)
-                        .fitCenter().placeholder(R.drawable.image_svg)
-                        .into(uvPickupImage);
-                aBoolean=true;
-                imagePopup.initiatePopupWithPicasso(photoURI);
+                loadRecyclerViewData(photoURI);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -422,20 +477,27 @@ if(aBoolean==false){
 
         }
 
-        if (requestCode == 101 ) {
-            try{
-                String status =data.getStringExtra("upload_status");
-                if(status.contains("true")){
-                    isCustomerReportUpload=true;
+        if (requestCode == 101) {
+            try {
+                String status = data.getStringExtra("upload_status");
+                if (status.contains("true")) {
+                    isCustomerReportUpload = true;
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
         }
 
+    }
+
+    private void loadRecyclerViewData(Uri uri) {
+
+        pickup_image.add(uri);
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext());
+        pickupImageAdapter.notifyDataSetChanged();
+        recyclerViewPickupImage.setAdapter(pickupImageAdapter);
     }
 
     private void dispatchTakePictureIntent(int requestCode) {

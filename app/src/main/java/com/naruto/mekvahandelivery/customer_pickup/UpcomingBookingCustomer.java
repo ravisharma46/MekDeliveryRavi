@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -17,7 +15,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Html;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +34,6 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -46,8 +42,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.broooapps.otpedittext2.OtpEditText;
 import com.bumptech.glide.Glide;
-import com.ceylonlabs.imageviewpopup.ImagePopup;
-import com.google.android.gms.common.internal.Constants;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.naruto.mekvahandelivery.NavActivity;
@@ -58,12 +52,8 @@ import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
 import com.naruto.mekvahandelivery.customer_report.VolleyMultipartRequest;
 import com.naruto.mekvahandelivery.customer_report.VolleySingleton;
-import com.naruto.mekvahandelivery.login_signup.FragmentForgotPassword;
+import com.naruto.mekvahandelivery.upcoming_orders.PickupImageAdapter;
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,7 +61,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,9 +69,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
-import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.BASE;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
@@ -93,33 +80,29 @@ import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN
 
 public class UpcomingBookingCustomer extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView recyclerView, recyclerViewPickupImage;
+    private RecyclerView.Adapter adapter, pickupImageAdapter;
     private LinearLayout navigation;
-    private ImageView call,vehicle_image;
-    private TextView tvDetails,date, time,name,address,vehicleBrand,vehicleName,numberPlate,serviceName;
-    private Button report,confirm_booking;
+    private ImageView call, vehicle_image;
+    private TextView tvDetails, date, time, name, address, vehicleBrand, vehicleName, numberPlate, serviceName;
+    private Button report, confirm_booking;
 
     public ArrayList<String> arrayList, arrayListsend;
     public List<CustomerPickupData> customerPickupDataList;
     private final int REQUEST_CODE = 10;
     private Uri photoURI;
-    private int photoIndex = 0;
 
-    private String otp_input="0000",bookingid="";
+    private String otp_input = "0000", bookingid = "";
     private OtpEditText otpEditText;
 
     private static final String myUrl = "https://mekvahan.com/api/delivery/upcoming_ongoing";
     private static final String myUrl_img = "https://mekvahan.com/api/delivery/pickup_image";
 
-    private ProgressDialog mProgressDialog;
-    private ImageView uvPickupImage;
-    private ImagePopup imagePopup;
-    private Boolean aBoolean=false;
-    private double latitude=0.0,longitude=0.0;
+
+    private double latitude = 0.0, longitude = 0.0;
     private Boolean isCustomerReportUpload = false;
     private LoginSessionManager sessionManager;
-    private Bitmap bitmap;
+    private ArrayList<Uri> pickup_image;
 
 
     @Override
@@ -130,70 +113,70 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         tvDetails = findViewById(R.id.tvDetails);
         report = findViewById(R.id.tvcustomer_report);
         call = findViewById(R.id.call);
-        confirm_booking=findViewById(R.id.bt_confirm);
-        navigation=findViewById(R.id.ll_navigation);
-        vehicle_image=findViewById(R.id.iv_carimage);
-        date=findViewById(R.id.tv_date);
-        time=findViewById(R.id.tv_time);
-        name=findViewById(R.id.tv_name);
-        address=findViewById(R.id.tv_address);
-        vehicleBrand=findViewById(R.id.tv_vehiclebrand);
-        vehicleName=findViewById(R.id.tv_vehiclename);
-        numberPlate=findViewById(R.id.tv_numberPlate);
-        serviceName=findViewById(R.id.tv_servicename);
-        uvPickupImage = findViewById(R.id.iv_uvpickup);
+        confirm_booking = findViewById(R.id.bt_confirm);
+        navigation = findViewById(R.id.ll_navigation);
+        vehicle_image = findViewById(R.id.iv_carimage);
+        date = findViewById(R.id.tv_date);
+        time = findViewById(R.id.tv_time);
+        name = findViewById(R.id.tv_name);
+        address = findViewById(R.id.tv_address);
+        vehicleBrand = findViewById(R.id.tv_vehiclebrand);
+        vehicleName = findViewById(R.id.tv_vehiclename);
+        numberPlate = findViewById(R.id.tv_numberPlate);
+        serviceName = findViewById(R.id.tv_servicename);
         sessionManager = new LoginSessionManager(this);
 
-        otpEditText=findViewById(R.id.et_otp);
+        otpEditText = findViewById(R.id.et_otp);
         otpEditText.setOnClickListener(view -> {
             otp_input = String.valueOf(otpEditText.getText());
-            Log.e("TAG",otp_input);
+            Log.e("TAG", otp_input);
         });
 
-        arrayList=new ArrayList<>();
-        arrayListsend=new ArrayList<>();
+        arrayList = new ArrayList<>();
+        arrayListsend = new ArrayList<>();
         customerPickupDataList = new ArrayList<>();
 
-        Bundle bundle=getIntent().getExtras();
-        assert bundle != null;
-        String name_1 =bundle.getString("name");
-        String vehicle_type =bundle.getString("vehicletype");
-        bookingid =bundle.getString("bookingid");
-        String address_1 =bundle.getString("address");
-        try{
-            latitude= Double.parseDouble(bundle.getString("latitude"));
-            longitude=Double.parseDouble( bundle.getString("longitude"));
 
-        }
-        catch (Exception e){
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        String name_1 = bundle.getString("name");
+        String vehicle_type = bundle.getString("vehicletype");
+        bookingid = bundle.getString("bookingid");
+        String address_1 = bundle.getString("address");
+        try {
+            latitude = Double.parseDouble(bundle.getString("latitude"));
+            longitude = Double.parseDouble(bundle.getString("longitude"));
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        String dropdate=bundle.getString("dropDate");
-        String dropTime= bundle.getString("dropTime");
-        String amount=bundle.getString("amount");
-        String otp_1=bundle.getString("otp");
-        String mobileNo=bundle.getString("mobile");
-        String vehiclename=bundle.getString("vehiclename");
-        String vehiclebrand=bundle.getString("vehiclebrand");
-        String numberplate=bundle.getString("numberplate");
-        String vehicleImageUrl=bundle.getString("imageurl");
-        String servicename=bundle.getString("servicename");
-        String action1=bundle.getString("action1");
-        String action2=bundle.getString("action2");
-        String action3=bundle.getString("action3");
-        String action4=bundle.getString("action4");
-        String action5=bundle.getString("action5");
-        String action6=bundle.getString("action6");
-        String action7=bundle.getString("action7");
-        String action8=bundle.getString("action8");
-        String action9=bundle.getString("action9");
-        String action10=bundle.getString("action10");
-        String action11=bundle.getString("action11");
-        String action12=bundle.getString("action12");
-        String action13=bundle.getString("action13");
-        String action14=bundle.getString("action14");
-        String action15=bundle.getString("action15");
+        String dropdate = bundle.getString("dropDate");
+        String dropTime = bundle.getString("dropTime");
+        String amount = bundle.getString("amount");
+        String otp_1 = bundle.getString("otp");
+        String mobileNo = bundle.getString("mobile");
+        String vehiclename = bundle.getString("vehiclename");
+        String vehiclebrand = bundle.getString("vehiclebrand");
+        String numberplate = bundle.getString("numberplate");
+        String vehicleImageUrl = bundle.getString("imageurl");
+        String servicename = bundle.getString("servicename");
+        String action1 = bundle.getString("action1");
+        String action2 = bundle.getString("action2");
+        String action3 = bundle.getString("action3");
+        String action4 = bundle.getString("action4");
+        String action5 = bundle.getString("action5");
+        String action6 = bundle.getString("action6");
+        String action7 = bundle.getString("action7");
+        String action8 = bundle.getString("action8");
+        String action9 = bundle.getString("action9");
+        String action10 = bundle.getString("action10");
+        String action11 = bundle.getString("action11");
+        String action12 = bundle.getString("action12");
+        String action13 = bundle.getString("action13");
+        String action14 = bundle.getString("action14");
+        String action15 = bundle.getString("action15");
+
         arrayList.add(action1);
         arrayList.add(action2);
         arrayList.add(action3);
@@ -209,18 +192,25 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         arrayList.add(action14);
         arrayList.add(action15);
 
-        for(int i=0;i<arrayList.size();i++){
-            if(arrayList.get(i).isEmpty()){
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i).isEmpty()) {
                 break;
-            }else{
+            } else {
                 arrayListsend.add(arrayList.get(i));
             }
         }
 
+        //    --pickup image adapter set----
+        pickup_image = new ArrayList<>();
+        recyclerViewPickupImage = findViewById(R.id.rv_pickup_image);
+        recyclerViewPickupImage.hasFixedSize();
+        recyclerViewPickupImage.setLayoutManager(new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false));
+
+
         recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter(arrayListsend,"upcoming");
+        adapter = new CustomListAdapter(arrayListsend, "upcoming");
         recyclerView.setAdapter(adapter);
 
         name.setText(name_1);
@@ -235,17 +225,16 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         numberPlate.setText(numberplate);
         serviceName.setText(servicename);
 
-        try{
+        try {
             Glide.with(UpcomingBookingCustomer.this).load(vehicleImageUrl)
                     .into(vehicle_image);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle(Html.fromHtml("Order id: "+bookingid));
+        getSupportActionBar().setTitle(Html.fromHtml("Order id: " + bookingid));
         final Drawable upArrow = getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
         assert upArrow != null;
         upArrow.setColorFilter(getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
@@ -268,119 +257,116 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             }
         });
 
-        call.setOnClickListener(view -> callIntent(UpcomingBookingCustomer.this,mobileNo));
+        call.setOnClickListener(view -> callIntent(UpcomingBookingCustomer.this, mobileNo));
 
         navigation.setOnClickListener(view -> {
-              sendNavigateIntent(UpcomingBookingCustomer.this,latitude,longitude);
+            sendNavigateIntent(UpcomingBookingCustomer.this, latitude, longitude);
         });
 
         report.setOnClickListener(view -> {
             Intent intent = new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class);
             intent.putExtra("bookingid", bookingid);
             intent.putExtra("vehicletype", vehicle_type);
-            startActivityForResult(intent,101);
+            startActivityForResult(intent, 101);
         });
 
-       confirm_booking.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               sendDb_exterior_image();
-               //sendDb_pickupConfirm();
-           }
-       });
-
-        mProgressDialog = new ProgressDialog(getApplicationContext());
-        mProgressDialog.setMessage("Please wait...");
-
-        imagePopup = new ImagePopup(UpcomingBookingCustomer.this);
-        imagePopup.setWindowHeight(800); // Optional
-        imagePopup.setWindowWidth(800); // Optional
-        imagePopup.setBackgroundColor(getColor(R.color.offwhite_01));
-        imagePopup.setFullScreen(true); // Optional
-        imagePopup.setHideCloseIcon(true);  // Optional
-        imagePopup.setImageOnClickClose(true);
-
-        if(!aBoolean){
-            imagePopup.initiatePopup(imagePopup.getDrawable());
-        }
-        uvPickupImage.setOnClickListener(view -> imagePopup.viewPopup());
+        confirm_booking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendDb_exterior_image();
+                //sendDb_pickupConfirm();
+            }
+        });
 
     }
 
-    private void sendDb_pickupConfirm(){
-      //  mProgressDialog.show();
-        if (isCustomerReportUpload!=true) {
+    private void sendDb_pickupConfirm() {
+        //  mProgressDialog.show();
+        if (isCustomerReportUpload != true) {
             Snackbar.make(confirm_booking, "Please add customer report..!",
                     BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
             return;
         }
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,myUrl,response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, myUrl, response -> {
 
-            try{
-               // mProgressDialog.dismiss();
-                JSONObject object=new JSONObject(response);
+            try {
+                // mProgressDialog.dismiss();
+                JSONObject object = new JSONObject(response);
                 int status_1 = object.getInt("status");
-                if(status_1!=1) {
+                if (status_1 != 1) {
                     dialogpop();
                     //Toast.makeText(getApplicationContext(),"Incorrect OTP",Toast.LENGTH_SHORT).show();
                     return;
                 }
-               // mProgressDialog.dismiss();
+                // mProgressDialog.dismiss();
                 pickupConfirm(UpcomingBookingCustomer.this);
                 delay(new NavActivity());
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        },error -> {
-          //  mProgressDialog.dismiss();
-            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+        }, error -> {
+            //  mProgressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
             Log.e("TAG", error.toString());
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String,String> headers=new HashMap<>();
-                headers.put("otp",otp_input);
+                Map<String, String> headers = new HashMap<>();
+                headers.put("otp", otp_input);
                 return headers;
             }
 
             @Override
             public Map<String, String> getHeaders() {
-                Map<String,String> headers=new HashMap<>();
-                headers.put("Accept","application/json");
-                LoginSessionManager loginSessionManager=new LoginSessionManager(Objects.requireNonNull(getApplication()));
-                HashMap<String,String> token=loginSessionManager.getUserDetailsFromSP();
-                String token_type=token.get(TOKEN_TYPE);
-                String acces_token= token.get(ACCESS_TOKEN);
-                headers.put("Authorization",token_type+" "+acces_token);
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept", "application/json");
+                LoginSessionManager loginSessionManager = new LoginSessionManager(Objects.requireNonNull(getApplication()));
+                HashMap<String, String> token = loginSessionManager.getUserDetailsFromSP();
+                String token_type = token.get(TOKEN_TYPE);
+                String acces_token = token.get(ACCESS_TOKEN);
+                headers.put("Authorization", token_type + " " + acces_token);
 
                 return headers;
             }
         };
 
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
-                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS * 1000),
+                NO_OF_RETRY, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
 
-    private void sendDb_exterior_image(){
+    private void sendDb_exterior_image() {
+
+        if (pickup_image.size() < 6) {
+            Snackbar.make(confirm_booking, "Please upload all images!",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Uploading exterior images..!");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, myUrl_img,
                 response -> {
 
                     String resultResponse = new String(response.data);
-                    Log.e("IMG123:=",resultResponse );
+                    Log.e("PICKUPIMAGE", resultResponse);
 
                     try {
                         JSONObject jsonObject = new JSONObject(resultResponse);
-
+                        progressDialog.dismiss();
                     } catch (Exception e) {
+                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
                 }, error -> {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Failed to Upload..!", Toast.LENGTH_LONG).show();
             NetworkResponse networkResponse = error.networkResponse;
             String errorMessage = "Unknown error";
             if (networkResponse == null) {
@@ -392,7 +378,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             } else {
                 String result = new String(networkResponse.data);
                 try {
-                   // Log.e("result string", newBId+" "+result);
+                    // Log.e("result string", newBId+" "+result);
                     JSONObject response = new JSONObject(result);
                     String status = response.getString("status");
                     String message = response.getString("message");
@@ -415,6 +401,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                             break;
                     }
                 } catch (JSONException e) {
+                    progressDialog.dismiss();
                     e.printStackTrace();
                 }
             }
@@ -424,10 +411,8 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> bodyparams = new HashMap<>();
-                String bookinID= bookingid.replace("#","");
+                String bookinID = bookingid.substring(1);
                 bodyparams.put("booking_id", bookinID);
-
-
                 return bodyparams;
             }
 
@@ -437,7 +422,13 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
 
-                params.put("pickup_image",new DataPart(getFilename(), getBytes(), "image/jpeg"));
+                params.put("pickup_image",  new DataPart(getFilename(0), getBytes(0), "image/jpeg"));
+                params.put("pickup_image1", new DataPart(getFilename(1), getBytes(1), "image/jpeg"));
+                params.put("pickup_image2", new DataPart(getFilename(2), getBytes(2), "image/jpeg"));
+                params.put("pickup_image3", new DataPart(getFilename(3), getBytes(3), "image/jpeg"));
+                params.put("pickup_image4", new DataPart(getFilename(4), getBytes(4), "image/jpeg"));
+                params.put("pickup_image5", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
+                Log.e("IMG",params.toString());
 
                 return params;
             }
@@ -447,33 +438,33 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 Map<String, String> headerParams = new HashMap<>();
                 headerParams.put("Accept", "application/json");
                 headerParams.put("Authorization", sessionManager.getUserDetailsFromSP()
-                        .get(LoginSessionManager.TOKEN_TYPE)+" "+sessionManager.getUserDetailsFromSP()
+                        .get(LoginSessionManager.TOKEN_TYPE) + " " + sessionManager.getUserDetailsFromSP()
                         .get(LoginSessionManager.ACCESS_TOKEN));
                 return headerParams;
             }
         };
 
-        multipartRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS*1000),
-                NO_OF_RETRY,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy((RETRY_SECONDS * 1000),
+                NO_OF_RETRY, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(multipartRequest);
 
     }
 
-    private String getFilename() {
-        String fileName = photoURI.toString();
+    private String getFilename(int indx) {
+        String fileName = pickup_image.get(indx).toString();
         int lindex = fileName.lastIndexOf('/');
-        return  fileName.substring(lindex+1);
+        return fileName.substring(lindex + 1);
     }
 
-    public byte[] getBytes() throws IOException {
+    public byte[] getBytes(int i) throws IOException {
         InputStream iStream;
 
-            iStream = getContentResolver().openInputStream(photoURI);
+        iStream = getContentResolver().openInputStream(pickup_image.get(i));
 
 
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
+        int bufferSize = 100;
         byte[] buffer = new byte[bufferSize];
 
         int len;
@@ -505,10 +496,16 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     }
 
     public void onAddImageButtonClick(View view) {
+
         if (ContextCompat.checkSelfPermission(UpcomingBookingCustomer.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(UpcomingBookingCustomer.this,
                     new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
+            return;
+        }
+
+        if (pickup_image.size() > 5) {
+            Toast.makeText(getApplicationContext(), "You can't add more than 6 images", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -522,27 +519,21 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
 
             try {
-                Glide.with(uvPickupImage.getContext()).load(photoURI)
-                        .fitCenter().placeholder(R.drawable.image_svg)
-                        .into(uvPickupImage);
-                aBoolean=true;
-                Log.e("imagefilepath",photoURI.toString());
-                imagePopup.initiatePopupWithPicasso(photoURI);
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoURI);
+
+                loadRecyclerViewData(photoURI);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        if (requestCode == 101 ) {
-            try{
-                String status =data.getStringExtra("upload_status");
-                if(status.contains("true")){
-                    isCustomerReportUpload=true;
+        if (requestCode == 101) {
+            try {
+                String status = data.getStringExtra("upload_status");
+                if (status.contains("true")) {
+                    isCustomerReportUpload = true;
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -551,7 +542,13 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
 
     }
 
+    private void loadRecyclerViewData(Uri uri) {
 
+        pickup_image.add(uri);
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext());
+        pickupImageAdapter.notifyDataSetChanged();
+        recyclerViewPickupImage.setAdapter(pickupImageAdapter);
+    }
 
 
     private void dispatchTakePictureIntent(int requestCode) {
@@ -591,20 +588,17 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         );
     }
 
-    private void dialogpop(){
+    private void dialogpop() {
         // mProgressDialog.dismiss();
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-
         alertBuilder.setMessage("Incorrect OTP").setCancelable(false);
-
         alertBuilder.setPositiveButton("Retry", (dialog, which) -> dialog.cancel());
-
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.setTitle("OTP Results");
         alertDialog.show();
     }
 
-    public void delay(Activity activity){
+    public void delay(Activity activity) {
         Handler handler = new Handler();
 
         handler.postDelayed(() -> {

@@ -46,7 +46,6 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
     @Override
     public void onBindViewHolder(@NonNull AddCustomerReportAdapter.ViewHolder holder, int position) {
         final AddCustomerReportData data = imageDocumentList.get(position);
-
         final ImagePopup imagePopup = new ImagePopup(context);
         imagePopup.setWindowHeight(800); // Optional
         imagePopup.setWindowWidth(800); // Optional

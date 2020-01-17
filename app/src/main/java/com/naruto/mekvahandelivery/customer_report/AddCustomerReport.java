@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -233,6 +234,26 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
     private void sendCarReport() {
 
+        String rc = reportDocument.get(0).getBtnstate();
+        String puc = reportDocument.get(1).getBtnstate();
+        String insurance = reportDocument.get(2).getBtnstate();
+
+        if(rc.contains("0")){
+            Snackbar.make(addDetails, "Please upload RC",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+        if(puc.contains("0")){
+            Snackbar.make(addDetails, "Please upload PUC",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+        if(insurance.contains("0")){
+            Snackbar.make(addDetails, "Please upload Insurance",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+
         if (reportDocument.size()<8) {
             Snackbar.make(addDetails, "Please upload all images!",
                     BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
@@ -265,6 +286,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                         e.printStackTrace();
                     }
         }, error -> {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Failed to Upload..!", Toast.LENGTH_LONG).show();
             NetworkResponse networkResponse = error.networkResponse;
             String errorMessage = "Unknown error";
             if (networkResponse == null) {
@@ -299,6 +322,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                             break;
                     }
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                 }
             }
@@ -350,6 +374,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                 params.put("passenger_tax", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
                 params.put("image", new DataPart(getFilename(6), getBytes(6), "image/jpeg"));
                 params.put("signature", new DataPart(getFilename(7), getBytes(7), "image/jpeg"));
+
                 return params;
             }
 
@@ -371,6 +396,26 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     }
 
     private void sendBikeReport() {
+
+        String rc = reportDocument.get(0).getBtnstate();
+        String puc = reportDocument.get(1).getBtnstate();
+        String insurance = reportDocument.get(2).getBtnstate();
+
+        if(rc.contains("0")){
+            Snackbar.make(addDetails, "Please upload RC",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+        if(puc.contains("0")){
+            Snackbar.make(addDetails, "Please upload PUC",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+        if(insurance.contains("0")){
+            Snackbar.make(addDetails, "Please upload Insurance",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
         if (reportDocument.size()<8) {
             Snackbar.make(addDetails, "Please upload all images!",
                     BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
@@ -400,6 +445,8 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
                         e.printStackTrace();
                     }
                 }, error -> {
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Failed to Upload..!", Toast.LENGTH_LONG).show();
             NetworkResponse networkResponse = error.networkResponse;
             String errorMessage = "Unknown error";
             if (networkResponse == null) {
@@ -520,7 +567,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         }
 
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
+        int bufferSize = 100;
         byte[] buffer = new byte[bufferSize];
 
         int len;

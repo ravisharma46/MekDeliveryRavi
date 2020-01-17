@@ -58,38 +58,60 @@ import java.util.List;
 
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-	private final String TAG = this.getClass().getSimpleName();
-	private LoginSessionManager mSession;
-	HashMap<String, String> mUserInfo;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private final String TAG = this.getClass().getSimpleName();
+    HashMap<String, String> mUserInfo;
+    ExpandableListAdapter expandableListAdapter;
+    ExpandableListView expandableListView;
+    List<MenuModel> headerList = new ArrayList<>();
+    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    private LoginSessionManager mSession;
+    private int lastExpandedPosition = -1;
+    private List<Fragment> mFragmentList;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ImageView chaufer;
+    private Boolean mLocationPermissionsGranted = false;
+    private BottomNavigationView navigation;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = item -> {
+//                Fragment fragment;
+        switch (item.getItemId()) {
+            case R.id.navigation_home:
+                //toolbar.setTitle("Shop");
+//                        Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.navigation_location:
+                startActivity(new Intent(NavActivity.this, Checklist.class));
+                //toolbar.setTitle("My Gifts");
+                return true;
+            // case R.id.navigation_sm:
 
-	ExpandableListAdapter expandableListAdapter;
-	ExpandableListView expandableListView;
-	List<MenuModel> headerList = new ArrayList<>();
-	HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+            //  return true;
+            case R.id.navigation_walet:
+                startActivity(new Intent(NavActivity.this, OrderHistory.class));
+                // toolbar.setTitle("Profile");
+                return true;
+            case R.id.navigation_profile:
+                startActivity(new Intent(NavActivity.this, UserProfile.class));
 
-	private int lastExpandedPosition = -1;
-	private List<Fragment> mFragmentList;
+                return true;
+        }
+        return false;
+    };
 
-	private TabLayout tabLayout;
-	private ViewPager viewPager;
-	private ImageView chaufer;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-	private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-	private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-	private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-	private Boolean mLocationPermissionsGranted = false;
-	private BottomNavigationView navigation;
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(new UpcomingFragment());
+        mFragmentList.add(new OngoingFragment());
+        mFragmentList.add(new BookingHistoryFragment());
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		mFragmentList = new ArrayList<>();
-		mFragmentList.add(new UpcomingFragment());
-		mFragmentList.add(new OngoingFragment());
-		mFragmentList.add(new BookingHistoryFragment());
-
-        mSession  = new LoginSessionManager(getApplicationContext());
+        mSession = new LoginSessionManager(getApplicationContext());
         mUserInfo = mSession.getUserDetailsFromSP();
 
         if (!mSession.isLoggedIn()) {
@@ -98,431 +120,389 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             return;
         }
 
-		setContentView(R.layout.home_page);
-		Log.e(TAG,"Login successfully");
+        setContentView(R.layout.home_page);
+        Log.e(TAG, "Login successfully");
 
 
+        chaufer = findViewById(R.id.chaufer);
+        chaufer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(NavActivity.this, Chauffer.class));
+                Toast.makeText(NavActivity.this, "To be Implemented", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        setNavigationDrawer();
+
+        setBottomNavigation();
+
+        setTabLayout();
+
+        getLocationPermission();
 
 
+    }
 
+    private void getLocationPermission() {
 
+        Log.e(TAG, "getLocationPermission");
 
+        String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
 
-		chaufer= findViewById(R.id.chaufer);
-		chaufer.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				//startActivity(new Intent(NavActivity.this, Chauffer.class));
-				Toast.makeText(NavActivity.this,"To be Implemented",Toast.LENGTH_LONG).show();
-			}
-		});
+        if (ContextCompat.checkSelfPermission(this,
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this,
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionsGranted = true;
+                enableGPS();
+            } else {
+                ActivityCompat.requestPermissions(NavActivity.this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            ActivityCompat.requestPermissions(NavActivity.this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
 
-		setNavigationDrawer();
+    private void enableGPS() {
 
-		setBottomNavigation();
+        Log.e(TAG, "getLocationPermission");
 
-		setTabLayout();
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-		getLocationPermission();
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        } else {
+            MyLocationService myLocationService = new MyLocationService(this);
+            startService(new Intent(NavActivity.this, MyLocationService.class));
+        }
+    }
 
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, Please enable it..!")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                });
 
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
 
+    private void setTabLayout() {
 
+        viewPager = findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new UpcomingFragment(), "Upcoming");
+        adapter.addFragment(new OngoingFragment(), "Ongoing");
+        adapter.addFragment(new BookingHistoryFragment(), "History");
+        viewPager.setAdapter(adapter);
+    }
 
-	}
+    private void setBottomNavigation() {
 
-	private void getLocationPermission() {
+        navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
 
-		Log.e(TAG, "getLocationPermission");
+    private void setNavigationDrawer() {
 
-		String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
-				Manifest.permission.ACCESS_COARSE_LOCATION};
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.drawer_icon);
+        setSupportActionBar(toolbar);
 
-		if (ContextCompat.checkSelfPermission(this,
-				FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-			if (ContextCompat.checkSelfPermission(this,
-					COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-				mLocationPermissionsGranted = true;
-				enableGPS();
-			} else {
-				ActivityCompat.requestPermissions(NavActivity.this,
-						permissions,
-						LOCATION_PERMISSION_REQUEST_CODE);
-			}
-		} else {
-			ActivityCompat.requestPermissions(NavActivity.this,
-					permissions,
-					LOCATION_PERMISSION_REQUEST_CODE);
-		}
-	}
+        expandableListView = findViewById(R.id.expandableListView);
+        prepareMenuData();
+        populateExpandableList();
 
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
 
-	private void enableGPS() {
-
-		Log.e(TAG, "getLocationPermission");
-
-		final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			buildAlertMessageNoGps();
-		}
-		else{
-			MyLocationService myLocationService=new MyLocationService(this);
-			startService(new Intent(NavActivity.this, MyLocationService.class));
-		}
-	}
-	private void buildAlertMessageNoGps() {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Your GPS seems to be disabled, Please enable it..!")
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
-						startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-					}
-				});
-
-		final AlertDialog alert = builder.create();
-		alert.show();
-	}
-
-	private void setTabLayout(){
-
-		viewPager = findViewById(R.id.viewpager);
-		setupViewPager(viewPager);
-
-		tabLayout = findViewById(R.id.tabs);
-		tabLayout.setupWithViewPager(viewPager);
-	}
-
-	private void setupViewPager(ViewPager viewPager) {
-		ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-		adapter.addFragment(new UpcomingFragment(), "Upcoming");
-		adapter.addFragment(new OngoingFragment(), "Ongoing");
-		adapter.addFragment(new BookingHistoryFragment(), "History");
-		viewPager.setAdapter(adapter);
-	}
-
-	public static class ViewPagerAdapter extends FragmentPagerAdapter {
-		private final List<Fragment> mFragmentList = new ArrayList<>();
-		private final List<String> mFragmentTitleList = new ArrayList<>();
-
-		public ViewPagerAdapter(FragmentManager manager) {
-			super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-		}
-
-		@NonNull
-		@Override
-		public Fragment getItem(int position) {
-			return mFragmentList.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return mFragmentList.size();
-		}
-
-		public void addFragment(Fragment fragment, String title) {
-			mFragmentList.add(fragment);
-			mFragmentTitleList.add(title);
-		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return mFragmentTitleList.get(position);
-		}
-	}
-
-	private  void setBottomNavigation(){
-
-		 navigation = findViewById(R.id.navigation);
-		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-	}
-	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-			= item -> {
-//                Fragment fragment;
-		switch (item.getItemId()) {
-			case R.id.navigation_home:
-				//toolbar.setTitle("Shop");
-//                        Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.navigation_location:
-				startActivity(new Intent(NavActivity.this, Checklist.class));
-				//toolbar.setTitle("My Gifts");
-				return true;
-			// case R.id.navigation_sm:
-
-			//  return true;
-			case R.id.navigation_walet:
-				startActivity(new Intent(NavActivity.this, OrderHistory.class));
-				// toolbar.setTitle("Profile");
-				return true;
-			case R.id.navigation_profile:
-				startActivity(new Intent(NavActivity.this, UserProfile.class));
-
-				return true;
-		}
-		return false;
-	};
-
-	private void setNavigationDrawer(){
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		toolbar.setNavigationIcon(R.drawable.drawer_icon);
-		setSupportActionBar(toolbar);
-
-		expandableListView = findViewById(R.id.expandableListView);
-		prepareMenuData();
-		populateExpandableList();
-
-		final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-
-				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-		drawer.addDrawerListener(toggle);
-
-		toggle.setDrawerIndicatorEnabled(false);
+        toggle.setDrawerIndicatorEnabled(false);
 //        Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.drawer_icon,NavActivity.this.getTheme());
 //        toggle.setHomeAsUpIndicator(icon);
 
-		toggle.setToolbarNavigationClickListener(v -> {
+        toggle.setToolbarNavigationClickListener(v -> {
 //                mMenuMyVehicleLayout.setVisibility(View.GONE);
-			if (drawer.isDrawerVisible(GravityCompat.START)) {
-				drawer.closeDrawer(GravityCompat.START);
-			} else {
-				drawer.openDrawer(GravityCompat.START);
-			}
-		});
+            if (drawer.isDrawerVisible(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
 
-		toggle.syncState();
+        toggle.syncState();
 
-		NavigationView navigationView = findViewById(R.id.nav_view);
-		navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-		// Set Navigation Header
-		View headerView      =  navigationView.getHeaderView(0);
+        // Set Navigation Header
+        View headerView = navigationView.getHeaderView(0);
 
-		ImageView iv_profile =  headerView.findViewById(R.id.profile_pic);
-		TextView tv_name     =  headerView.findViewById(R.id.name);
-		TextView tv_mobile   =  headerView.findViewById(R.id.mobile);
+        ImageView iv_profile = headerView.findViewById(R.id.profile_pic);
+        TextView tv_name = headerView.findViewById(R.id.name);
+        TextView tv_mobile = headerView.findViewById(R.id.mobile);
 
-		// need to set a profile pic -
-		iv_profile.setOnClickListener(v -> {
-			//startActivity(new Intent(AppHomePage.this,Profile.class));
-			drawer.closeDrawer(GravityCompat.START);
-		});
-		tv_name.setText(mUserInfo.get(LoginSessionManager.NAME));
-		tv_mobile.setText(mUserInfo.get(LoginSessionManager.MOBILE));
+        // need to set a profile pic -
+        iv_profile.setOnClickListener(v -> {
+            //startActivity(new Intent(AppHomePage.this,Profile.class));
+            drawer.closeDrawer(GravityCompat.START);
+        });
+        tv_name.setText(mUserInfo.get(LoginSessionManager.NAME));
+        tv_mobile.setText(mUserInfo.get(LoginSessionManager.MOBILE));
 
-	}
+    }
 
-	private void prepareMenuData() {
+    private void prepareMenuData() {
 
-		List<MenuModel> childModelsList = new ArrayList<>();
+        List<MenuModel> childModelsList = new ArrayList<>();
 
-		MenuModel menuModel = new MenuModel(1,"Home",false,true,R.drawable.ic_home);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
+        MenuModel menuModel = new MenuModel(1, "Home", false, true, R.drawable.ic_home);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
-		menuModel = new MenuModel(2,"Profile",false,true,R.drawable.ic_profile);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
+        menuModel = new MenuModel(2, "Profile", false, true, R.drawable.ic_profile);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
-		menuModel = new MenuModel(3,"Bookings", true, true, R.drawable.ic_bookings);
-		headerList.add(menuModel);
-		MenuModel childModel = new MenuModel(31,"Upcoming Bookings", false, false, 0);
-		childModelsList.add(childModel);
-		childModel = new MenuModel(32,"Ongoing Bookings", false, false, 0);
-		childModelsList.add(childModel);
-		childModel = new MenuModel(33,"History", false, false, 0);
-		childModelsList.add(childModel);
-		if (menuModel.isHasChildren()) {
-			childList.put(menuModel, childModelsList);
-		}
+        menuModel = new MenuModel(3, "Bookings", true, true, R.drawable.ic_bookings);
+        headerList.add(menuModel);
+        MenuModel childModel = new MenuModel(31, "Upcoming Bookings", false, false, 0);
+        childModelsList.add(childModel);
+        childModel = new MenuModel(32, "Ongoing Bookings", false, false, 0);
+        childModelsList.add(childModel);
+        childModel = new MenuModel(33, "History", false, false, 0);
+        childModelsList.add(childModel);
+        if (menuModel.isHasChildren()) {
+            childList.put(menuModel, childModelsList);
+        }
 
-		menuModel = new MenuModel(4,"Transaction History",false,true,R.drawable.ic_transaction_history);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
+        menuModel = new MenuModel(4, "Transaction History", false, true, R.drawable.ic_transaction_history);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
-		menuModel = new MenuModel(5,"Notifications",false,true,R.drawable.ic_notification);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
+        menuModel = new MenuModel(5, "Notifications", false, true, R.drawable.ic_notification);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
-		menuModel = new MenuModel(6,"About Us",false,true,R.drawable.ic_about_us);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
+        menuModel = new MenuModel(6, "About Us", false, true, R.drawable.ic_about_us);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
-		menuModel = new MenuModel(7,"Support",false,true,R.drawable.ic_help);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
-
-
-		menuModel = new MenuModel(8,"",false,false, 0);  //Blank Space
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
-
-		menuModel = new MenuModel(9,"Logout",false,true,R.drawable.ic_logout);
-		headerList.add(menuModel);
-		if (!menuModel.isHasChildren()) {
-			childList.put(menuModel, null);
-		}
-
-	}
-
-	private void populateExpandableList() {
-
-		expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
-
-		ViewGroup footerView = (ViewGroup) getLayoutInflater().inflate(R.layout.home_page_expandable_view_footer, expandableListView, false);
-		expandableListView.addFooterView(footerView);
+        menuModel = new MenuModel(7, "Support", false, true, R.drawable.ic_help);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
 
-		expandableListView.setAdapter(expandableListAdapter);
+        menuModel = new MenuModel(8, "", false, false, 0);  //Blank Space
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
 
-		expandableListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
+        menuModel = new MenuModel(9, "Logout", false, true, R.drawable.ic_logout);
+        headerList.add(menuModel);
+        if (!menuModel.isHasChildren()) {
+            childList.put(menuModel, null);
+        }
+
+    }
+
+    private void populateExpandableList() {
+
+        expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
+
+        ViewGroup footerView = (ViewGroup) getLayoutInflater().inflate(R.layout.home_page_expandable_view_footer, expandableListView, false);
+        expandableListView.addFooterView(footerView);
+
+
+        expandableListView.setAdapter(expandableListAdapter);
+
+        expandableListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
 
 //            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-			MenuModel menuModel = headerList.get(groupPosition);
-			int id_int = (int) id;
+            MenuModel menuModel = headerList.get(groupPosition);
+            int id_int = (int) id;
 
-			if (menuModel.isGroup()) {
+            if (menuModel.isGroup()) {
 
-				if (!menuModel.isHasChildren()) {
-					switch (id_int) {
-						case 0:
-							//startActivity(new Intent(NavActivity.this, UserProfile.class));
-							break;
-						case 1: //startActivity(new Intent(AppHomePage.this, MyAddressHomePage.class));
-							delay(new UserProfile());
-							break;
-						case 2: //startActivity(new Intent(AppHomePage.this,MekCoinsWallet.class));break;
-							break;
-						case 3:
-							delay(new OrderHistory());
-							break;
-						case 4:
-							break;
-						case 5:
-							delay(new AboutUs());
-							break;
-						case 6:
-							delay(new Help());
-							break;
-						case 7: //startActivity(new Intent(AppHomePage.this, OffersHomePage.class));
-							break;
-						case 8: //startActivity(new Intent(AppHomePage.this, AboutUsPage.class));
+                if (!menuModel.isHasChildren()) {
+                    switch (id_int) {
+                        case 0:
+                            //startActivity(new Intent(NavActivity.this, UserProfile.class));
+                            break;
+                        case 1: //startActivity(new Intent(AppHomePage.this, MyAddressHomePage.class));
+                            delay(new UserProfile());
+                            break;
+                        case 2: //startActivity(new Intent(AppHomePage.this,MekCoinsWallet.class));break;
+                            break;
+                        case 3:
+                            delay(new OrderHistory());
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            delay(new AboutUs());
+                            break;
+                        case 6:
+                            delay(new Help());
+                            break;
+                        case 7: //startActivity(new Intent(AppHomePage.this, OffersHomePage.class));
+                            break;
+                        case 8: //startActivity(new Intent(AppHomePage.this, AboutUsPage.class));
                             mSession.logoutUser();
-							finish();
-							break;
-					}
-					onBackPressed();
-				}
-			}
+                            finish();
+                            break;
+                    }
+                    onBackPressed();
+                }
+            }
 
-			return false;
-		});
+            return false;
+        });
 
-		expandableListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+        expandableListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
 
-			if (childList.get(headerList.get(groupPosition)) != null) {
+            if (childList.get(headerList.get(groupPosition)) != null) {
 
-				if (groupPosition == 2) {
-					switch (childPosition) {
-						case 0:
-							tabLayout.getTabAt(0).select();
-							break;
-						case 1:
-							tabLayout.getTabAt(1).select();
-							break;
-						case 2:
-							tabLayout.getTabAt(2).select();
-							break;
-					}
-				}
+                if (groupPosition == 2) {
+                    switch (childPosition) {
+                        case 0:
+                            tabLayout.getTabAt(0).select();
+                            break;
+                        case 1:
+                            tabLayout.getTabAt(1).select();
+                            break;
+                        case 2:
+                            tabLayout.getTabAt(2).select();
+                            break;
+                    }
+                }
 
-				onBackPressed();
+                onBackPressed();
 
-			}
+            }
 
-			return false;
+            return false;
 
-		});
+        });
 
-		expandableListView.setOnGroupExpandListener(groupPosition -> {
+        expandableListView.setOnGroupExpandListener(groupPosition -> {
 
-			if (lastExpandedPosition != -1
-					&& groupPosition != lastExpandedPosition) {
-				expandableListView.collapseGroup(lastExpandedPosition);
-			}
-			lastExpandedPosition = groupPosition;
+            if (lastExpandedPosition != -1
+                    && groupPosition != lastExpandedPosition) {
+                expandableListView.collapseGroup(lastExpandedPosition);
+            }
+            lastExpandedPosition = groupPosition;
 
-		});
-	}
+        });
+    }
 
-	@Override
-	public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
 //        mMenuMyVehicleLayout.setVisibility(View.GONE);
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
-		} else {
-			super.onBackPressed();
-			finish();
-		}
-	}
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+            finish();
+        }
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_home, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		drawer.closeDrawer(GravityCompat.START);
-		return true;
-	}
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.e(TAG,"onResume");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume");
 
-		enableGPS();
-		navigation.setSelectedItemId(R.id.navigation_home);
+        enableGPS();
+        navigation.setSelectedItemId(R.id.navigation_home);
 
-	}
+    }
 
+    public void delay(Activity activity) {
+        Handler handler = new Handler();
 
+        handler.postDelayed(() -> {
+            Intent intent = new Intent(NavActivity.this, activity.getClass());
+            startActivity(intent);
 
-	public void delay(Activity activity){
-		Handler handler = new Handler();
+        }, 250);
+    }
 
-		handler.postDelayed(() -> {
-			Intent intent = new Intent(NavActivity.this, activity.getClass());
-			startActivity(intent);
+    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-		}, 250);
-	}
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 
 }

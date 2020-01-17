@@ -16,9 +16,8 @@ import io.fabric.sdk.android.Fabric;
 public class SplashActivity extends AppCompatActivity {
 
 
-    private LoginSessionManager mSession;
     private final int SPLASH_DISPLAY_LENGTH = 1000;
-
+    private LoginSessionManager mSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

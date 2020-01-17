@@ -61,7 +61,6 @@ public class SignatureActivity extends AppCompatActivity {
 
         save_button.setOnClickListener(view -> {
             Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
-
             Intent intent= new Intent();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             signatureBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);

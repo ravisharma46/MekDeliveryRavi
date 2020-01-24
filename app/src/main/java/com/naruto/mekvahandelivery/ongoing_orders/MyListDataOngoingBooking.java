@@ -29,6 +29,12 @@ public class MyListDataOngoingBooking {
     private String action15;
     private  int statusid;
     private String vehicle_type;
+    private String image1;
+    private String image2;
+    private String image3;
+    private String image4;
+    private String image5;
+    private String image6;
 
 
 
@@ -48,7 +54,8 @@ public class MyListDataOngoingBooking {
                                      String latitude,String longitude,String drop_date,String drop_time,String amount, String  vehicleBrand,String service_type,
                                      String action1, String action2, String action3,
                                      String action4, String action5, String action6, String action7, String action8, String action9,
-                                     String action10, String action11, String action12, String action13, String action14, String action15,int statusid,String vehicle_type
+                                     String action10, String action11, String action12, String action13, String action14, String action15,int statusid,String vehicle_type,
+                                     String image1,String image2,String image3,String image4, String image5, String image6
                                     ) {
         this.status = status;
         this.date=date;
@@ -88,7 +95,37 @@ public class MyListDataOngoingBooking {
         this.action15 = action15;
         this.statusid=statusid;
         this.vehicle_type=vehicle_type;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
+        this.image5 = image5;
+        this.image6 = image6;
 
+    }
+
+    public String getImage1() {
+        return image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public String getImage4() {
+        return image4;
+    }
+
+    public String getImage5() {
+        return image5;
+    }
+
+    public String getImage6() {
+        return image6;
     }
 
     public String getVehicle_type() {

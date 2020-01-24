@@ -419,6 +419,7 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:id="@+id/iv_qrcode"
+                        android:visibility="gone"
                         android:layout_height="40dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
@@ -440,116 +441,29 @@
                     android:textColor="@color/app_grey_headline_caption"
                     android:textSize="12sp" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="152dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/frame_rect_02">
 
-                    <HorizontalScrollView
+                    <FrameLayout
+                        android:id="@+id/rv_imagevendorpickup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scrollbars="none">
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/frame_rect_02" >
 
-
-                        <LinearLayout
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_pickup_image"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/frame_sqr">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginRight="16dp"
-                                    android:layout_marginBottom="16dp"
-                                    android:background="@drawable/image_svg" />
-
-                            </FrameLayout>
+                            android:layout_gravity="bottom|center"
+                            android:layout_height="wrap_content"
+                             />
 
 
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/frame_sqr">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginRight="16dp"
-                                    android:layout_marginBottom="16dp"
-                                    android:background="@drawable/image_svg" />
-
-                            </FrameLayout>
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/frame_sqr">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginRight="16dp"
-                                    android:layout_marginBottom="16dp"
-                                    android:background="@drawable/image_svg" />
-
-                            </FrameLayout>
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:background="@drawable/frame_sqr">
-
-                                <ImageView
-                                    android:layout_width="80dp"
-                                    android:layout_height="80dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginRight="16dp"
-                                    android:layout_marginBottom="16dp"
-                                    android:background="@drawable/image_svg" />
-
-                            </FrameLayout>
 
 
-                        </LinearLayout>
+                    </FrameLayout>
 
 
-                    </HorizontalScrollView>
 
-
-                </FrameLayout>
 
 
             </LinearLayout>

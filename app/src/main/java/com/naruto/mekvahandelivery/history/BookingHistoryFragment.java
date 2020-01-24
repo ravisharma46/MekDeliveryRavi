@@ -238,6 +238,12 @@ public class BookingHistoryFragment extends Fragment {
 
 
                             String licencePlate = jsonObject.getString("license_plate");
+                            String image1 = jsonObject.getString("pickup_image");
+                            String image2 = jsonObject.getString("pickup_image1");
+                            String image3 = jsonObject.getString("pickup_image2");
+                            String image4 = jsonObject.getString("pickup_image3");
+                            String image5 = jsonObject.getString("pickup_image4");
+                            String image6 = jsonObject.getString("pickup_image5");
                             Log.e("TAG", "reached");
 
                             String paymentStatus = "Payment awaiting";
@@ -246,7 +252,8 @@ public class BookingHistoryFragment extends Fragment {
                             mBookingList.add(new MyListDataOngoingBooking(status, serviceDate, serviceTime, logo_url, mobile, vehicle_name,
                                     licencePlate, bookingId, paymentStatus, serviceName, image_url, otp, name, address, latitude, longitude,
                                     drop_date, drop_time, amount, vehicleBrand, service_type, action1, action2, action3, action4, action5, action6,
-                                    action7, action8, action9, action10, action11, action12, action13, action14, action15, status_id, vehicle_type
+                                    action7, action8, action9, action10, action11, action12, action13, action14, action15, status_id, vehicle_type,image1,
+                                    image2,image3,image4,image5,image6
                             ));
 
 

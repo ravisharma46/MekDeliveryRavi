@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -56,6 +57,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -198,6 +200,9 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
         });
 
         take_sign.setOnClickListener(view -> {
+           if(!isWriteStoragePermissionGranted()){
+              return;
+           }
             Intent i=new Intent(AddCustomerReport.this, SignatureActivity.class);
             startActivityForResult(i,2);
 
@@ -230,6 +235,26 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
 
 
+    }
+
+
+    public  boolean isWriteStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted2");
+                return true;
+            } else {
+
+                Log.v("TAG","Permission is revoked2");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG","Permission is granted2");
+            return true;
+        }
     }
 
     private void sendCarReport() {
@@ -271,6 +296,7 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
             String resultResponse = new String(response.data);
                     try {
                         JSONObject jsonObject = new JSONObject(resultResponse);
+                        Toast.makeText(getApplicationContext(), "Customer report Upload..!", Toast.LENGTH_LONG).show();
                         Log.e("data check", jsonObject.toString());
                         JSONObject dataObject = jsonObject.getJSONObject("data");
                         JSONArray documentDataArray = dataObject.getJSONArray("rc");
@@ -557,29 +583,20 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
     }
 
     public byte[] getBytes(int i) throws IOException {
-        InputStream iStream;
+        Uri uri=null;
         if (i==7) {
             String path = MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "sign", null);
-            photoURI = Uri.parse(path);
-            iStream = getContentResolver().openInputStream(photoURI);
+            uri = Uri.parse(path);
+
         } else {
-            iStream = getContentResolver().openInputStream(reportDocument.get(i).getPhotoUri());
+            uri =reportDocument.get(i).getPhotoUri();
         }
 
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 100;
-        byte[] buffer = new byte[bufferSize];
-
-        int len;
-        if (iStream != null) {
-            while ((len = iStream.read(buffer)) != -1) {
-                byteBuffer.write(buffer, 0, len);
-            }
-        } else
-            Log.e("iStream: ", "null");
-        assert iStream != null;
-        iStream.close();
-        return byteBuffer.toByteArray();
+        byte[] data = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+        return data = baos.toByteArray();
     }
 
     // storing the index of all buttons passed in the list sequentially

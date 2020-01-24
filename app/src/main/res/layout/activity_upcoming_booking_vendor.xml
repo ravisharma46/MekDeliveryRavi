@@ -380,7 +380,7 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:id="@+id/bt_addReport"
-                    android:text="Add Customer Report"
+                    android:text="View Customer Report"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 
@@ -433,18 +433,22 @@
 
                 <FrameLayout
                     android:id="@+id/rv_imagevendorpickup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="152dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="136dp"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center"
                     android:background="@drawable/frame_rect_02" >
-                    <ImageView
-                        android:id="@+id/iv_uvpickup"
-                        android:layout_width="wrap_content"
-                        android:padding="8dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:src="@drawable/image_svg" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_pickup_image"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="bottom|center"
+                        android:layout_height="wrap_content"
+                        />
+
+
+
+
                 </FrameLayout>
             </LinearLayout>
 

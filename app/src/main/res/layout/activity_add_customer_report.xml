@@ -509,7 +509,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_imagedocument"
                 android:layout_width="match_parent"
-                android:layout_height="152dp"
+                android:layout_height="136dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/frame_rect_02" />
 

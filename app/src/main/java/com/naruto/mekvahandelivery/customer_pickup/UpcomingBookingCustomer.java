@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -42,8 +43,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.broooapps.otpedittext2.OtpEditText;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.api.Api;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonObject;
 import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
@@ -70,6 +73,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
@@ -86,6 +97,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     private ImageView call, vehicle_image;
     private TextView tvDetails, date, time, name, address, vehicleBrand, vehicleName, numberPlate, serviceName;
     private Button report, confirm_booking;
+    File mPhotoFile;
 
     public ArrayList<String> arrayList, arrayListsend;
     public List<CustomerPickupData> customerPickupDataList;
@@ -100,9 +112,11 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
 
 
     private double latitude = 0.0, longitude = 0.0;
-    private Boolean isCustomerReportUpload = false;
+    private Boolean isCustomerReportUpload = false,isPickupImageUpload=false;
     private LoginSessionManager sessionManager;
     private ArrayList<Uri> pickup_image;
+    private ArrayList<File> pickup_image_filePath = new ArrayList<>();
+
 
 
     @Override
@@ -273,20 +287,21 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendDb_exterior_image();
-                //sendDb_pickupConfirm();
+
+                if(isPickupImageUpload){
+                    sendDb_pickupConfirm();
+                }
+                else{
+                    sendDb_exterior_image();
+                }
+
             }
         });
 
     }
 
     private void sendDb_pickupConfirm() {
-        //  mProgressDialog.show();
-        if (isCustomerReportUpload != true) {
-            Snackbar.make(confirm_booking, "Please add customer report..!",
-                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
-            return;
-        }
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, myUrl, response -> {
 
             try {
@@ -340,8 +355,14 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
 
     private void sendDb_exterior_image() {
 
+        if (isCustomerReportUpload != true) {
+            Snackbar.make(confirm_booking, "Please add customer report..!",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+
         if (pickup_image.size() < 6) {
-            Snackbar.make(confirm_booking, "Please upload all images!",
+            Snackbar.make(confirm_booking, "Please add exterior images..!",
                     BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
             return;
         }
@@ -355,10 +376,13 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 response -> {
 
                     String resultResponse = new String(response.data);
-                    Log.e("PICKUPIMAGE", resultResponse);
+
 
                     try {
                         JSONObject jsonObject = new JSONObject(resultResponse);
+                        Toast.makeText(getApplicationContext(), "Pickup image uploaded,Please enter otp", Toast.LENGTH_LONG).show();
+                        isPickupImageUpload=true;
+
                         progressDialog.dismiss();
                     } catch (Exception e) {
                         progressDialog.dismiss();
@@ -428,8 +452,6 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 params.put("pickup_image3", new DataPart(getFilename(3), getBytes(3), "image/jpeg"));
                 params.put("pickup_image4", new DataPart(getFilename(4), getBytes(4), "image/jpeg"));
                 params.put("pickup_image5", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
-                Log.e("IMG",params.toString());
-
                 return params;
             }
 
@@ -458,25 +480,11 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     }
 
     public byte[] getBytes(int i) throws IOException {
-        InputStream iStream;
-
-        iStream = getContentResolver().openInputStream(pickup_image.get(i));
-
-
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 100;
-        byte[] buffer = new byte[bufferSize];
-
-        int len;
-        if (iStream != null) {
-            while ((len = iStream.read(buffer)) != -1) {
-                byteBuffer.write(buffer, 0, len);
-            }
-        } else
-            Log.e("iStream: ", "null");
-        assert iStream != null;
-        iStream.close();
-        return byteBuffer.toByteArray();
+        byte[] data = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickup_image.get(i));
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+        return data = baos.toByteArray();
     }
 
     @Override
@@ -519,7 +527,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
 
             try {
-
+                pickup_image_filePath.add(mPhotoFile);
                 loadRecyclerViewData(photoURI);
 
             } catch (Exception e) {
@@ -545,7 +553,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     private void loadRecyclerViewData(Uri uri) {
 
         pickup_image.add(uri);
-        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext());
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext(),"upcoming");
         pickupImageAdapter.notifyDataSetChanged();
         recyclerViewPickupImage.setAdapter(pickupImageAdapter);
     }
@@ -569,6 +577,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                         "com.naruto.mekvahandelivery",
                         photoFile);
 
+                mPhotoFile = photoFile;
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, requestCode);
             }
@@ -578,9 +587,15 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "MEK_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         // Save a file: path for use with ACTION_VIEW intents
+//        File image = File.createTempFile(
+//                imageFileName,  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
+//        String currentPhotoPath = image.getAbsolutePath();
         return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */

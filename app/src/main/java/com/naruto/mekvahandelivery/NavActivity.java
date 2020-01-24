@@ -171,7 +171,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
     private void enableGPS() {
 
-        Log.e(TAG, "getLocationPermission");
 
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -460,7 +459,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         super.onResume();
         Log.e(TAG, "onResume");
 
-        enableGPS();
+        getLocationPermission();
         navigation.setSelectedItemId(R.id.navigation_home);
 
     }

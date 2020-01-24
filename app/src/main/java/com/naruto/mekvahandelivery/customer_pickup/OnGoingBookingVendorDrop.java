@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -35,7 +36,9 @@ import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
+import com.naruto.mekvahandelivery.upcoming_orders.PickupImageAdapter;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,12 +53,14 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
 
     public ArrayList<String> arrayList;
     public ArrayList<String> arrayListsend;
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView recyclerView,recyclerViewPickupImage;
+    private RecyclerView.Adapter adapter, pickupImageAdapter;
     private LinearLayout navigation;
     private TextView tvDetails, date, time, name, address, vehicleBrand, vehicleName, numberPlate, serviceName;
     private ImageView call, iv_qrcode, vehicle_image;
     private Button report_show, drop;
+    private ArrayList<Uri> pickup_image;
+    private Uri image_1, image_2, image_3, image_4, image_5, image_6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,33 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         String action13 = bundle.getString("action13");
         String action14 = bundle.getString("action14");
         String action15 = bundle.getString("action15");
+        String image1 = bundle.getString("image1");
+        String image2 = bundle.getString("image2");
+        String image3 = bundle.getString("image3");
+        String image4 = bundle.getString("image4");
+        String image5 = bundle.getString("image5");
+        String image6 = bundle.getString("image6");
+
+        image_1 =Uri.parse(image1);
+        image_2 =Uri.parse(image2);
+        image_3 =Uri.parse(image3);
+        image_4 =Uri.parse(image4);
+        image_5 =Uri.parse(image5);
+        image_6 =Uri.parse(image6);
+        pickup_image = new ArrayList<>();
+        pickup_image.add(image_1);
+        pickup_image.add(image_2);
+        pickup_image.add(image_3);
+        pickup_image.add(image_4);
+        pickup_image.add(image_5);
+        pickup_image.add(image_6);
+
+        recyclerViewPickupImage = findViewById(R.id.rv_pickup_image);
+        recyclerViewPickupImage.hasFixedSize();
+        recyclerViewPickupImage.setLayoutManager(new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false));
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext(),"ongoing");
+        recyclerViewPickupImage.setAdapter(pickupImageAdapter);
+
         arrayList.add(action1);
         arrayList.add(action2);
         arrayList.add(action3);

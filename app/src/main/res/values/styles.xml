@@ -20,8 +20,6 @@
         <item name="android:fontFamily">@font/gotham_book</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="button_style_1">
         <item name="android:paddingTop">14dp</item>
         <item name="android:paddingBottom">14dp</item>
@@ -34,9 +32,6 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="SwitchCompatTheme">
-        <item name="colorControlActivated">#4cbc17</item>
-    </style>
     <style name="SwitchCompatStyle" >
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="android:track">@drawable/switch_track</item>
@@ -48,14 +43,6 @@
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/custom_spiner</item>
         <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="MyMaterialTheme" parent="AppTheme">
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
-        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
 

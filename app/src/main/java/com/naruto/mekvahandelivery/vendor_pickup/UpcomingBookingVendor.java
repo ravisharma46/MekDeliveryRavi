@@ -1,9 +1,11 @@
 package com.naruto.mekvahandelivery.vendor_pickup;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,16 +40,22 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.TimeoutError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.ScanQrcode;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
+import com.naruto.mekvahandelivery.common_files.MySingleton;
 import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_pickup.CustomerPickupData;
+import com.naruto.mekvahandelivery.customer_pickup.OnGoingBookingVendorDrop;
+import com.naruto.mekvahandelivery.customer_pickup.UpcomingBookingCustomer;
 import com.naruto.mekvahandelivery.customer_report.AddCustomerReport;
+import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
 import com.naruto.mekvahandelivery.customer_report.VolleyMultipartRequest;
 import com.naruto.mekvahandelivery.customer_report.VolleySingleton;
 import com.naruto.mekvahandelivery.upcoming_orders.PickupImageAdapter;
@@ -64,17 +74,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.NO_OF_RETRY;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.RETRY_SECONDS;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getDate;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.getTime;
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.pickupConfirm;
 import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.sendNavigateIntent;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.ACCESS_TOKEN;
+import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN_TYPE;
 
 public class UpcomingBookingVendor extends AppCompatActivity {
 
-    private static final String myUrl_img = "https://mekvahan.com/api/delivery/dropoff_image";
+    private static final String myUrl_img = "https://mekvahan.com/api/delivery/pickup_image";
     private final int REQUEST_CODE = 20;
     public ArrayList<String> arrayList, arrayListsend;
     public List<CustomerPickupData> customerPickupDataList;
@@ -90,7 +104,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     private ImagePopup imagePopup;
     private Boolean aBoolean = false;
     private double latitude = 0.0, longitude = 0.0;
-    private Boolean isCustomerReportUpload = false;
+    private Boolean isCustomerReportUpload = false, isPickupImageUpload=false;
 
     private ArrayList<Uri> pickup_image;
     private LoginSessionManager sessionManager;
@@ -235,10 +249,10 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(UpcomingBookingVendor.this, AddCustomerReport.class);
-                i.putExtra("bookingid", bookingid);
-                i.putExtra("vehicletype", vehicle_type);
-                startActivityForResult(i, 101);
+                Intent intent = new Intent(UpcomingBookingVendor.this, ViewCustomerReport.class);
+                intent.putExtra("bookingId", bookingid);
+                intent.putExtra("vehicletype", vehicle_type);
+                startActivity(intent);
 
             }
         });
@@ -275,15 +289,16 @@ public class UpcomingBookingVendor extends AppCompatActivity {
             public void onClick(View view) {
 
                 // sendDb_exterior_image();
-                if (isCustomerReportUpload != true) {
-                    Snackbar.make(pickup_confirm, "Please add customer report..!",
-                            BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
-                    return;
+                if (isPickupImageUpload) {
+                    Intent i = new Intent(UpcomingBookingVendor.this, ScanQrcode.class);
+                    i.putExtra("otp", otp_1);
+                    startActivity(i);
+                }
+                else {
+                    sendDb_exterior_image();
                 }
 
-                Intent i = new Intent(UpcomingBookingVendor.this, ScanQrcode.class);
-                i.putExtra("otp", otp_1);
-                startActivity(i);
+
             }
         });
 
@@ -291,10 +306,18 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     }
 
 
+
+
     private void sendDb_exterior_image() {
 
+        if (isCustomerReportUpload != true) {
+            Snackbar.make(pickup_confirm, "Please add customer report..!",
+                    BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
+            return;
+        }
+
         if (pickup_image.size() < 6) {
-            Snackbar.make(pickup_confirm, "Please upload all images!",
+            Snackbar.make(pickup_confirm, "Please add exterior images..!",
                     BaseTransientBottomBar.LENGTH_SHORT).setAction("Ok", null).show();
             return;
         }
@@ -308,10 +331,13 @@ public class UpcomingBookingVendor extends AppCompatActivity {
                 response -> {
 
                     String resultResponse = new String(response.data);
-                    Log.e("PICKUPIMAGE", resultResponse);
+
 
                     try {
                         JSONObject jsonObject = new JSONObject(resultResponse);
+                        Toast.makeText(getApplicationContext(), "Pickup image uploaded,Please confirm pickup", Toast.LENGTH_LONG).show();
+                        isPickupImageUpload=true;
+
                         progressDialog.dismiss();
                     } catch (Exception e) {
                         progressDialog.dismiss();
@@ -319,6 +345,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
                     }
                 }, error -> {
             progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Failed to Upload..!", Toast.LENGTH_LONG).show();
             NetworkResponse networkResponse = error.networkResponse;
             String errorMessage = "Unknown error";
             if (networkResponse == null) {
@@ -374,13 +401,12 @@ public class UpcomingBookingVendor extends AppCompatActivity {
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
 
-                params.put("pickup_image", new DataPart(getFilename(0), getBytes(0), "image/jpeg"));
+                params.put("pickup_image",  new DataPart(getFilename(0), getBytes(0), "image/jpeg"));
                 params.put("pickup_image1", new DataPart(getFilename(1), getBytes(1), "image/jpeg"));
                 params.put("pickup_image2", new DataPart(getFilename(2), getBytes(2), "image/jpeg"));
                 params.put("pickup_image3", new DataPart(getFilename(3), getBytes(3), "image/jpeg"));
                 params.put("pickup_image4", new DataPart(getFilename(4), getBytes(4), "image/jpeg"));
                 params.put("pickup_image5", new DataPart(getFilename(5), getBytes(5), "image/jpeg"));
-
                 return params;
             }
 
@@ -409,26 +435,13 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     }
 
     public byte[] getBytes(int i) throws IOException {
-        InputStream iStream;
-
-        iStream = getContentResolver().openInputStream(pickup_image.get(i));
-
-
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len;
-        if (iStream != null) {
-            while ((len = iStream.read(buffer)) != -1) {
-                byteBuffer.write(buffer, 0, len);
-            }
-        } else
-            Log.e("iStream: ", "null");
-        assert iStream != null;
-        iStream.close();
-        return byteBuffer.toByteArray();
+        byte[] data = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickup_image.get(i));
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+        return data = baos.toByteArray();
     }
+
 
 
     @Override
@@ -495,7 +508,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     private void loadRecyclerViewData(Uri uri) {
 
         pickup_image.add(uri);
-        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext());
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext(),"upcoming");
         pickupImageAdapter.notifyDataSetChanged();
         recyclerViewPickupImage.setAdapter(pickupImageAdapter);
     }
@@ -524,6 +537,8 @@ public class UpcomingBookingVendor extends AppCompatActivity {
             }
         }
     }
+
+
 
     private File createImageFile() throws IOException {
         // Create an image file name

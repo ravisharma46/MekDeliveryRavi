@@ -7,6 +7,8 @@
     tools:context=".vendor_pickup.OngoingBookingCustomerDrop">
 
 
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -40,9 +42,82 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Vehicle details"
+                    android:textColor="@color/app_grey_headline_caption"
+                    android:textSize="12sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/frame_rect_02"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_vehiclebrand"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="Maruti Suzuki"
+                            android:textColor="@color/app_grey_headline_caption"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginTop="40dp"
+                            android:id="@+id/tv_vehiclename"
+                            android:fontFamily="@font/montserrat_medium1"
+                            android:text="WagonR"
+                            android:textColor="@color/chart_deep_red"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_numberPlate"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginTop="64dp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="DL1R0ABC"
+                            android:textColor="@color/app_caption_dark_grey"
+                            android:textSize="12sp" />
+                    </FrameLayout>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/iv_carimage"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:src="@drawable/maruti_suzuki" />
+
+
+                </LinearLayout>
 
 
                 <LinearLayout

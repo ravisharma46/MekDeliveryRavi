@@ -82,6 +82,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'net.gotev:uploadservice:2.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
 
 

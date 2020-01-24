@@ -145,7 +145,13 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                     i1.putExtra("action12",data.getAction12());
                     i1.putExtra("action13",data.getAction13());
                     i1.putExtra("action14",data.getAction14());
-                    i1.putExtra("action15",data.getAction14());
+                    i1.putExtra("action15",data.getAction15());
+                    i1.putExtra("image1",data.getImage1());
+                    i1.putExtra("image2",data.getImage2());
+                    i1.putExtra("image3",data.getImage3());
+                    i1.putExtra("image4",data.getImage4());
+                    i1.putExtra("image5",data.getImage5());
+                    i1.putExtra("image6",data.getImage6());
                     view.getContext().startActivity(i1);
 
                 });
@@ -166,6 +172,10 @@ public class OngoingAdapter_1 extends RecyclerView.Adapter<OngoingAdapter_1.View
                     i1.putExtra("amount",data.getAmount());
                     i1.putExtra("otp",data.getOtp());
                     i1.putExtra("mobile",data.getMobile());
+                    i1.putExtra("vehiclename",data.getModelName());
+                    i1.putExtra("vehiclebrand",data.getVehicleBrand());
+                    i1.putExtra("numberplate",data.getNumberPlate());
+                    i1.putExtra("imageurl",data.getImage_url());
 
                     view.getContext().startActivity(i1);
 

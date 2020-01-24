@@ -29,6 +29,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.broooapps.otpedittext2.OtpEditText;
+import com.bumptech.glide.Glide;
 import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
@@ -54,8 +55,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
     private Button btadd_report, bt_drop;
     private LinearLayout navigation;
     private EditText otp;
-    private ImageView call;
-    private TextView sub_total, tax, additional_charge, total, nameC, addressC, dateD, timeD;
+    private ImageView call,vehicle_image;
+    private TextView sub_total, tax, additional_charge, total, nameC, addressC, dateD, timeD,vehicleBrand,vehicleName,numberPlate;
     private OtpEditText otpEditText;
     private ProgressDialog mProgressDialog;
     private String otp_input = "0000";
@@ -69,6 +70,11 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         bt_drop = findViewById(R.id.bt_drop);
         navigation = findViewById(R.id.ll_navigation);
         call = findViewById(R.id.call);
+
+        vehicleBrand = findViewById(R.id.tv_vehiclebrand);
+        vehicleName = findViewById(R.id.tv_vehiclename);
+        numberPlate = findViewById(R.id.tv_numberPlate);
+        vehicle_image = findViewById(R.id.iv_carimage);
 
         sub_total = findViewById(R.id.tv_subtotal);
         tax = findViewById(R.id.tv_tax);
@@ -92,6 +98,10 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         String name = bundle.getString("name");
         String bookingid = bundle.getString("bookingid");
         String address = bundle.getString("address");
+        String vehiclename = bundle.getString("vehiclename");
+        String vehiclebrand = bundle.getString("vehiclebrand");
+        String numberplate = bundle.getString("numberplate");
+        String vehicleImageUrl = bundle.getString("imageurl");
         // double latitude= Double.parseDouble(bundle.getString("latitude"));
         // double longitude=Double.parseDouble( bundle.getString("longitude"));
         String dropdate = bundle.getString("dropDate");
@@ -110,6 +120,16 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         addressC.setText(address);
         dateD.setText(dropdate);
         timeD.setText(dropTime);
+        vehicleName.setText(vehiclename);
+        vehicleBrand.setText(vehiclebrand);
+        numberPlate.setText(numberplate);
+        try {
+            Glide.with(OngoingBookingCustomerDrop.this).load(vehicleImageUrl)
+                    .into(vehicle_image);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));

@@ -26,10 +26,12 @@ public class PickupImageAdapter extends RecyclerView.Adapter<PickupImageAdapter.
 
     private ArrayList<Uri> pickup_image;
     private Context context;
+    private String booking;
 
-    public PickupImageAdapter(ArrayList<Uri> pickup_image,Context context) {
+    public PickupImageAdapter(ArrayList<Uri> pickup_image,Context context,String booking) {
         this.pickup_image= pickup_image;
         this.context=context;
+        this.booking = booking;
     }
 
     @NonNull
@@ -43,7 +45,9 @@ public class PickupImageAdapter extends RecyclerView.Adapter<PickupImageAdapter.
     @Override
     public void onBindViewHolder(@NonNull PickupImageAdapter.ViewHolder holder, int i) {
 
-
+         if(booking.contains("ongoing")){
+             holder.ivcancel.setVisibility(View.GONE);
+         }
 
             Glide.with(context)
                     .load(pickup_image.get(i))

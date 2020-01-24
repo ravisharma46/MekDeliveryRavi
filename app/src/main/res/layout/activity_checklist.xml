@@ -34,6 +34,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_gravity="right"
+            android:id="@+id/bt_update"
             android:background="@drawable/done_red_button"
             android:textColor="@color/white"
             android:text="Update"
@@ -180,11 +181,11 @@
 
                     <Switch
                         style="@style/SwitchCompatStyle"
+                        android:id="@+id/sw_shower"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -235,10 +236,10 @@
                     <Switch
                         style="@style/SwitchCompatStyle"
                         android:layout_width="wrap_content"
+                        android:id="@+id/sw_charger"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -290,9 +291,9 @@
                         style="@style/SwitchCompatStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:id="@+id/sw_power_bank"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -343,10 +344,10 @@
                     <Switch
                         style="@style/SwitchCompatStyle"
                         android:layout_width="wrap_content"
+                        android:id="@+id/sw_uniform"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -398,9 +399,9 @@
                         style="@style/SwitchCompatStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:id="@+id/sw_backpack"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -451,10 +452,10 @@
                     <Switch
                         style="@style/SwitchCompatStyle"
                         android:layout_width="wrap_content"
+                        android:id="@+id/sw_swipping_machine"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -506,9 +507,9 @@
                         style="@style/SwitchCompatStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:id="@+id/sw_id_card"
                         android:layout_gravity="right"
                         android:layout_marginRight="16dp"
-                        android:enabled="true"
                         android:switchMinWidth="48dp" />
 
 
@@ -583,13 +584,7 @@
                     android:padding="8dp"
                     android:layout_gravity="center"
                     android:src="@drawable/image_svg" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/iv_cross"
-                    android:src="@drawable/image_cross"
-                    android:layout_gravity="right"
-                    android:padding="8dp"
-                    android:layout_height="wrap_content" />
+
 
             </FrameLayout>
 

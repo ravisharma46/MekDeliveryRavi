@@ -474,11 +474,11 @@
                 android:background="@drawable/frame_rect_02">
                 <Button
                     android:id="@+id/bt_confirm"
+                    style="@style/Button.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/done_red_button"
                     android:fontFamily="@font/montserrat_medium1"
                     android:text="Confirm"
                     android:textAllCaps="false"

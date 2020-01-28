@@ -482,7 +482,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/done_red_button"
+                    style="@style/Button.Primary"
                     android:fontFamily="@font/montserrat_medium1"
                     android:text="Vehicle Drop"
                     android:textAllCaps="false"

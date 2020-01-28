@@ -463,7 +463,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/done_red_button"
+                    style="@style/Button.Primary"
                     android:fontFamily="@font/montserrat_medium1"
                     android:text="Pickup Confirmation"
                     android:textAllCaps="false"

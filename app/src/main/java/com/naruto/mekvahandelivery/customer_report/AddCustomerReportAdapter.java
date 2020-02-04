@@ -1,9 +1,11 @@
 package com.naruto.mekvahandelivery.customer_report;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -46,13 +48,7 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
     @Override
     public void onBindViewHolder(@NonNull AddCustomerReportAdapter.ViewHolder holder, int position) {
         final AddCustomerReportData data = imageDocumentList.get(position);
-        final ImagePopup imagePopup = new ImagePopup(context);
-        imagePopup.setWindowHeight(800); // Optional
-        imagePopup.setWindowWidth(800); // Optional
-        imagePopup.setBackgroundColor(context.getColor(R.color.offwhite_01));
-        imagePopup.setFullScreen(true); // Optional
-        imagePopup.setHideCloseIcon(true);  // Optional
-        imagePopup.setImageOnClickClose(true);
+
 
         if (data.getPhotoUri() != null) {
 
@@ -69,8 +65,18 @@ public class AddCustomerReportAdapter extends RecyclerView.Adapter<AddCustomerRe
 
           // Optional
 
-        imagePopup.initiatePopupWithPicasso(data.getPhotoUri());
-        holder.ivevent.setOnClickListener(view -> imagePopup.viewPopup());
+        holder.ivevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog settingsDialog = new Dialog(context);
+                settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                settingsDialog.setContentView(R.layout.popup_layout);
+                ImageView image = settingsDialog.findViewById(R.id.chosen_image);
+                Glide.with(context).load(data.getPhotoUri()).fitCenter().into(image);
+                settingsDialog.setCanceledOnTouchOutside(true);
+                settingsDialog.show();
+            }
+        });
 
 
 

@@ -1,6 +1,8 @@
 package com.naruto.mekvahandelivery.customer_report;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -59,7 +62,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     private FrameLayout car, bike;
     private ImageView car_image, bike_image,img_sign;
     private TextView tvbike, tvcar, document;
-    private Button take_sign, btRc, btPuc, btInsurance, btRoadTax, btPassengertax, btPollutionPaper, stepney;
+    private Button take_sign, btRc, btPuc, btInsurance, btRoadTax, btPassengertax, btPollutionPaper, stepney,bt_done;
     private TextView tvHeadRest, tvFloorMats, tvMudFlap, tvSeatCover, tvOtherreport, tvBatttery, tvOdometer;
 
     private Map<String, String> carButton, bikeButton, reportButton;
@@ -67,6 +70,7 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
     private List<String> imageStringList, keyList;
     private ProgressBar mProgressBar;
     private SeekBar sk_fuelmeter;
+    private String dialog_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +124,35 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
         tvOtherreport = findViewById(R.id.tv_votherReport);
         tvBatttery = findViewById(R.id.tv_vBattery);
         sk_fuelmeter=findViewById(R.id.sb_vfuelmeter);
+        bt_done = findViewById(R.id.bt_vdone);
 
         sk_fuelmeter.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
+            }
+        });
+
+        bt_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+        img_sign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog settingsDialog = new Dialog(ViewCustomerReport.this);
+                settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                settingsDialog.setContentView(getLayoutInflater().inflate(R.layout.popup_layout
+                        , null));
+                ImageView image = settingsDialog.findViewById(R.id.chosen_image);
+                Glide.with(ViewCustomerReport.this).load(dialog_img).fitCenter().into(image);
+                settingsDialog.setCanceledOnTouchOutside(true);
+                settingsDialog.show();
+
             }
         });
 
@@ -359,7 +387,9 @@ public class ViewCustomerReport extends AppCompatActivity implements ViewCustome
                                         break;
                                     case "signature":
                                         Glide.with(this).load(data.getJSONArray(key).getString(1))
-                                                .placeholder(R.drawable.image_svg).into(img_sign);
+                                                .into(img_sign);
+
+                                       dialog_img = data.getJSONArray(key).getString(1);
                                         break;
                                         default:
                                             Log.e("NoKey", "No case for "+key);

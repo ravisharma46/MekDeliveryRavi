@@ -46,9 +46,8 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="20dp"
 				android:fontFamily="@font/gotham_book"
-				android:labelFor="@id/emp_id"
 				android:paddingHorizontal="4dp"
-				android:paddingTop="28dp"
+				android:paddingBottom="8dp"
 				android:text="@string/enter_your_employee_id"
 				android:textColor="@color/offwhite"
 				android:textSize="10sp" />
@@ -70,8 +69,7 @@
 				android:layout_marginTop="8dp"
 				android:fontFamily="@font/gotham_book"
 				android:labelFor="@id/emp_psw"
-				android:paddingHorizontal="8dp"
-				android:paddingTop="24dp"
+				android:paddingHorizontal="4dp"
 				android:text="@string/password"
 				android:textColor="@color/light_grey"
 				android:textSize="10sp" />
@@ -80,7 +78,7 @@
 				android:layout_width="match_parent"
 				app:hintTextAppearance="@style/TextLabel"
 				app:passwordToggleEnabled="true"
-				android:layout_height="wrap_content">
+				android:layout_height="54dp">
 
 				<com.google.android.material.textfield.TextInputEditText
 					android:id="@+id/emp_psw"
@@ -89,6 +87,7 @@
 					android:textSize="14sp"
 					android:fontFamily="@font/gotham_medium1"
 					android:textColor="@color/black"
+					android:textStyle="bold"
 					android:inputType="textPassword"/>
 			</com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +107,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="24dp"
-				android:background="@drawable/red_button"
+				style="@style/Button.Primary"
 				android:fontFamily="@font/montserrat_medium"
 				android:text="@string/submit"
 				android:textAllCaps="false"
@@ -121,7 +120,7 @@
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:layout_marginTop="16dp"
 		android:layout_gravity="bottom"
 		android:gravity="bottom"

@@ -28,7 +28,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="8dp"
             android:padding="16dp"
-            android:src="@drawable/right_tick" />
+            android:src="@drawable/checked_svg" />
 
 
     </FrameLayout>

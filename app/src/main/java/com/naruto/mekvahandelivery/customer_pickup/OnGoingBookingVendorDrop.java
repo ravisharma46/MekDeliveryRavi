@@ -135,6 +135,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         image_4 =Uri.parse(image4);
         image_5 =Uri.parse(image5);
         image_6 =Uri.parse(image6);
+
         pickup_image = new ArrayList<>();
         pickup_image.add(image_1);
         pickup_image.add(image_2);
@@ -146,13 +147,14 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         recyclerViewPickupImage = findViewById(R.id.rv_pickup_image);
         recyclerViewPickupImage.hasFixedSize();
         recyclerViewPickupImage.setLayoutManager(new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false));
-        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext(),"ongoing");
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, OnGoingBookingVendorDrop.this,"ongoing");
         recyclerViewPickupImage.setAdapter(pickupImageAdapter);
 
         arrayList.add(action1);
         arrayList.add(action2);
         arrayList.add(action3);
         arrayList.add(action4);
+        arrayList.add(action5);
         arrayList.add(action6);
         arrayList.add(action7);
         arrayList.add(action8);
@@ -175,7 +177,7 @@ public class OnGoingBookingVendorDrop extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter(arrayListsend, "ongoing");
+        adapter = new CustomListAdapter(arrayListsend, "ongoing","partner_drop");
         recyclerView.setAdapter(adapter);
 
         name.setText(name_1);

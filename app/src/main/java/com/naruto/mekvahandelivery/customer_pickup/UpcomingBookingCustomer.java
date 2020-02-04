@@ -224,7 +224,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter(arrayListsend, "upcoming");
+        adapter = new CustomListAdapter(arrayListsend, "upcoming","customer_pickup");
         recyclerView.setAdapter(adapter);
 
         name.setText(name_1);
@@ -278,6 +278,12 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
         });
 
         report.setOnClickListener(view -> {
+
+            if(isCustomerReportUpload){
+                Toast.makeText(getApplicationContext(), "Customer report added", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             Intent intent = new Intent(UpcomingBookingCustomer.this, AddCustomerReport.class);
             intent.putExtra("bookingid", bookingid);
             intent.putExtra("vehicletype", vehicle_type);
@@ -540,6 +546,9 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
                 String status = data.getStringExtra("upload_status");
                 if (status.contains("true")) {
                     isCustomerReportUpload = true;
+                    report.setBackgroundResource(R.drawable.green_button);
+                    report.setText("Customer report added");
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -553,7 +562,7 @@ public class UpcomingBookingCustomer extends AppCompatActivity {
     private void loadRecyclerViewData(Uri uri) {
 
         pickup_image.add(uri);
-        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext(),"upcoming");
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, UpcomingBookingCustomer.this,"upcoming");
         pickupImageAdapter.notifyDataSetChanged();
         recyclerViewPickupImage.setAdapter(pickupImageAdapter);
     }

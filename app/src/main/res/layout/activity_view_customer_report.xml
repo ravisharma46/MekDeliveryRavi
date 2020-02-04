@@ -464,12 +464,15 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_viewimagedocument"
                 android:layout_width="match_parent"
-                android:layout_height="152dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="136dp"
                 android:background="@drawable/frame_rect_02" />
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -647,8 +650,8 @@
                     android:textSize="14sp" />
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -659,8 +662,10 @@
                         android:id="@+id/image_vsign"
                         android:layout_width="wrap_content"
                         android:layout_gravity="center"
+                        android:padding="12dp"
+                        android:src="@drawable/image_svg"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/image_svg" />
+                        />
                 </FrameLayout>
 
             </LinearLayout>
@@ -673,7 +678,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/done_red_button"
+                style="@style/Button.Primary"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Done"
                 android:textAllCaps="false"

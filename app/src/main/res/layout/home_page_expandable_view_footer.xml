@@ -29,7 +29,7 @@
         android:fontFamily="@font/gotham_book"
         android:gravity="center_vertical"
         android:paddingStart="48dp"
-        android:text="\u00A9 2018 Mekpark, App version 1.0"
+        android:text="@string/version_name"
         android:textSize="12sp"
         android:paddingBottom="16dp"/>
 

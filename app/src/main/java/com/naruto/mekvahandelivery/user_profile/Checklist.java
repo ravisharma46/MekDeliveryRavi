@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -94,6 +96,8 @@ public class Checklist extends AppCompatActivity {
     private String shower,charger,powerBank,uniform,backpack,swipingMachine,idCard;
 
     private LoginSessionManager sessionManager;
+    private  String selfie_path;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +135,19 @@ public class Checklist extends AppCompatActivity {
                 }
 
                 dispatchTakePictureIntent(REQUEST_CODE);
+            }
+        });
+
+        selfie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog settingsDialog = new Dialog(Checklist.this);
+                settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                settingsDialog.setContentView(R.layout.popup_layout);
+                ImageView image = settingsDialog.findViewById(R.id.chosen_image);
+                Glide.with(Checklist.this).load(selfie_path).fitCenter().into(image);
+                settingsDialog.setCanceledOnTouchOutside(true);
+                settingsDialog.show();
             }
         });
 
@@ -459,6 +476,7 @@ public class Checklist extends AppCompatActivity {
                         String swiping_machine = data.getString("swiping_machine");
                         String idCard = data.getString("id_card");
                         String image = data.getString("image1");
+                        selfie_path = image;
 
                         if(shower.contains("1")){
                             sw_shower.setChecked(true);

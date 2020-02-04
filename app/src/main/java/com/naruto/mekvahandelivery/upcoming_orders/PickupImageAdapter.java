@@ -1,11 +1,13 @@
 package com.naruto.mekvahandelivery.upcoming_orders;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +58,20 @@ public class PickupImageAdapter extends RecyclerView.Adapter<PickupImageAdapter.
                             .placeholder(R.drawable.image_svg))
                     .into(holder.ivevent);
 
+        holder.ivevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final Dialog settingsDialog = new Dialog(context);
+                settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                settingsDialog.setContentView(R.layout.popup_layout);
+                ImageView image = settingsDialog.findViewById(R.id.chosen_image);
+                Glide.with(context).load(pickup_image.get(i)).fitCenter().into(image);
+                settingsDialog.setCanceledOnTouchOutside(true);
+                settingsDialog.show();
+            }
+        });
+
 
     }
 
@@ -83,6 +99,8 @@ public class PickupImageAdapter extends RecyclerView.Adapter<PickupImageAdapter.
 
                 }
             });
+
+
 
 
         }

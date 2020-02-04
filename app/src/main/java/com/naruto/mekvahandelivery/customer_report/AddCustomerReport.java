@@ -211,17 +211,6 @@ public class AddCustomerReport extends AppCompatActivity implements Car_Add_frag
 
         addDetails.setOnClickListener(view -> {
             if (vehicle_type.equalsIgnoreCase("car")) {
-              //  Log.e("TAG","CLICKED YES");
-               // Log.e("odometer", odoMeter.getText().toString());
-               // Log.e("odometer1", reportButton.get("odometer"));
-//                Log.e("description", reportButton.get("otherreport"));
-//                Log.e("battery_info", reportButton.get("sbrand"));
-//                Log.e("miscellaneous", "0");    //??????
-//                Log.e("head_rest", reportButton.get("headrest"));
-//                Log.e("floor_mats", reportButton.get("floormats"));
-//                Log.e("wheel_cap", reportButton.get("wheelcap"));
-//                Log.e("mud_flap", reportButton.get("mudflap"));
-
 
 
 

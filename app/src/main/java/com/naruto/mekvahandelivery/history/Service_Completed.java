@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class Service_Completed extends AppCompatActivity {
 
-    private TextView rupeeAmount, rupeepaytm,rupTax,rupSubtotal,rupAdditonalchrg,rupTotal,tvDetails,service, vehicleBrand,vehicleName,numberPlate,serviceName;
+    private TextView rupeeAmount, rupeepaytm,rupTax,rupSubtotal,rupAdditonalchrg,rupTotal,tvDetails,service, vehicleBrand,vehicleName,numberPlate,serviceName,total_collected;
     private ImageView vehicle_image;
     private TextView btnClickme;
     private RelativeLayout rrTilte;
@@ -44,7 +44,6 @@ public class Service_Completed extends AppCompatActivity {
 
 
         rupeeAmount = findViewById(R.id.rupeeAmount);
-        rupeepaytm = findViewById(R.id.rupeePaytm);
         tvDetails=findViewById(R.id.tvDetails);
         service=findViewById(R.id.service);
         rrTilte=findViewById(R.id.firstRelative);
@@ -58,7 +57,7 @@ public class Service_Completed extends AppCompatActivity {
         rupTax=findViewById(R.id.tv_tax);
         rupSubtotal=findViewById(R.id.tv_subtotal);
         rupTotal=findViewById(R.id.tv_total);
-
+        total_collected = findViewById(R.id.tv_total_collected);
 
 
         arrayList=new ArrayList<>();
@@ -116,7 +115,7 @@ public class Service_Completed extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView_listView);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend,"history");
+        adapter = new CustomListAdapter((ArrayList<String>) arrayListsend,"history","history");
         recyclerView.setAdapter(adapter);
 
         vehicleName.setText(vehiclename);
@@ -136,12 +135,12 @@ public class Service_Completed extends AppCompatActivity {
         }
 
 
-        rupeepaytm.setText("\u20B9 " + amount);
         rupeeAmount.setText("\u20B9 " + amount);
         rupSubtotal.setText("\u20B9 " + amount);
         rupTax.setText("\u20B9 " + "0");
         rupAdditonalchrg.setText("\u20B9 " + "0");
         rupTotal.setText("\u20B9 " + amount);
+        total_collected.setText("\u20B9 " + amount);
 
         //Action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="right"
             android:id="@+id/bt_update"
-            android:background="@drawable/done_red_button"
+           style="@style/Button.Primary"
             android:textColor="@color/white"
             android:text="Update"
             android:fontFamily="@font/montserrat_medium1"
@@ -570,23 +570,18 @@
 
             </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/rv_imagevendorpickup"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="8dp"
-                android:layout_gravity="left"
-                android:background="@drawable/frame_rect_02" >
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:background="@drawable/frame_rect_02"
+                android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/iv_selfie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:layout_gravity="center"
                     android:src="@drawable/image_svg" />
 
-
-            </FrameLayout>
+            </RelativeLayout>
 
 
             <LinearLayout
@@ -659,7 +654,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/done_red_button"
+                style="@style/Button.Primary"
                 android:fontFamily="@font/montserrat_medium1"
                 android:text="Done"
                 android:textAllCaps="false"

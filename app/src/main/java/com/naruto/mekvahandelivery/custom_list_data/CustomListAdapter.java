@@ -18,10 +18,12 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
 
     private ArrayList<String> data;
     private String booking;
+    private String booking_type;
 
-    public CustomListAdapter(ArrayList<String> data,String booking) {
+    public CustomListAdapter(ArrayList<String> data,String booking,String booking_type) {
         this.data = data;
         this.booking=booking;
+        this.booking_type= booking_type;
     }
 
 
@@ -37,8 +39,8 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
 
         holder.data.setText(data.get(i));
 
-        if(booking.contains("upcoming")){
-            holder.iv_check.setImageResource(R.drawable.checked_svg);
+        if(booking_type.contains("customer_drop") || booking_type.contains("partner_pickup") || booking_type.contains("history")){
+            holder.iv_check.setImageResource(R.drawable.right_tick);
         }
 
         if(i%2!=0){

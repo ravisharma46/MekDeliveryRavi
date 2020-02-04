@@ -399,7 +399,7 @@
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
                         android:paddingBottom="8dp"
-                        android:text="To confirm delivery add vehicle exterior pic."
+                        android:text="To confirm delivery add vehicle exterior pic(6)."
                         android:textColor="@color/app_caption_dark_grey"
                         android:textSize="10sp" />
 

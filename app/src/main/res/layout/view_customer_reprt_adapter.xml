@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="132dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/iv_document"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:src="@drawable/image_svg"
+            android:paddingBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="4dp"
+            android:layout_height="16dp"
+            android:layout_alignRight="@id/iv_document"
+            android:onClick="onAddReportButton"
+            android:src="@drawable/ic_cancel" />
+    </RelativeLayout>
+
+
+</LinearLayout>

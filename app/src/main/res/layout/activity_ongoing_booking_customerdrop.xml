@@ -119,6 +119,63 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Service type"
+                    android:textColor="@color/app_grey_headline_caption"
+                    android:textSize="12sp" />
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/frame_rect">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:clickable="true"
+                        android:id="@+id/tv_servicename"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="Denting Painting"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetails_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:layout_marginRight="12dp"
+                        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+                        android:drawablePadding="4dp"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:padding="16dp"
+                        android:text="Details"
+                        android:textColor="@color/chart_deep_red"
+                        android:textSize="10sp" />
+
+
+                </FrameLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/recyclerView_listView"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -220,7 +277,7 @@
                         android:layout_gravity="right"
                         android:layout_marginRight="8dp"
                         android:padding="16dp"
-                        android:src="@drawable/mobile_grey_svg" />
+                        android:src="@drawable/mobile_svg" />
 
                     <TextView
                         android:layout_width="wrap_content"

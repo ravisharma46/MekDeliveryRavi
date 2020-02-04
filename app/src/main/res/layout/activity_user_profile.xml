@@ -123,6 +123,7 @@
 
                     <Switch
                         android:layout_width="wrap_content"
+                        android:id="@+id/sw_rider_status"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:enabled="true"
@@ -723,7 +724,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium1"
                     android:paddingBottom="8dp"
-                    android:text="Parking place Picture"
+                    android:text="Vehicle licence plate picture"
                     android:textColor="@color/app_caption_dark_grey"
                     android:textSize="10sp" />
 

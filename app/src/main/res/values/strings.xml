@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Mekvahan Delivery</string>
+	<string name="app_name">MEKRIDER</string>
 	<string name="enter_employee_id_and_password_to_submit">Enter employee ID and password to submit</string>
 	<string name="password">Password</string>
 	<string name="login">Login</string>
@@ -18,7 +18,7 @@
 	<string name="_15_min_approx">15 min (approx)</string>
 	<string name="navigate">Navigate</string>
 	<string name="pickup_date_time"><![CDATA[Pickup date & time]]></string>
-	<string name="to_confirm_service_nadd_vehicle_pic_confirm_otp"><![CDATA[To confirm service\nadd vehicle exterior pic & confirm OTP]]></string>
+	<string name="to_confirm_service_nadd_vehicle_pic_confirm_otp"><![CDATA[To confirm service\nadd vehicle exterior pic(6) & confirm OTP]]></string>
 	<string name="petrol_diesel_meter">Petrol/ Diesel Meter</string>
 	<string name="message">I aurthorize to execute the jobs described herin using the necessary material cost. I understand that the vehicle is stored, repaired and tested at my own risk</string>
     <string name="drop_date_time"><![CDATA[Drop date & time]]></string>
@@ -35,4 +35,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="doc"><![CDATA[Doc & vehicle interior pictures(2)]]></string>
+    <string name="version_name">© 2018 Mekvahan, App version 1.0.1</string>
 </resources>

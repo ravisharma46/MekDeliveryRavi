@@ -56,6 +56,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.naruto.mekvahandelivery.common_files.CommonVaribalesFunctions.callIntent;
+
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -128,8 +130,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         chaufer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(NavActivity.this, Chauffer.class));
-                Toast.makeText(NavActivity.this, "To be Implemented", Toast.LENGTH_LONG).show();
+                callIntent(NavActivity.this,"7838878899");
             }
         });
 

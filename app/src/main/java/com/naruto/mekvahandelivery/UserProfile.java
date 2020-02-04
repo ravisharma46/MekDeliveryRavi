@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ public class UserProfile extends AppCompatActivity {
     private LoginSessionManager msessionManager;
     private ImageView iv_plus,iv_park;
     private LinearLayout update_pic;
+    private Switch sw_rider_status;
 
 
     private static final int PICK_IMAGE_REQUEST = 0;
@@ -106,7 +108,9 @@ public class UserProfile extends AppCompatActivity {
         iv_park=findViewById(R.id.iv_parking);
         fl_park=findViewById(R.id.fl_parking);
         remove=findViewById(R.id.tv_remove);
+        sw_rider_status = findViewById(R.id.sw_rider_status);
 
+        sw_rider_status.setChecked(true);
 
 
 
@@ -130,7 +134,7 @@ public class UserProfile extends AppCompatActivity {
         name_1.setText(userInfo.get(NAME));
         mobile.setText(userInfo.get(MOBILE));
         email.setText(userInfo.get(EMAIL));
-        partnerType.setText(userInfo.get(TYPE));
+        partnerType.setText("Rider");
         executive_id.setText(userInfo.get(PROFILE_ID));
 
         String a=userInfo.get(LATITUDE);

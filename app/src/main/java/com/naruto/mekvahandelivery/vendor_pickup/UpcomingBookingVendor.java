@@ -210,7 +210,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView_listView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
-        adapter = new CustomListAdapter(arrayListsend, "upcoming");
+        adapter = new CustomListAdapter(arrayListsend, "upcoming","partner_pickup");
         recyclerView.setAdapter(adapter);
 
 
@@ -249,6 +249,11 @@ public class UpcomingBookingVendor extends AppCompatActivity {
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(isCustomerReportUpload){
+                    Toast.makeText(getApplicationContext(), "Customer report added", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent(UpcomingBookingVendor.this, ViewCustomerReport.class);
                 intent.putExtra("bookingId", bookingid);
                 intent.putExtra("vehicletype", vehicle_type);
@@ -495,6 +500,8 @@ public class UpcomingBookingVendor extends AppCompatActivity {
                 String status = data.getStringExtra("upload_status");
                 if (status.contains("true")) {
                     isCustomerReportUpload = true;
+                    report.setBackgroundResource(R.drawable.green_button);
+                    report.setText("Customer report added");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -508,7 +515,7 @@ public class UpcomingBookingVendor extends AppCompatActivity {
     private void loadRecyclerViewData(Uri uri) {
 
         pickup_image.add(uri);
-        pickupImageAdapter = new PickupImageAdapter(pickup_image, getApplicationContext(),"upcoming");
+        pickupImageAdapter = new PickupImageAdapter(pickup_image, UpcomingBookingVendor.this,"upcoming");
         pickupImageAdapter.notifyDataSetChanged();
         recyclerViewPickupImage.setAdapter(pickupImageAdapter);
     }

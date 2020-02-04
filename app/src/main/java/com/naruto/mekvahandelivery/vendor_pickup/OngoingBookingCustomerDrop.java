@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -34,10 +36,12 @@ import com.naruto.mekvahandelivery.NavActivity;
 import com.naruto.mekvahandelivery.R;
 import com.naruto.mekvahandelivery.common_files.LoginSessionManager;
 import com.naruto.mekvahandelivery.common_files.MySingleton;
+import com.naruto.mekvahandelivery.custom_list_data.CustomListAdapter;
 import com.naruto.mekvahandelivery.customer_report.ViewCustomerReport;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -51,12 +55,16 @@ import static com.naruto.mekvahandelivery.common_files.LoginSessionManager.TOKEN
 
 public class OngoingBookingCustomerDrop extends AppCompatActivity {
 
+    private ArrayList<String> arrayList;
+    private ArrayList<String> arrayListsend;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
     private static final String myUrl = "https://mekvahan.com/api/delivery/ongoing_history";
     private Button btadd_report, bt_drop;
     private LinearLayout navigation;
     private EditText otp;
     private ImageView call,vehicle_image;
-    private TextView sub_total, tax, additional_charge, total, nameC, addressC, dateD, timeD,vehicleBrand,vehicleName,numberPlate;
+    private TextView sub_total,tvDetails, tax, additional_charge, total, nameC, addressC, dateD, timeD,vehicleBrand,vehicleName,numberPlate,serviceName;
     private OtpEditText otpEditText;
     private ProgressDialog mProgressDialog;
     private String otp_input = "0000";
@@ -66,6 +74,11 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoing_booking_customerdrop);
 
+
+        arrayList = new ArrayList<>();
+        arrayListsend = new ArrayList<>();
+
+        tvDetails = findViewById(R.id.tvDetails_1);
         btadd_report = findViewById(R.id.bt_addReport);
         bt_drop = findViewById(R.id.bt_drop);
         navigation = findViewById(R.id.ll_navigation);
@@ -84,6 +97,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         addressC = findViewById(R.id.tv_address);
         dateD = findViewById(R.id.tv_date);
         timeD = findViewById(R.id.tv_time);
+        serviceName = findViewById(R.id.tv_servicename);
+
         //OTP text
         otpEditText = findViewById(R.id.et_otp);
         otpEditText.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +107,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
                 otp_input = String.valueOf(((EditText) findViewById(R.id.et_otp)).getText());
             }
         });
+
+
 
 
         Bundle bundle = getIntent().getExtras();
@@ -110,6 +127,53 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         String otp_1 = bundle.getString("otp");
         String mobileNo = bundle.getString("mobile");
         String vehicle_type = bundle.getString("vehicletype");
+        String servicename = bundle.getString("servicename");
+        String action1 = bundle.getString("action1");
+        String action2 = bundle.getString("action2");
+        String action3 = bundle.getString("action3");
+        String action4 = bundle.getString("action4");
+        String action5 = bundle.getString("action5");
+        String action6 = bundle.getString("action6");
+        String action7 = bundle.getString("action7");
+        String action8 = bundle.getString("action8");
+        String action9 = bundle.getString("action9");
+        String action10 = bundle.getString("action10");
+        String action11 = bundle.getString("action11");
+        String action12 = bundle.getString("action12");
+        String action13 = bundle.getString("action13");
+        String action14 = bundle.getString("action14");
+        String action15 = bundle.getString("action15");
+
+        arrayList.add(action1);
+        arrayList.add(action2);
+        arrayList.add(action3);
+        arrayList.add(action4);
+        arrayList.add(action5);
+        arrayList.add(action6);
+        arrayList.add(action7);
+        arrayList.add(action8);
+        arrayList.add(action9);
+        arrayList.add(action10);
+        arrayList.add(action11);
+        arrayList.add(action12);
+        arrayList.add(action13);
+        arrayList.add(action14);
+        arrayList.add(action15);
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i).isEmpty()) {
+                break;
+            } else {
+                arrayListsend.add(arrayList.get(i));
+            }
+        }
+
+        recyclerView = findViewById(R.id.recyclerView_listView);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
+        adapter = new CustomListAdapter(arrayListsend, "ongoing","customer_drop");
+        recyclerView.setAdapter(adapter);
+
 
 
         tax.setText("\u20B9" + null);
@@ -123,6 +187,8 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         vehicleName.setText(vehiclename);
         vehicleBrand.setText(vehiclebrand);
         numberPlate.setText(numberplate);
+        serviceName.setText(servicename);
+
         try {
             Glide.with(OngoingBookingCustomerDrop.this).load(vehicleImageUrl)
                     .into(vehicle_image);
@@ -137,6 +203,26 @@ public class OngoingBookingCustomerDrop extends AppCompatActivity {
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_backspace_black_24dp);
         upArrow.setColorFilter(getResources().getColor(R.color.chart_deep_red), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+
+        tvDetails.setOnClickListener(new View.OnClickListener() {
+            int check = 1;
+
+            @Override
+            public void onClick(View view) {
+
+                if (check == 1) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    check = 0;
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    check = 1;
+                }
+
+
+            }
+        });
+
 
 
         call.setOnClickListener(new View.OnClickListener() {

@@ -426,7 +426,7 @@
                         android:onClick="onAddReportButton"
                         android:background="@drawable/customer_rprt_bt01"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Road tax"
+                        android:text="Dashboard"
                         android:textAllCaps="false"
                         android:textSize="12sp" />
 
@@ -440,7 +440,7 @@
                         android:id="@+id/bt_passengertax"
                         android:background="@drawable/customer_rprt_bt01"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Passenger tax"
+                        android:text="Odometer"
                         android:textAllCaps="false"
                         android:textSize="12sp" />
 
@@ -454,7 +454,7 @@
                         android:onClick="onAddReportButton"
                         android:background="@drawable/customer_rprt_bt01"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Pollution Paper"
+                        android:text="Dicky"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textScaleX=".9"
@@ -473,7 +473,7 @@
                     android:layout_gravity="start"
                     android:fontFamily="@font/montserrat_medium"
                     android:padding="16dp"
-                    android:text="vehicle interior pictures"
+                    android:text="@string/doc"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
